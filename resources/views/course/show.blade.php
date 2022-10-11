@@ -100,6 +100,7 @@
                                                                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Assignment</h1>
                                                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                 </div>
+                                                                                                {{ $content->assignment->users}}
                                                                                                 <form action="{{ route('home.assignment.upload', $content->assignment->id) }}" method="post" enctype="multipart/form-data">
                                                                                                     @csrf
                                                                                                     @method('POST')
