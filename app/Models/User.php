@@ -46,4 +46,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Course::class);
     }
+
+    public function assignment(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
+
 }

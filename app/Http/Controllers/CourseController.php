@@ -40,6 +40,7 @@ class CourseController extends Controller
         return view('course.index', compact('courses'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,6 +51,17 @@ class CourseController extends Controller
         $course = new Course();
         $action = URL::route('admin.course.store');
         return view('admin.course.form', compact('course', 'action'));
+    }
+
+    public function enroll($id): View|Factory|Application
+    {
+        $course = \App\Models\Course::findOrFail($id);
+        if (!$course->discounted_price && !$course->price) { # Free Course ...
+            $course->users()->attach(auth()->id());
+        } else { # Paid course ...
+
+        }
+        return view('course.show', compact('course'));
     }
 
     /**

@@ -11,6 +11,13 @@ class Course extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $appends = ['subscription_status'];
+
+    public function getSubscriptionStatusAttribute(): bool
+    {
+        $subscription = $this->users()->where('users.id', auth()->id())->first();
+        return (bool)$subscription;
+    }
 
     public function sections(): HasMany
     {

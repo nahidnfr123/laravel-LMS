@@ -19,8 +19,8 @@
                         <div class="card-body">
                             <img src="{{$course->photo}}" alt="" class="img-fluid" style="height: 240px!important;">
                             <div class="my-2">
-                                @if($course->discounted_price)
 
+                                @if($course->discounted_price)
                                     <p>Tk.
                                         <span style="text-decoration: line-through;">
                                        {{ $course->price}}
@@ -30,7 +30,13 @@
                                 @else
                                     <p>Tk. <strong>{{$course->discounted_price ?? $course->price}}</strong></p>
                                 @endif
-                                <a href="" class="btn btn-primary">Enroll</a>
+
+                                @if($course->subscription_status)
+                                    <p><strong class="text-success">Active</strong></p>
+                                @else
+                                    <a href="{{route('home.course.enroll', $course->id)}}" class="btn btn-primary">Enroll</a>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -55,13 +61,13 @@
                                                             @foreach($section->contents as $content)
                                                                 <div class="accordion-item">
                                                                     <div class="accordion-header d-flex justify-between align-center" id="section-heading{{$content->id}}">
-                                                                        <button class="accordion-button" @if($content->paid) disabled @endif type="button" data-bs-toggle="collapse" data-bs-target="#content-collapse{{$content->id}}" aria-expanded="true" aria-controls="content-collapse{{$content->id}}">
-                                                                            @if($content->paid)
+                                                                        <button class="accordion-button" @if($content->paid && !$course->subscription_status) disabled @endif type="button" data-bs-toggle="collapse" data-bs-target="#content-collapse{{$content->id}}" aria-expanded="true" aria-controls="content-collapse{{$content->id}}">
+                                                                            @if($content->paid && !$course->subscription_status)
                                                                                 <i class="fa fa-lock" style="color: red"></i>
                                                                             @else
                                                                                 <i class="fa fa" style="color: green"></i>
                                                                             @endif
-                                                                            <span style="color:@if($content->paid) #949393 @else black  @endif; margin-left: 20px">{{ ucfirst($content->type) }}: {{ $content->title }}</span>
+                                                                            <span style="color:@if($content->paid && !$course->subscription_status) #949393 @else black  @endif; margin-left: 20px">{{ ucfirst($content->type) }}: {{ $content->title }}</span>
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -80,6 +86,37 @@
                                                                                         End Time: <strong>{{ \Carbon\Carbon::parse($content->assignment->end_time)  }}</strong>
                                                                                     </div>
                                                                                 </div>
+
+                                                                                @if($course->subscription_status)
+                                                                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                                        <i class="typcn typcn-file mr-2"></i> Upload Assignment
+                                                                                    </button>
+
+                                                                                    <!-- Modal -->
+                                                                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                        <div class="modal-dialog">
+                                                                                            <div class="modal-content">
+                                                                                                <div class="modal-header">
+                                                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Assignment</h1>
+                                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                </div>
+                                                                                                <form action="{{ route('home.assignment.upload', $content->assignment->id) }}" method="post" enctype="multipart/form-data">
+                                                                                                    @csrf
+                                                                                                    @method('POST')
+                                                                                                    <div class="modal-body">
+                                                                                                        <input type="hidden" class="form-control" name="assignment_id" value="{{$content->assignment->id}}">
+                                                                                                        <input type="hidden" class="form-control" name="content_id" value="{{$content->id}}">
+                                                                                                        <input type="file" class="form-control" name="file">
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                                                                    </div>
+                                                                                                </form>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
                                                                             </div>
                                                                         @endif
                                                                         @if($content->exam)

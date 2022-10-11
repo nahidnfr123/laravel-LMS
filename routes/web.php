@@ -27,10 +27,14 @@ Route::get('/course/{id}', function ($id) {
     return view('course.show', compact('course'));
 })->name('home.course');
 
-Route::get('/my-courses', function () {
-    return view('index');
-});
+Route::middleware('auth')->group(function () {
+    Route::get('/course/{id}/enroll', [\App\Http\Controllers\CourseController::class, 'enroll'])->name('home.course.enroll');
+    Route::post('/assignment/{id}/upload', [\App\Http\Controllers\AssignmentController::class, 'upload'])->name('home.assignment.upload');
 
+    Route::get('/my-courses', function () {
+        return view('index');
+    });
+});
 Route::get('/profile', function () {
     return view('index');
 });
