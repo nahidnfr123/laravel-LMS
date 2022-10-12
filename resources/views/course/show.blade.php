@@ -27,14 +27,26 @@
                                     </span>
                                         <strong>{{$course->discounted_price}}</strong>
                                     </p>
-                                @else
+                                @elseif($course->price)
                                     <p>Tk. <strong>{{$course->discounted_price ?? $course->price}}</strong></p>
+                                @else
+                                    <p><strong class="text-success">Free</strong></p>
                                 @endif
 
                                 @if($course->subscription_status)
                                     <p><strong class="text-success">Active</strong></p>
                                 @else
-                                    <a href="{{route('home.course.enroll', $course->id)}}" class="btn btn-primary">Enroll</a>
+                                    @if($course->discounted_price || $course->price)
+                                        <button class="btn btn-primary btn-block" id="sslczPayBtn"
+                                                token="if you have any token validation"
+                                                postdata=""
+                                                order="If you already have the transaction generated for current order"
+                                                endpoint="{{ url('/pay-via-ajax') }}"> Pay Now
+                                        </button>
+                                    @else
+                                        <a href="{{route('home.course.enroll', $course->id)}}" class="btn btn-primary">Enroll</a>
+                                    @endif
+
                                 @endif
 
                             </div>
@@ -194,5 +206,30 @@
 @endsection
 
 @section('script')
+
+    <script>
+        const obj = {};
+        @if(auth()->check())
+            obj.cus_name = '{!! auth()->user()->name?:null !!}';
+        obj.cus_phone = $('#mobile').val();
+        obj.cus_email = '{!! auth()->user()->email?:null !!}';
+        obj.amount = '{!! $course->discounted_price ?? $course->price !!}'
+        obj.user_id = '{!! auth()->id()?:0 !!}'
+        obj.course_id = '{!! $course->id?:0 !!}'
+        @endif
+
+        $('#sslczPayBtn').prop('postdata', obj);
+
+        (function (window, document) {
+            const loader = function () {
+                const script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+                // script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR LIVE
+                script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR SANDBOX
+                tag.parentNode.insertBefore(script, tag);
+            };
+
+            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+        })(window, document);
+    </script>
 
 @stop

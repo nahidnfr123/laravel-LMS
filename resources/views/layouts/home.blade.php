@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="/home/css/custom.css">
 
     <!-- Modernizer for Portfolio -->
-    <script src="js/modernizer.js"></script>
+    <script src="/home/js/modernizer.js"></script>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -41,85 +41,6 @@
 
 </head>
 <body class="host_version">
-
-<!-- Modal -->
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header tit-up">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Customer Login</h4>
-            </div>
-            <div class="modal-body customer-box">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs">
-                    <li><a class="active" href="#Login" data-toggle="tab">Login</a></li>
-                    <li><a href="#Registration" data-toggle="tab">Registration</a></li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane active" id="Login">
-                        <form role="form" class="form-horizontal">
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input class="form-control" id="email1" placeholder="Name" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input class="form-control" id="exampleInputPassword1" placeholder="Email" type="email">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-light btn-radius btn-brd grd1">
-                                        Submit
-                                    </button>
-                                    <a class="for-pwd" href="/home/javascript:;">Forgot your password?</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane" id="Registration">
-                        <form role="form" class="form-horizontal">
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input class="form-control" placeholder="Name" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input class="form-control" id="email" placeholder="Email" type="email">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input class="form-control" id="mobile" placeholder="Mobile" type="email">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input class="form-control" id="password" placeholder="Password" type="password">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <button type="button" class="btn btn-light btn-radius btn-brd grd1">
-                                        Save &amp; Continue
-                                    </button>
-                                    <button type="button" class="btn btn-light btn-radius btn-brd grd1">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- LOADER -->
 <div id="preloader">
     <div class="loader-container">
@@ -144,19 +65,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbars-host">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home.courses') }}">Courses</a></li>
+                    <li class="nav-item {{ Request::is('/') ? 'active' : null }}"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                    <li class="nav-item {{ Request::is('courses') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.courses') }}">Courses</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Blog </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                            <a class="dropdown-item" href="blog.html">Blog </a>
-                            <a class="dropdown-item" href="blog-single.html">Blog single </a>
-                        </div>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="teachers.html">Teachers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    @if(auth()->check())
+                        <li class="nav-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <button type="submit" class="btn btn-secondary"
+                                        onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </button>
+                            </form>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="/login">Login</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -236,15 +164,17 @@
 <!-- ALL JS FILES -->
 <script src="/home/js/all.js"></script>
 <!-- ALL PLUGINS -->
-<script src="/home/js/custom.js"></script>
-<script src="/home/js/timeline.min.js"></script>
+<script src="/home/js/custom.js" defer></script>
+<script src="/home/js/timeline.min.js" defer></script>
 <script>
-    timeline(document.querySelectorAll('.timeline'), {
-        forceVerticalMode: 700,
-        mode: 'horizontal',
-        verticalStartPosition: 'left',
-        visibleItems: 4
-    });
+    /* timeline(document.querySelectorAll('.timeline'), {
+         forceVerticalMode: 200,
+         mode: 'horizontal',
+         verticalStartPosition: 'left',
+         visibleItems: 4
+     });*/
 </script>
+
+@yield('script')
 </body>
 </html>

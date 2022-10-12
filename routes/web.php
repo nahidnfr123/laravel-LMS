@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('home');
 
 Route::get('/courses', function () {
     $courses = \App\Models\Course::where('status', true)->get();
@@ -28,8 +30,8 @@ Route::get('/course/{id}', function ($id) {
 })->name('home.course');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/course/{id}/enroll', [\App\Http\Controllers\CourseController::class, 'enroll'])->name('home.course.enroll');
-    Route::post('/assignment/{id}/upload', [\App\Http\Controllers\AssignmentController::class, 'upload'])->name('home.assignment.upload');
+    Route::get('/course/{id}/enroll', [CourseController::class, 'enroll'])->name('home.course.enroll');
+    Route::post('/assignment/{id}/upload', [AssignmentController::class, 'upload'])->name('home.assignment.upload');
 
     Route::get('/my-courses', function () {
         return view('index');
@@ -51,5 +53,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+require __DIR__ . '/payment.php';
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

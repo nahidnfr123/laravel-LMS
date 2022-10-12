@@ -8,7 +8,7 @@
     /* ==============================================
     Fixed menu
     =============================================== */
-    
+
 	$(window).on('scroll', function () {
 		if ($(window).scrollTop() > 50) {
 			//$('.top-navbar').addClass('fixed-menu');
@@ -35,18 +35,18 @@
     /* ==============================================
 	Loader -->
 	=============================================== */
-	
+
 	$(window).load(function() {
         $("#preloader").on(500).fadeOut();
         $(".preloader").on(600).fadeOut("slow");
 		$('.loader-container').addClass('done');
-		$('.progress-br').addClass('done');	 
+		$('.progress-br').addClass('done');
     });
-	
+
 	/* ==============================================
-		Scroll to top  
+		Scroll to top
 	============================================== */
-		
+
 	if ($('#scroll-to-top').length) {
 		var scrollTrigger = 100, // px
 			backToTop = function () {
@@ -68,7 +68,7 @@
 			}, 700);
 		});
 	}
-	
+
     /* ==============================================
      Fun Facts -->
      =============================================== */
@@ -94,9 +94,9 @@
 	/* ==============================================
      Bootstrap Touch Slider -->
      =============================================== */
-	 
+
 	$('#carouselExampleControls').bsTouchSlider();
-	
+
     /* ==============================================
      Tooltip -->
      =============================================== */
@@ -109,7 +109,7 @@
     jQuery(document).ready(function() {
         $('#contactform').submit(function() {
             var action = $(this).attr('action');
-            $("#message").slideUp(750, function() {
+            $("#message").slideUp(200, function() {
                 $('#message').hide();
                 $('#submit')
                     .after('<img src="images/ajax-loader.gif" class="loader" />')
@@ -138,5 +138,5 @@
             return false;
         });
     });
-	
+
 })(jQuery);

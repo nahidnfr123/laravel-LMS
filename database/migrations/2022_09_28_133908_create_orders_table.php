@@ -16,14 +16,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->decimal('total')->nullable();
-            $table->decimal('discount')->nullable();
-            $table->string('coupon')->nullable();
-            $table->decimal('coupon_discount')->nullable();
-            $table->decimal('grand_total')->nullable();
-            $table->decimal('paid')->nullable();
+            $table->foreignId('course_id')->nullable()->constrained()->onDelete('set null');
+            $table->decimal('amount')->nullable();
             $table->string('status')->nullable();
-            $table->string('transaction_phone_no')->nullable();
+            $table->string('currency')->nullable();
             $table->string('transaction_id')->nullable();
             $table->timestamps();
         });
