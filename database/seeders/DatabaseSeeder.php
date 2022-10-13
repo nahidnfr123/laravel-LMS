@@ -72,9 +72,20 @@ class DatabaseSeeder extends Seeder
         LiveClass::create(['content_id' => $content5->id, 'start_time' => Carbon::now()->addDay(), 'end_time' => Carbon::now()->addDay()->addMinutes(60), 'link' => 'https://www.youtube.com/watch?v=J3nhis7d5Rs&list=PLFHz2csJcgk_mM2jEf7t8P678O_jz83on']);
         Pdf::create(['content_id' => $content6->id, 'link' => '/storage/uploads/assignments/obMMzPyB29pHWszdEM8rcrIoXZUpdMl4S01R6O8U.pdf']);
         Exam::create([
-            'content_id' => $content9->id,
+            'content_id' => $content7->id,
             'duration' => 20,
-            'description' => $content9->id,
+            'description' => 'Question Description',
+            'per_question_mark' => 1,
+            'negative_mark' => 0,
+            'pass_mark' => 10,
+            'result_publish_time' => Carbon::now()->addDays(10),
+            'start_time' => Carbon::now()->addDay(),
+            'end_time' => Carbon::now()->addDays(10),
+        ]);
+        Exam::create([
+            'content_id' => $content8->id,
+            'duration' => 20,
+            'description' => 'Question Description',
             'per_question_mark' => 1,
             'negative_mark' => 0,
             'pass_mark' => 10,
