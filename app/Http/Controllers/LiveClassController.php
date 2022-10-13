@@ -58,10 +58,12 @@ class LiveClassController extends Controller
         $allAttendedUsers = [];
         if (count($enrolledUsers->users)) {
             foreach ($enrolledUsers->users as $user) {
-                $allAttendedUsers[] = ['user_id' => $user->id, 'attended' => (bool)$liveClass->attendance->where('id', '=', $user->id)->first()];
+                $data = null;
+                $data['user'] = $user;
+                $data['attended'] = (bool)$liveClass->attendance->where('user_id', '=', $user->id)->first();
+                $allAttendedUsers[] = $data;
             }
         }
-        dd($enrolledUsers->users, $allAttendedUsers);
         return view('admin.course.content.live_class.index', compact('allAttendedUsers', 'content'));
     }
 

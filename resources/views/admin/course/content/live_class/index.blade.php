@@ -28,34 +28,16 @@
                         <tr>
                             <th>Course</th>
                             <th>Status</th>
-                            <th>Featured</th>
-                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($courses as $course)
+                        @foreach($allAttendedUsers as $allAttendedUser)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.course.show', $course->id) }}">
-                                        <img src="{{$course->photo}}" alt="" height="60" class="rounded-lg">
-                                        <div class="mt-1">
-                                            <strong>{{$course->title}}</strong>
-                                        </div>
-                                    </a>
+                                    <strong>{{$allAttendedUser['user']->name}}</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $course->status ? 'Active' : 'Inactive'}}</strong>
-                                </td>
-                                <td>
-                                    <strong>{{ $course->featured ? 'Featured' : 'Not Featured'}}</strong>
-                                </td>
-                                <td>
-                                    <form action="{{ route('admin.course.destroy', $course->id) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.course.edit', $course->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
-                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
-                                    </form>
+                                    <strong class="@if(!$allAttendedUser['attended']) text-danger @endif">{{ $allAttendedUser['attended'] ? 'Attended' : 'Absent'}}</strong>
                                 </td>
                             </tr>
                         @endforeach
