@@ -101,7 +101,7 @@
                                                                                     </div>
                                                                                     @if(auth()->check() && $course->subscription_status)
                                                                                         @php
-                                                                                            $user =$content->assignment->users->find(auth()->id())home
+                                                                                            $user =$content->assignment->users->find(auth()->id())
                                                                                         @endphp
                                                                                         @if(!empty($user) && $user->pivot->file)
                                                                                             <iframe src="{{$user->pivot->file}}" height="500" width="100%"></iframe>
@@ -178,7 +178,8 @@
                                                                             @endif
                                                                             @if($content->live_class)
                                                                                 @if(\Carbon\Carbon::now()->isBetween($content->live_class->start_time, $content->live_class->end_time))
-                                                                                    <a href="{{ $content->live_class->link }}" target="_blank" disabled="disabled" class="btn btn-sm btn-primary">Go To Link</a>
+                                                                                    <a href="{{route('home.attendance.store', ['live_class_id'=>$content->live_class->id])}}" target="_blank" disabled="disabled" class="btn btn-sm btn-primary">Go To Link</a>
+                                                                                    {{--                                                                                    <a href="{{ $content->live_class->link }}" target="_blank" disabled="disabled" class="btn btn-sm btn-primary">Go To Link</a>--}}
                                                                                 @else
                                                                                     <p class="text-danger">Link will appear on time.</p>
                                                                                 @endif

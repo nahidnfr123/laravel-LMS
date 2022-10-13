@@ -38,7 +38,7 @@
                                                     <h4>{{$user->id}} - {{$user->name}}</h4>
                                                     @if(!empty($user) && $user->pivot->file)
                                                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{$user->id}}">
-                                                            <i class="typcn typcn-file mr-2"></i> Show
+                                                            <i class="typcn typcn-file mr-2"></i> View Submission
                                                         </button>
 
                                                         <!-- Modal -->
@@ -72,9 +72,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                @endif
-                                @endif
                             </div>
+                        @else
+                            <div class="alert alert-info" role="alert">
+                               No submissions yet!
+                            </div>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>

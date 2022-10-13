@@ -111,7 +111,6 @@
                                                                                 End Time: <strong>{{ \Carbon\Carbon::parse($content->assignment->end_time)  }}</strong>
                                                                             </div>
                                                                         </div>
-                                                                        {{ $content->assignment->users }}
                                                                     </div>
                                                                 @endif
                                                                 @if($content->exam)
