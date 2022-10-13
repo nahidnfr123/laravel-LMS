@@ -15,4 +15,8 @@ class LiveClass extends Model
     {
         return $this->belongsTo(Content::class);
     }
+    public function attendance(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

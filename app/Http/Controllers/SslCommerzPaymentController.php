@@ -172,7 +172,7 @@ class SslCommerzPaymentController extends Controller
         #Check order status in order tabel against the transaction id or order id.
         $order_detials = DB::table('orders')
             ->where('transaction_id', $tran_id)->first();
-        $user = User::findOrFail($order_detials->course_id);
+        $user = User::findOrFail($order_detials->user_id);
         Auth::login($user);
 
         if ($order_detials->status == 'Pending') {
@@ -189,6 +189,7 @@ class SslCommerzPaymentController extends Controller
                     ->update(['status' => 'Processing']);
 
                 $course = \App\Models\Course::findOrFail($order_detials->course_id);
+                $course->users()->detach(auth()->id());
                 $course->users()->attach(auth()->id());
                 return redirect()->route('home.course', $order_detials->course_id)->with('success-transaction', 'Transaction successful.');
             } else {
@@ -207,6 +208,7 @@ class SslCommerzPaymentController extends Controller
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
              */
             $course = \App\Models\Course::findOrFail($order_detials->course_id);
+            $course->users()->detach(auth()->id());
             $course->users()->attach(auth()->id());
             return redirect()->route('home.course', $order_detials->course_id)->with('success-transaction', 'Transaction successful.');
         } else {

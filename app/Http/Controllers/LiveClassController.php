@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLiveClassRequest;
 use App\Http\Requests\UpdateLiveClassRequest;
+use App\Models\Course;
 use App\Models\LiveClass;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class LiveClassController extends Controller
 {
@@ -31,7 +35,7 @@ class LiveClassController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreLiveClassRequest  $request
+     * @param \App\Http\Requests\StoreLiveClassRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreLiveClassRequest $request)
@@ -42,18 +46,29 @@ class LiveClassController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LiveClass  $liveClass
-     * @return \Illuminate\Http\Response
+     * @param LiveClass $liveClass
+     * @return Application|Factory|View
      */
-    public function show(LiveClass $liveClass)
+    public function show(LiveClass $liveClass): View|Factory|Application
     {
-        //
+        $content = $liveClass->content;
+        $attendedUsers = $liveClass->attendance;
+        $enrolledUsers = Course::findOrFail($liveClass->content->section->course->id);
+
+        $allAttendedUsers = [];
+        if (count($enrolledUsers->users)) {
+            foreach ($enrolledUsers->users as $user) {
+                $allAttendedUsers[] = ['user_id' => $user->id, 'attended' => (bool)$liveClass->attendance->where('id', '=', $user->id)->first()];
+            }
+        }
+        dd($enrolledUsers->users, $allAttendedUsers);
+        return view('admin.course.content.live_class.index', compact('allAttendedUsers', 'content'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LiveClass  $liveClass
+     * @param LiveClass $liveClass
      * @return \Illuminate\Http\Response
      */
     public function edit(LiveClass $liveClass)
@@ -64,8 +79,8 @@ class LiveClassController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateLiveClassRequest  $request
-     * @param  \App\Models\LiveClass  $liveClass
+     * @param \App\Http\Requests\UpdateLiveClassRequest $request
+     * @param LiveClass $liveClass
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateLiveClassRequest $request, LiveClass $liveClass)
@@ -76,7 +91,7 @@ class LiveClassController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LiveClass  $liveClass
+     * @param LiveClass $liveClass
      * @return \Illuminate\Http\Response
      */
     public function destroy(LiveClass $liveClass)

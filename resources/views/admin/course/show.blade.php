@@ -84,6 +84,11 @@
                                                                                 Submissions
                                                                             </a>
                                                                         @endif
+                                                                        @if($content->live_class)
+                                                                            <a href="{{route('admin.live_class.show', $content->live_class->id)}}" class="btn btn-xs btn-behance rounded-lg mr-1">
+                                                                                Attendance
+                                                                            </a>
+                                                                        @endif
                                                                         <a href="{{route('admin.content.edit', $content->id)}}" class="btn btn-xs btn-primary rounded-lg mr-1">
                                                                             <i class="typcn typcn-pencil mr-2"></i>Edit
                                                                         </a>
