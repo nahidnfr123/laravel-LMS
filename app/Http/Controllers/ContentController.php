@@ -53,6 +53,12 @@ class ContentController extends Controller
     {
         DB::beginTransaction();
         try {
+            if (!$request->has('paid')) {
+                $request['paid'] = 0;
+            }
+            if (!$request->has('status')) {
+                $request['status'] = 0;
+            }
             $data = $request->only('section_id', 'title', 'available_at', 'type', 'paid', 'status');
             $content = Content::create($data);
             $request['content_id'] = $content->id;
@@ -119,6 +125,12 @@ class ContentController extends Controller
     {
         DB::beginTransaction();
         try {
+            if (!$request->has('paid')) {
+                $request['paid'] = 0;
+            }
+            if (!$request->has('status')) {
+                $request['status'] = 0;
+            }
             $data = $request->only('section_id', 'title', 'available_at', 'type', 'paid', 'status');
             $content->update($data);
             $request['content_id'] = $content->id;

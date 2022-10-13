@@ -83,111 +83,127 @@
                                                                         </button>
                                                                     </div>
                                                                 </div>
-                                                                <div id="content-collapse{{$content->id}}" class="accordion-collapse collapse" aria-labelledby="content-heading{{$content->id}}">
-                                                                    <div class="accordion-body">
-                                                                        @if($content->assignment)
-                                                                            <div>
-                                                                                <h3>Question: </h3>
-                                                                                {!!  $content->assignment->question !!}
+                                                                @if(($content->paid && $course->subscription_status) || !$content->paid)
+                                                                    <div id="content-collapse{{$content->id}}" class="accordion-collapse collapse" aria-labelledby="content-heading{{$content->id}}">
+                                                                        <div class="accordion-body">
+                                                                            @if($content->assignment)
+                                                                                <div>
+                                                                                    <h3>Question: </h3>
+                                                                                    {!!  $content->assignment->question !!}
 
-                                                                                <div class="mt-1">
-                                                                                    <div class="badge rounded-pill text-bg-primary">
-                                                                                        Start Time: <strong>{{ \Carbon\Carbon::parse($content->assignment->start_time)  }}</strong>
-                                                                                    </div>
-                                                                                    <div class="badge rounded-pill text-bg-primary">
-                                                                                        End Time: <strong>{{ \Carbon\Carbon::parse($content->assignment->end_time)  }}</strong>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                @if($course->subscription_status)
-                                                                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                                        <i class="typcn typcn-file mr-2"></i> Upload Assignment
-                                                                                    </button>
-
-                                                                                    <!-- Modal -->
-                                                                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                                        <div class="modal-dialog">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Assignment</h1>
-                                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                                                </div>
-                                                                                                {{ $content->assignment->users}}
-                                                                                                <form action="{{ route('home.assignment.upload', $content->assignment->id) }}" method="post" enctype="multipart/form-data">
-                                                                                                    @csrf
-                                                                                                    @method('POST')
-                                                                                                    <div class="modal-body">
-                                                                                                        <input type="hidden" class="form-control" name="assignment_id" value="{{$content->assignment->id}}">
-                                                                                                        <input type="hidden" class="form-control" name="content_id" value="{{$content->id}}">
-                                                                                                        <input type="file" class="form-control" name="file">
-                                                                                                    </div>
-                                                                                                    <div class="modal-footer">
-                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                                                                                    </div>
-                                                                                                </form>
-                                                                                            </div>
+                                                                                    <div class="mt-1">
+                                                                                        <div class="badge rounded-pill text-bg-primary">
+                                                                                            Start Time: <strong>{{ \Carbon\Carbon::parse($content->assignment->start_time)  }}</strong>
+                                                                                        </div>
+                                                                                        <div class="badge rounded-pill text-bg-primary">
+                                                                                            End Time: <strong>{{ \Carbon\Carbon::parse($content->assignment->end_time)  }}</strong>
                                                                                         </div>
                                                                                     </div>
-                                                                                @endif
-                                                                            </div>
-                                                                        @endif
-                                                                        @if($content->exam)
-                                                                            <div>
-                                                                                <div>Duration: {{ $content->exam->duration }}</div>
-                                                                                <div>per_question_mark: {!! $content->exam->per_question_mark !!}</div>
-                                                                                <div>negative_mark: {!! $content->exam->negative_mark !!}</div>
-                                                                                <div>pass_mark: {!! $content->exam->pass_mark !!}</div>
+                                                                                    @if(auth()->check() && $course->subscription_status)
+                                                                                        @php
+                                                                                            $user =$content->assignment->users->find(auth()->id())
+                                                                                        @endphp
+                                                                                        @if(!empty($user) && $user->pivot->file)
+                                                                                            <iframe src="{{$user->pivot->file}}" height="500" width="100%"></iframe>
+                                                                                        @endif
+                                                                                        @if(\Carbon\Carbon::now()->isBetween($content->assignment->start_time, $content->assignment->end_time))
+                                                                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                                                <i class="typcn typcn-file mr-2"></i> Upload Assignment
+                                                                                            </button>
 
-                                                                                <div class="my-2">
-                                                                                    <div><strong>Details:</strong></div>
-                                                                                    {!!  $content->exam->description !!}
+                                                                                            <!-- Modal -->
+                                                                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                                <div class="modal-dialog">
+                                                                                                    <div class="modal-content">
+                                                                                                        <div class="modal-header">
+                                                                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Assignment</h1>
+                                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                        </div>
+                                                                                                        <form action="{{ route('home.assignment.upload', $content->assignment->id) }}" method="post" enctype="multipart/form-data">
+                                                                                                            @csrf
+                                                                                                            @method('POST')
+                                                                                                            <div class="modal-body">
+                                                                                                                <input type="hidden" class="form-control" name="assignment_id" value="{{$content->assignment->id}}">
+                                                                                                                <input type="hidden" class="form-control" name="content_id" value="{{$content->id}}">
+                                                                                                                <input type="file" class="form-control" name="file">
+                                                                                                            </div>
+                                                                                                            <div class="modal-footer">
+                                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                                                                            </div>
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        @else
+                                                                                            <p class="text-danger">Upload option is available only between your start and end time.</p>
+                                                                                        @endif
+                                                                                    @endif
                                                                                 </div>
+                                                                            @endif
+                                                                            @if($content->exam)
+                                                                                <div>
+                                                                                    <div>Duration: {{ $content->exam->duration }}</div>
+                                                                                    <div>per_question_mark: {!! $content->exam->per_question_mark !!}</div>
+                                                                                    <div>negative_mark: {!! $content->exam->negative_mark !!}</div>
+                                                                                    <div>pass_mark: {!! $content->exam->pass_mark !!}</div>
 
+                                                                                    <div class="my-2">
+                                                                                        <div><strong>Details:</strong></div>
+                                                                                        {!!  $content->exam->description !!}
+                                                                                    </div>
+
+                                                                                    <div class="mt-1">
+                                                                                        <div class="badge rounded-pill text-bg-primary">
+                                                                                            Start Time: <strong>{{ \Carbon\Carbon::parse($content->exam->start_time)  }}</strong>
+                                                                                        </div>
+                                                                                        <div class="badge rounded-pill text-bg-primary">
+                                                                                            End Time: <strong>{{ \Carbon\Carbon::parse($content->exam->end_time)  }}</strong>
+                                                                                        </div>
+                                                                                        <div class="badge rounded-pill text-bg-primary">
+                                                                                            Result Time: <strong>{{ \Carbon\Carbon::parse($content->exam->result_publish_time)  }}</strong>
+                                                                                        </div>
+                                                                                    </div>
+
+
+                                                                                </div>
+                                                                            @endif
+                                                                            @if($content->recorded_class)
+                                                                                <iframe
+                                                                                    width="560"
+                                                                                    height="315"
+                                                                                    src="{{ $content->recorded_class->link }}"
+                                                                                    title="YouTube video player"
+                                                                                    frameborder="0"
+                                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                                    allowfullscreen></iframe>
+                                                                            @endif
+                                                                            @if($content->live_class)
+                                                                                @if(\Carbon\Carbon::now()->isBetween($content->live_class->start_time, $content->live_class->end_time))
+                                                                                    <a href="{{ $content->live_class->link }}" target="_blank" disabled="disabled" class="btn btn-sm btn-primary">Go To Link</a>
+                                                                                @else
+                                                                                    <p class="text-danger">Link will appear on time.</p>
+                                                                                @endif
                                                                                 <div class="mt-1">
                                                                                     <div class="badge rounded-pill text-bg-primary">
-                                                                                        Start Time: <strong>{{ \Carbon\Carbon::parse($content->exam->start_time)  }}</strong>
+                                                                                        Start Time: <strong>{{ \Carbon\Carbon::parse($content->live_class->start_time)  }}</strong>
                                                                                     </div>
                                                                                     <div class="badge rounded-pill text-bg-primary">
-                                                                                        End Time: <strong>{{ \Carbon\Carbon::parse($content->exam->end_time)  }}</strong>
-                                                                                    </div>
-                                                                                    <div class="badge rounded-pill text-bg-primary">
-                                                                                        Result Time: <strong>{{ \Carbon\Carbon::parse($content->exam->result_publish_time)  }}</strong>
+                                                                                        End Time: <strong>{{ \Carbon\Carbon::parse($content->live_class->end_time)  }}</strong>
                                                                                     </div>
                                                                                 </div>
-
-
-                                                                            </div>
-                                                                        @endif
-                                                                        @if($content->recorded_class)
-                                                                            <iframe
-                                                                                width="560"
-                                                                                height="315"
-                                                                                src="{{ $content->recorded_class->link }}"
-                                                                                title="YouTube video player"
-                                                                                frameborder="0"
-                                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                                allowfullscreen></iframe>
-                                                                        @endif
-                                                                        @if($content->live_class)
-                                                                            <a href="{{ $content->live_class->link }}" target="_blank" class="btn btn-sm btn-primary">Go To Link</a>
-                                                                            <div class="mt-1">
-                                                                                <div class="badge rounded-pill text-bg-primary">
-                                                                                    Start Time: <strong>{{ \Carbon\Carbon::parse($content->live_class->start_time)  }}</strong>
-                                                                                </div>
-                                                                                <div class="badge rounded-pill text-bg-primary">
-                                                                                    End Time: <strong>{{ \Carbon\Carbon::parse($content->live_class->end_time)  }}</strong>
-                                                                                </div>
-                                                                            </div>
-                                                                        @endif
-                                                                        @if($content->note)
-                                                                            {!! $content->note->note !!}
-                                                                        @endif
-                                                                        @if($content->pdf)
-                                                                            {{ $content->pdf }}
-                                                                        @endif
+                                                                            @endif
+                                                                            @if($content->note)
+                                                                                {!! $content->note->note !!}
+                                                                            @endif
+                                                                            @if($content->pdf)
+                                                                                @if($content->pdf->link)
+                                                                                    <iframe src="{{$content->pdf->link}}" height="500" width="100%"></iframe>
+                                                                                @endif
+                                                                            @endif
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                @endif
                                                             @endforeach
                                                         </div>
                                                     @endif
