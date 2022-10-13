@@ -101,7 +101,7 @@
                                                                                     </div>
                                                                                     @if(auth()->check() && $course->subscription_status)
                                                                                         @php
-                                                                                            $user =$content->assignment->users->find(auth()->id())
+                                                                                            $user =$content->assignment->users->find(auth()->id())home
                                                                                         @endphp
                                                                                         @if(!empty($user) && $user->pivot->file)
                                                                                             <iframe src="{{$user->pivot->file}}" height="500" width="100%"></iframe>
@@ -164,8 +164,6 @@
                                                                                             Result Time: <strong>{{ \Carbon\Carbon::parse($content->exam->result_publish_time)  }}</strong>
                                                                                         </div>
                                                                                     </div>
-
-
                                                                                 </div>
                                                                             @endif
                                                                             @if($content->recorded_class)

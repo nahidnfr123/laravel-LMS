@@ -18,6 +18,6 @@ class Assignment extends Model
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withPivot('file');
+        return $this->belongsToMany(User::class)->withPivot('file', 'marks');
     }
 }

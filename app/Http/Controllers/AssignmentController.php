@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAssignmentRequest;
 use App\Http\Requests\UpdateAssignmentRequest;
 use App\Models\Assignment;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -69,11 +72,12 @@ class AssignmentController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Assignment $assignment
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function show(Assignment $assignment)
+    public function show(Assignment $assignment): View|Factory|Application
     {
-        //
+        $content = $assignment->content;
+        return view('admin.course.content.assignment.index', compact('content'));
     }
 
     /**
@@ -92,11 +96,12 @@ class AssignmentController extends Controller
      *
      * @param \App\Http\Requests\UpdateAssignmentRequest $request
      * @param \App\Models\Assignment $assignment
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(UpdateAssignmentRequest $request, Assignment $assignment)
+    public function update(UpdateAssignmentRequest $request, Assignment $assignment): RedirectResponse
     {
-        //
+        $assignment->users()->updateExistingPivot($request->user_id, ['marks' => $request->marks]);
+        return redirect()->back();
     }
 
     /**

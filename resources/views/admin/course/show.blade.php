@@ -70,13 +70,18 @@
                                                                     {{ ucfirst($content->type) }}: {{ $content->title }}
                                                                 </button>
 
-                                                                <form action="{{ route('admin.content.destroy', $content->id) }}" class="d-flex mt-2 ml-2" method="POST" style="width: 260px">
+                                                                <form action="{{ route('admin.content.destroy', $content->id) }}" class="d-flex mt-2 ml-2" method="POST" style="width: 300px">
                                                                     {{ csrf_field() }}
                                                                     {{ method_field('DELETE') }}
                                                                     <div>
                                                                         @if($content->exam)
                                                                             <a href="{{route('admin.exam.index', ['content_id'=> $content->id])}}" class="btn btn-xs btn-behance rounded-lg mr-1">
                                                                                 Mcq
+                                                                            </a>
+                                                                        @endif
+                                                                        @if($content->assignment)
+                                                                            <a href="{{route('admin.assignment.show', $content->assignment->id)}}" class="btn btn-xs btn-behance rounded-lg mr-1">
+                                                                                Submissions
                                                                             </a>
                                                                         @endif
                                                                         <a href="{{route('admin.content.edit', $content->id)}}" class="btn btn-xs btn-primary rounded-lg mr-1">
@@ -132,8 +137,6 @@
                                                                                 Result Time: <strong>{{ \Carbon\Carbon::parse($content->exam->result_publish_time)  }}</strong>
                                                                             </div>
                                                                         </div>
-
-
                                                                     </div>
                                                                 @endif
                                                                 @if($content->recorded_class)
