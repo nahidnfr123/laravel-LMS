@@ -68,7 +68,13 @@ class ContentController extends Controller
             } else if ($content->type === 'note') {
                 Note::create($request->only('content_id', 'note'));
             } else if ($content->type === 'pdf') {
-                Pdf::create($request->only('content_id', 'file'));
+                if ($request->hasFile('file')) {
+                    $file = $request->file;
+                    $path = $file->store('public/uploads/assignments');
+                    $fileUploaded = str_replace('public', '/storage', $path) ?? $path;
+                    $request['link'] = $fileUploaded;
+                }
+                Pdf::create($request->only('content_id', 'link'));
             }
             DB::commit();
             return redirect()->back();
@@ -128,7 +134,13 @@ class ContentController extends Controller
             } else if ($content->type === 'note') {
                 $content->note()->update($request->only('content_id', 'note'));
             } else if ($content->type === 'pdf') {
-                $content->pdf()->update($request->only('content_id', 'file'));
+                if ($request->hasFile('file')) {
+                    $file = $request->file;
+                    $path = $file->store('public/uploads/assignments');
+                    $fileUploaded = str_replace('public', '/storage', $path) ?? $path;
+                    $request['link'] = $fileUploaded;
+                }
+                $content->pdf()->update($request->only('content_id', 'link'));
             }
             DB::commit();
             return redirect()->back();
