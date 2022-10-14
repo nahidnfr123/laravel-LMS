@@ -201,15 +201,29 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Courses" aria-expanded="false" aria-controls="ui-basic">
                         <i class="typcn typcn-briefcase menu-icon"></i>
                         <span class="menu-title">Manage Courses</span>
                         <i class="typcn typcn-chevron-right menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="ui-basic">
+                    <div class="collapse" id="ui-Courses">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="">Course Categories</a></li>
+                            {{--                            <li class="nav-item"><a class="nav-link" href="">Course Categories</a></li>--}}
                             <li class="nav-item"><a class="nav-link" href="{{ route('admin.course.index') }}">Courses</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Community" aria-expanded="false" aria-controls="ui-basic">
+                        <i class="typcn typcn-briefcase menu-icon"></i>
+                        <span class="menu-title">Manage Community</span>
+                        <i class="typcn typcn-chevron-right menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-Community">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_category.index') }}">Community Category</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_tags.index') }}">Community Tag</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_post.index') }}">Community Post</a></li>
                         </ul>
                     </div>
                 </li>

@@ -25,7 +25,7 @@ class StoreCommunityCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required',
+            'description' => '',
             'photo' => 'nullable|sometimes|image|mimes:jpg,png,jpeg,gif,svg|max:4048',
             'active' => '',
             'parent_id' => '',

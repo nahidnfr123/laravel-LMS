@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('community_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->nullable()->constrained('community_categories')->onDelete('cascade');
+//            $table->foreignId('parent_id')->nullable()->constrained('community_categories')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->string('photo')->nullable();
             $table->text('description')->nullable();

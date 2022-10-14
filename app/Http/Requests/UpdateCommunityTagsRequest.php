@@ -13,7 +13,7 @@ class UpdateCommunityTagsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateCommunityTagsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'photo' => 'nullable|sometimes|image|mimes:jpg,png,jpeg,gif,svg|max:4048',
+            'active' => '',
         ];
     }
 }

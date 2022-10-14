@@ -25,12 +25,12 @@ class CommunityCategoryController extends Controller
     {
         $prefix = $request->route()->getPrefix();
         if ($prefix === 'admin/') {
-            $communityCategory = CommunityCategory::all();
-            return view('admin.community.category.index', compact('communityCategory'));
+            $communityCategories = CommunityCategory::all();
+            return view('admin.community.category.index', compact('communityCategories'));
         }
 
-        $communityCategory = CommunityCategory::where('status', true)->get();
-        return view('community.index', compact('communityCategory'));
+        $communityCategories = CommunityCategory::where('status', true)->get();
+        return view('community.index', compact('communityCategories'));
     }
 
     /**
@@ -59,18 +59,18 @@ class CommunityCategoryController extends Controller
             $data['photo'] = $this->photoUploader($request->file('photo'));
         }
         CommunityCategory::create($data);
-        return redirect()->route('admin.community.category.index');
+        return redirect()->route('admin.community_category.index');
     }
 
     /**
      * Display the specified resource.
      *
      * @param CommunityCategory $communityCategory
-     * @return Response
+     * @return Application|Factory|View
      */
-    public function show(CommunityCategory $communityCategory)
+    public function show(CommunityCategory $communityCategory): View|Factory|Application
     {
-        //
+        return view('admin.community.category.show', compact('communityCategory'));
     }
 
     /**
@@ -101,7 +101,7 @@ class CommunityCategoryController extends Controller
             $data['photo'] = $path;
         }
         $communityCategory->update($data);
-        return redirect()->route('admin.community.category.index');
+        return redirect()->route('admin.community_category.index');
     }
 
     /**
