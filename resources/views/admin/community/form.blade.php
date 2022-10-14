@@ -99,6 +99,32 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-6 mt-4">
+                                <label for="Category">Category</label>
+                                <select class="form-select" id="Category" aria-label="multiple select example" name="community_category_id">
+                                    <option selected></option>
+                                    @foreach($communityCategories as $communityCategory)
+                                        <option
+                                            value="{{$communityCategory->id}}"
+                                            @if(old('community_category_id', $communityPost->community_category_id)) selected @endif
+                                        >
+                                            {{$communityCategory->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4">
+                                <label for="tags">Tags</label>
+                                <select class="form-select" id="tags" multiple aria-label="multiple select example" name="community_tag_ids">
+                                    @foreach($communityTags as $communityTag)
+                                        <option
+                                            value="{{$communityTag->id}}"
+                                        >
+                                            {{$communityTag->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                         <button class="btn btn-light">Cancel</button>

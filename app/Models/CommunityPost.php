@@ -15,4 +15,9 @@ class CommunityPost extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function communityCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CommunityCategory::class);
+    }
 }

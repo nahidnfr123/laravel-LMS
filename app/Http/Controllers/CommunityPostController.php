@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommunityPostRequest;
 use App\Http\Requests\UpdateCommunityPostRequest;
+use App\Models\CommunityCategory;
 use App\Models\CommunityPost;
+use App\Models\CommunityTags;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -40,8 +42,10 @@ class CommunityPostController extends Controller
     public function create(): View|Factory|Application
     {
         $communityPost = new CommunityPost();
+        $communityCategories = CommunityCategory::all();
+        $communityTags = CommunityTags::all();
         $action = URL::route('admin.community_post.store');
-        return view('admin.community.form', compact('communityPost', 'action'));
+        return view('admin.community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
     }
 
     /**
@@ -54,6 +58,7 @@ class CommunityPostController extends Controller
     {
         $user = auth()->user();
         $data = $request->validated();
+        dd($data);
         unset($data['photo']);
         $data['user_id'] = $user->id;
         if ($user && $user->role === 'admin') {
@@ -85,8 +90,10 @@ class CommunityPostController extends Controller
      */
     public function edit(CommunityPost $communityPost): View|Factory|Application
     {
+        $communityCategories = CommunityCategory::all();
+        $communityTags = CommunityTags::all();
         $action = URL::route('admin.community_post.update', $communityPost->id);
-        return view('admin.community.form', compact('communityPost', 'action'));
+        return view('admin.community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
     }
 
     /**

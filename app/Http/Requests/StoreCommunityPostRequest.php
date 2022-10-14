@@ -25,11 +25,13 @@ class StoreCommunityPostRequest extends FormRequest
     {
         return [
             'title' => 'required',
+            'community_category_id' => 'required',
             'photo' => 'nullable|sometimes|image|mimes:jpg,png,jpeg,gif,svg|max:4048',
             'description' => 'required',
             'publish_at' => '',
             'is_published' => '',
             'is_public' => '',
+            'community_tag_ids' => '',
         ];
     }
 }

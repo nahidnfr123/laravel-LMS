@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Assignment;
+use App\Models\CommunityCategory;
+use App\Models\CommunityTags;
 use App\Models\Content;
 use App\Models\Course;
 use App\Models\Exam;
@@ -112,5 +114,13 @@ class DatabaseSeeder extends Seeder
         Section::create(['course_id' => $course2->id, 'title' => 'Chapter 3']);
 
 
+        CommunityCategory::create(['name' => 'Category 1', 'description' => 'Category 1', 'active' => true,]);
+        CommunityCategory::create(['name' => 'Category 2', 'description' => 'Category 2', 'active' => true,]);
+        CommunityCategory::create(['name' => 'Category 3', 'description' => 'Category 3', 'active' => true,]);
+
+        CommunityTags::create(['name' => 'Tag 1', 'active' => true,]);
+        CommunityTags::create(['name' => 'Tag 2', 'active' => true,]);
+        CommunityTags::create(['name' => 'Tag 3', 'active' => true,]);
+        CommunityTags::create(['name' => 'Tag 4', 'active' => true,]);
     }
 }

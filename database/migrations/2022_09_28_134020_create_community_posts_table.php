@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');
-//            $table->foreignId('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreignId('community_category_id')->nullable()->constrained()->onDelete('set null');
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('photo')->nullable();

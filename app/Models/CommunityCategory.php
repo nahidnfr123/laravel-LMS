@@ -10,4 +10,9 @@ class CommunityCategory extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function communityPosts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CommunityPost::class);
+    }
 }
