@@ -20,4 +20,9 @@ class CommunityPost extends Model
     {
         return $this->belongsTo(CommunityCategory::class);
     }
+
+    public function communityTags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(CommunityTags::class);
+    }
 }

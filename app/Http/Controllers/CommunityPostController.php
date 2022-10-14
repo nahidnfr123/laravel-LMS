@@ -58,8 +58,7 @@ class CommunityPostController extends Controller
     {
         $user = auth()->user();
         $data = $request->validated();
-        dd($data);
-        unset($data['photo']);
+        unset($data['photo'], $data['community_tag_ids']);
         $data['user_id'] = $user->id;
         if ($user && $user->role === 'admin') {
             $data['approved_by'] = $user->id;
@@ -67,7 +66,12 @@ class CommunityPostController extends Controller
         if ($request->hasFile('photo')) {
             $data['photo'] = $this->photoUploader($request->file('photo'));
         }
-        CommunityPost::create($data);
+        $communityPost = CommunityPost::create($data);
+        if ($request['community_tag_ids'] && count($request['community_tag_ids'])) {
+            foreach ($request['community_tag_ids'] as $id) {
+                $communityPost->communityTags()->attach($id);
+            }
+        }
         return redirect()->route('admin.community_post.index');
     }
 
@@ -123,6 +127,11 @@ class CommunityPostController extends Controller
             $data['photo'] = $path;
         }
         $communityPost->update($data);
+        if ($data['community_tag_ids'] && count($data['community_tag_ids'])) {
+            foreach ($data['community_tag_ids'] as $id) {
+                $communityPost->communityTags()->attach($id);
+            }
+        }
         return redirect()->route('admin.community_post.index');
     }
 

@@ -115,10 +115,11 @@
                             </div>
                             <div class="col-12 col-sm-6 mt-4">
                                 <label for="tags">Tags</label>
-                                <select class="form-select" id="tags" multiple aria-label="multiple select example" name="community_tag_ids">
+                                <select class="form-select" id="tags" multiple aria-label="multiple select example" name="community_tag_ids[]">
                                     @foreach($communityTags as $communityTag)
                                         <option
                                             value="{{$communityTag->id}}"
+                                            {{is_array($communityPost->communityTags->pluck('id')->toArray()) && in_array($communityTag->id, $communityPost->communityTags->pluck('id')->toArray(), false) ? 'selected' : '' }}
                                         >
                                             {{$communityTag->name}}
                                         </option>
@@ -127,7 +128,6 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                        <button class="btn btn-light">Cancel</button>
                     </form>
                 </div>
             </div>
