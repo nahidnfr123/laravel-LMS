@@ -5,90 +5,129 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommunityPostRequest;
 use App\Http\Requests\UpdateCommunityPostRequest;
 use App\Models\CommunityPost;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class CommunityPostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param Request $request
+     * @return Application|Factory|View
      */
-    public function index(Request $request)
+    public function index(Request $request): View|Factory|Application
     {
         $prefix = $request->route()->getPrefix();
         if ($prefix === 'admin/') {
-            $communityPost = CommunityPost::all();
-            return view('admin.community.index', compact('communityPost'));
+            $communityPosts = CommunityPost::all();
+            return view('admin.community.index', compact('communityPosts'));
         }
 
-        $communityPost = CommunityPost::where('is_published', true)->where('is_public', true)->get();
-        return view('community.index', compact('communityPost'));
+        $communityPosts = CommunityPost::where('is_published', true)->where('is_public', true)->get();
+        return view('community.index', compact('communityPosts'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): View|Factory|Application
     {
-        //
+        $communityPost = new CommunityPost();
+        $action = URL::route('admin.community_post.store');
+        return view('admin.community.form', compact('communityPost', 'action'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCommunityPostRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreCommunityPostRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreCommunityPostRequest $request)
+    public function store(StoreCommunityPostRequest $request): RedirectResponse
     {
-        //
+        $user = auth()->user();
+        $data = $request->validated();
+        unset($data['photo']);
+        $data['user_id'] = $user->id;
+        if ($user && $user->role === 'admin') {
+            $data['approved_by'] = $user->id;
+        }
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $this->photoUploader($request->file('photo'));
+        }
+        CommunityPost::create($data);
+        return redirect()->route('admin.community_post.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CommunityPost  $communityPost
-     * @return \Illuminate\Http\Response
+     * @param CommunityPost $communityPost
+     * @return Application|Factory|View
      */
-    public function show(CommunityPost $communityPost)
+    public function show(CommunityPost $communityPost): View|Factory|Application
     {
-        //
+        return view('admin.community.show', compact('communityPost'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CommunityPost  $communityPost
-     * @return \Illuminate\Http\Response
+     * @param CommunityPost $communityPost
+     * @return Application|Factory|View
      */
-    public function edit(CommunityPost $communityPost)
+    public function edit(CommunityPost $communityPost): View|Factory|Application
     {
-        //
+        $action = URL::route('admin.community_post.update', $communityPost->id);
+        return view('admin.community.form', compact('communityPost', 'action'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCommunityPostRequest  $request
-     * @param  \App\Models\CommunityPost  $communityPost
-     * @return \Illuminate\Http\Response
+     * @param UpdateCommunityPostRequest $request
+     * @param CommunityPost $communityPost
+     * @return RedirectResponse
      */
-    public function update(UpdateCommunityPostRequest $request, CommunityPost $communityPost)
+    public function update(UpdateCommunityPostRequest $request, CommunityPost $communityPost): RedirectResponse
     {
-        //
+        $user = auth()->user();
+        $data = $request->validated();
+        if (!$request->has('is_published')) {
+            $data['is_published'] = false;
+        }
+        if (!$request->has('is_public')) {
+            $data['is_public'] = false;
+        }
+        unset($data['photo']);
+        $data['user_id'] = $user->id;
+        if ($user && $user->role === 'admin') {
+            $data['approved_by'] = $user->id;
+        }
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('public/uploads/img');
+            $data['photo'] = $path;
+        }
+        $communityPost->update($data);
+        return redirect()->route('admin.community_post.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CommunityPost  $communityPost
-     * @return \Illuminate\Http\Response
+     * @param CommunityPost $communityPost
+     * @return RedirectResponse
      */
-    public function destroy(CommunityPost $communityPost)
+    public function destroy(CommunityPost $communityPost): RedirectResponse
     {
-        //
+        $communityPost->delete();
+        return redirect()->back();
     }
 }

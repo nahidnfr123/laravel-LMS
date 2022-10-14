@@ -13,7 +13,7 @@ class StoreCommunityPostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreCommunityPostRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'photo' => 'nullable|sometimes|image|mimes:jpg,png,jpeg,gif,svg|max:4048',
+            'description' => 'required',
+            'publish_at' => '',
+            'is_published' => '',
+            'is_public' => '',
         ];
     }
 }

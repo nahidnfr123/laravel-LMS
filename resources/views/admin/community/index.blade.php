@@ -7,12 +7,12 @@
 @section('content')
     <div class="row">
         <div class="col-sm-6">
-            <h3 class="mb-0 font-weight-bold">Courses</h3>
+            <h3 class="mb-0 font-weight-bold">Community Post</h3>
             <p></p>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{ route('admin.course.create') }}" class="btn btn-sm bg-white btn-icon-text border">
+                <a href="{{ route('admin.community_post.create') }}" class="btn btn-sm bg-white btn-icon-text border">
                     <i class="typcn typcn-plus mr-2"></i>Add
                 </a>
             </div>
@@ -27,33 +27,41 @@
                         <thead>
                         <tr>
                             <th>Course</th>
-                            <th>Status</th>
-                            <th>Featured</th>
+                            <th>User</th>
+                            <th>Publish at</th>
+                            <th>Is Published</th>
+                            <th>Is Public</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($courses as $course)
+                        @foreach($communityPosts as $post)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.course.show', $course->id) }}">
-                                        <img src="{{$course->photo}}" alt="" height="60" class="rounded-lg">
+                                    <a href="{{ route('admin.community_post.show', $post->id) }}">
+                                        <img src="{{$post->photo}}" alt="" height="60" class="rounded-lg">
                                         <div class="mt-1">
-                                            <strong>{{$course->title}}</strong>
+                                            <strong>{{$post->title}}</strong>
                                         </div>
                                     </a>
                                 </td>
                                 <td>
-                                    <strong>{{ $course->status ? 'Active' : 'Inactive'}}</strong>
+                                    <strong>{{ $post->user->name}}</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $course->featured ? 'Featured' : 'Not Featured'}}</strong>
+                                    <strong>{{ $post->publish_at}}</strong>
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin.course.destroy', $course->id) }}" method="POST">
+                                    <strong>{{ $post->is_published ? 'Published' : 'Not Published'}}</strong>
+                                </td>
+                                <td>
+                                    <strong>{{ $post->is_public ? 'Public' : 'Private'}}</strong>
+                                </td>
+                                <td>
+                                    <form action="{{ route('admin.community_post.destroy', $post->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.course.edit', $course->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
+                                        <a href="{{route('admin.community_post.edit', $post->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
                                         <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
                                     </form>
                                 </td>
