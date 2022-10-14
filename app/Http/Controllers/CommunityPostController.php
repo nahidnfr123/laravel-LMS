@@ -111,24 +111,24 @@ class CommunityPostController extends Controller
     {
         $user = auth()->user();
         $data = $request->validated();
+        unset($data['photo'], $data['community_tag_ids']);
         if (!$request->has('is_published')) {
             $data['is_published'] = false;
         }
         if (!$request->has('is_public')) {
             $data['is_public'] = false;
         }
-        unset($data['photo']);
         $data['user_id'] = $user->id;
         if ($user && $user->role === 'admin') {
             $data['approved_by'] = $user->id;
         }
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('public/uploads/img');
-            $data['photo'] = $path;
+            $data['photo'] = $this->photoUploader($request->file('photo'));
         }
         $communityPost->update($data);
-        if ($data['community_tag_ids'] && count($data['community_tag_ids'])) {
-            foreach ($data['community_tag_ids'] as $id) {
+        if ($request['community_tag_ids'] && count($request['community_tag_ids'])) {
+            $communityPost->communityTags()->detach();
+            foreach ($request['community_tag_ids'] as $id) {
                 $communityPost->communityTags()->attach($id);
             }
         }

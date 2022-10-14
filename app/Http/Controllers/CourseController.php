@@ -112,8 +112,7 @@ class CourseController extends Controller
         $data = $request->validated();
         unset($data['photo']);
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('public/uploads/img');
-            $data['photo'] = $path;
+            $data['photo'] = $this->photoUploader($request->file('photo'));
         }
         $course->update($data);
         return redirect()->route('admin.course.index');

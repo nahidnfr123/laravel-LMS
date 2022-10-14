@@ -95,8 +95,7 @@ class CommunityTagsController extends Controller
         $data = $request->validated();
         unset($data['photo']);
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('public/uploads/img');
-            $data['photo'] = $path;
+            $data['photo'] = $this->photoUploader($request->file('photo'));
         }
         $communityTags->update($data);
         return redirect()->route('admin.community_tags.index');
