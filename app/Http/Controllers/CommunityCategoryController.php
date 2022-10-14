@@ -5,17 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommunityCategoryRequest;
 use App\Http\Requests\UpdateCommunityCategoryRequest;
 use App\Models\CommunityCategory;
+use Illuminate\Http\Request;
 
 class CommunityCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === 'admin/') {
+            $courses = CommunityCategory::all();
+            return view('admin.community.category.index', compact('courses'));
+        }
+
+        $courses = CommunityCategory::where('status', true)->get();
+        return view('community.index', compact('courses'));
     }
 
     /**

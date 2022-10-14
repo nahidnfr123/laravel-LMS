@@ -24,7 +24,6 @@ return new class extends Migration
             $table->dateTime('publish_at')->default(\Carbon\Carbon::now());
             $table->boolean('is_published')->default(0);
             $table->boolean('is_public')->default(0);
-            $table->boolean('is_hidden')->default(0);
             $table->timestamps();
         });
     }

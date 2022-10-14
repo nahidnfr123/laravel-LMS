@@ -16,12 +16,6 @@ use Illuminate\Validation\ValidationException;
 
 class CourseController extends Controller
 {
-    public function adminIndex(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
-    {
-        $course = Course::all();
-        return view('admin.', $course);
-    }
-
     /**
      * Display a listing of the resource.
      *

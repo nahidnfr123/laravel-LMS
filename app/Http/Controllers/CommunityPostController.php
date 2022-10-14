@@ -5,17 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommunityPostRequest;
 use App\Http\Requests\UpdateCommunityPostRequest;
 use App\Models\CommunityPost;
+use Illuminate\Http\Request;
 
 class CommunityPostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === 'admin/') {
+            $communityPost = CommunityPost::all();
+            return view('admin.community.index', compact('communityPost'));
+        }
+
+        $communityPost = CommunityPost::where('is_published', true)->where('is_public', true)->get();
+        return view('community.index', compact('communityPost'));
     }
 
     /**
