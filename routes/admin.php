@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CommunityCategoryController;
+use App\Http\Controllers\CommunityPostController;
+use App\Http\Controllers\CommunityTagsController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
@@ -23,4 +26,8 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::resource('/mcq', McqController::class)->name('*', 'mcq');
     Route::resource('/assignment', AssignmentController::class)->name('*', 'assignment');
     Route::resource('/live_class', LiveClassController::class)->name('*', 'live_class');
+
+    Route::resource('/community_category', CommunityCategoryController::class)->name('*', 'community_category');
+    Route::resource('/community_tags', CommunityTagsController::class)->name('*', 'community_tags');
+    Route::resource('/community_post', CommunityPostController::class)->name('*', 'community_post');
 });
