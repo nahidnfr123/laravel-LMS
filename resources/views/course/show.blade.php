@@ -102,6 +102,14 @@
                                                 </div>
                                                 <hr>
                                                 <div>"{{$review->review}}"</div>
+
+                                                @if(auth()->check() && $review->user_id === auth()->id())
+                                                    <form action="{{route('home.review.destroy', $review->id)}}" method="POST">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg">Remove</button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

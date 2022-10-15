@@ -185,6 +185,51 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-12 d-flex grid-margin stretch-card">
+            @if(count($course->reviews))
+                <div class="mt-2 card">
+                    <div class="card-body">
+                        @foreach($course->reviews as $review)
+                            <div class="mt-2 card">
+                                <div class="card-body d-flex" style="column-gap: 10px; align-items: center">
+                                    <div>
+                                        @if($review->user->photo)
+                                            <img src="{{$review->user->photo}}" alt="" height="60" class="rounded-lg">
+                                        @else
+                                            <img src="/images/profile.png" alt="" height="60" class="rounded-lg">
+                                        @endif
+                                        <div class=""><small>{{$review->user->name}}</small></div>
+                                    </div>
+                                    <div style="min-height: 100%; height: 100px; width: 2px; background-color: #0b2e1360;"></div>
+                                    <div>
+                                        <div>
+                                            <strong class="mr-2">{{$review->rating}}</strong>
+                                            <strong>
+                                                @for ($i = 0; $i < 5; ++$i)
+                                                    <i class="fa fa-star{{ $review->rating <= $i ? '-o' : ''}} '" aria-hidden="true"></i>
+                                                @endfor
+                                            </strong>
+                                        </div>
+                                        <div>"{{$review->review}}"</div>
+
+                                        <div class="mt-2">
+                                            @if(auth()->check())
+                                                <form action="{{route('home.review.destroy', $review->id)}}" method="POST">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <button type="submit" class="btn btn-xs btn-danger rounded-lg">Remove</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        </div>
     </div>
 @endsection
 

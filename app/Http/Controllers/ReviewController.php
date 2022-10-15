@@ -44,7 +44,7 @@ class ReviewController extends Controller
         if ($request->reviewable_type === 'course') {
             Course::findOrFail($request->reviewable_id)->reviews()->updateOrCreate(['user_id' => auth('sanctum')->id()], $data);
         } else {
-           Review::create($request->validated());
+            Review::create($request->validated());
         }
 //        $review = Review::with('user')->findOrFail($createdReview->id);
         return redirect()->back();
@@ -88,10 +88,12 @@ class ReviewController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Review $review
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(Review $review)
+    public function destroy($id): RedirectResponse
     {
-        //
+        $review= Review::findOrFail($id);
+        $review->delete();
+        return redirect()->back();
     }
 }

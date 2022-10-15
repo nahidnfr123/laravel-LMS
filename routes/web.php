@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/course/{id}/enroll', [CourseController::class, 'enroll'])->name('home.course.enroll');
     Route::post('/assignment/{id}/upload', [AssignmentController::class, 'upload'])->name('home.assignment.upload');
     Route::get('/attendance', [AttendanceController::class, 'store'])->name('home.attendance.store');
-    Route::post('/review', [\App\Http\Controllers\ReviewController::class, 'store'])->name('home.review.store');
+    Route::post('/review', [ReviewController::class, 'store'])->name('home.review.store');
+    Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('home.review.destroy');
 
     Route::get('/my-courses', function () {
         return view('index');
