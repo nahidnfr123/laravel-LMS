@@ -87,7 +87,7 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Review $review
+     * @param $id
      * @return RedirectResponse
      */
     public function destroy($id): RedirectResponse
