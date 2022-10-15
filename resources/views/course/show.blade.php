@@ -1,6 +1,7 @@
 @extends('layouts.home')
 
 @section('head')
+
 @stop
 
 @section('content')
@@ -19,7 +20,6 @@
                         <div class="card-body">
                             <img src="{{$course->photo}}" alt="" class="img-fluid" style="height: 240px!important;">
                             <div class="my-2">
-
                                 @if($course->discounted_price)
                                     <p>Tk.
                                         <span style="text-decoration: line-through;">
@@ -46,8 +46,34 @@
                                     @else
                                         <a href="{{route('home.course.enroll', $course->id)}}" class="btn btn-primary">Enroll</a>
                                     @endif
-
                                 @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2 card">
+                        <div class="card-body">
+                            <div class="course-rating d-flex" style="column-gap: 10px">
+                                <div class="mr-2"><strong>{{$course->rating}}</strong></div>
+                                <div class="mr-2">
+                                    @for ($i = 0; $i < 5; ++$i)
+                                        <i class="fa fa-star{{ $course->rating <= $i ? '-o' : ''}} '" aria-hidden="true"></i>
+                                    @endfor
+                                </div>
+                                <div>( <strong class="mr-2">{{count($course->reviews)}}</strong> <i class="fa fa-users"></i> )</div>
+                            </div>
+                            <hr>
+                            @if($course->subscription_status)
+                                <div>
+                                    <h4>Review</h4>
+                                    @php
+                                        $reviewable_id = $course->id;
+                                        $reviewable_type = 'course';
+                                    @endphp
+                                    @include('components.ratingForm')
+                                </div>
+                            @endif
+                            <div>
 
                             </div>
                         </div>

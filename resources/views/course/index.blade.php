@@ -29,13 +29,32 @@
                                     <p></p>
                                 </div>
                                 <div class="course-rating">
-                                    4.5
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half"></i>
+                                    <strong class="mr-2">{{$course->rating}}</strong>
+                                    <strong>
+                                        @for ($i = 0; $i < 5; ++$i)
+                                            <i class="fa fa-star{{ $course->rating <= $i ? '-o' : ''}} '" aria-hidden="true"></i>
+                                        @endfor
+                                    </strong>
                                 </div>
+
+                                @if(auth()->check() && $course->subscription_status)
+                                    <p class="text-success">
+                                        <strong>{{$course->subscription_status ? 'Active' : ''}}</strong>
+                                    </p>
+                                @else
+                                    @if($course->discounted_price)
+                                        <p>Tk.
+                                            <span style="text-decoration: line-through;">
+                                       {{ $course->price}}
+                                    </span>
+                                            <strong>{{$course->discounted_price}}</strong>
+                                        </p>
+                                    @elseif($course->price)
+                                        <p>Tk. <strong>{{$course->discounted_price ?? $course->price}}</strong></p>
+                                    @else
+                                        <p><strong class="text-success">Free</strong></p>
+                                    @endif
+                                @endif
                             </div>
                             <div class="course-meta-bot">
                                 <ul>
