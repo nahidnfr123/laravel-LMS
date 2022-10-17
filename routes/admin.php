@@ -10,6 +10,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\LiveClassController;
 use App\Http\Controllers\McqController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,8 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::resource('/community_category', CommunityCategoryController::class)->name('*', 'community_category');
     Route::resource('/community_tags', CommunityTagsController::class)->name('*', 'community_tags');
     Route::resource('/community_post', CommunityPostController::class)->name('*', 'community_post');
+
+    Route::get('/orders/{id}/accept', [OrderController::class, 'accept'])->name('orders.accept');
+    Route::get('/orders/{id}/reject', [OrderController::class, 'reject'])->name('orders.reject');
+    Route::resource('/orders', OrderController::class)->name('*', 'orders');
 });

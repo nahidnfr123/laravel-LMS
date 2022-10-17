@@ -122,6 +122,9 @@
                     <div class="card">
                         <div class="card-body">
                             {{--                    {!! html_entity_decode($post->body) !!}--}}
+                            @if($course->status_text === 'rejected')
+                                <div class="alert alert-info">Previous Payment rejected</div>
+                            @endif
                             @if(count($course->sections)>0)
                                 <div class="accordion" id="accordion-panelExample">
                                     @foreach($course->sections as $section)

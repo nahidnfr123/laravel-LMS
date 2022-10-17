@@ -12,12 +12,18 @@ class Course extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $appends = ['rating', 'subscription_status'];
+    protected $appends = ['rating', 'subscription_status', 'status_text'];
 
-    public function getSubscriptionStatusAttribute(): bool
+    public function getStatusTextAttribute()
     {
-        $subscription = $this->users()->where('users.id', auth()->id())->first();
-        return (bool)$subscription;
+        $subscription = $this->users()->where('users.id', auth()->id())->first()->pivot;
+        return $subscription ? $subscription->status : '';
+    }
+
+    public function getSubscriptionStatusAttribute()
+    {
+        $subscription = $this->users()->where('users.id', auth()->id())->first()->pivot;
+        return $subscription && $subscription->status === 'active' ? 1 : 0;
     }
 
     public function getRatingAttribute(): float
@@ -32,7 +38,7 @@ class Course extends Model
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class)->orderBy('id');
+        return $this->belongsToMany(User::class)->withPivot('status')->orderBy('id');
     }
 
     public function comments(): MorphMany
@@ -43,5 +49,10 @@ class Course extends Model
     public function reviews(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewable');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

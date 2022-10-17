@@ -228,6 +228,12 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                        <i class="typcn typcn-device-desktop menu-icon"></i>
+                        <span class="menu-title">Orders</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- partial -->

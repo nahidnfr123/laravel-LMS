@@ -44,9 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function course(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function course(): BelongsToMany
     {
-        return $this->hasMany(Course::class);
+        return $this->belongsToMany(Course::class)->withPivot('status');
     }
 
     public function communityPost(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -67,5 +67,10 @@ class User extends Authenticatable
     public function mcqs(): BelongsToMany
     {
         return $this->belongsToMany(Mcq::class)->withPivot(['exam_id', 'user_answer'])->withTimestamps();
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }
