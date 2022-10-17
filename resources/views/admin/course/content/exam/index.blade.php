@@ -97,12 +97,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                @endif
-                                @endif
                             </div>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('script')

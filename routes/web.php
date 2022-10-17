@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'store'])->name('home.attendance.store');
     Route::post('/review', [ReviewController::class, 'store'])->name('home.review.store');
     Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('home.review.destroy');
+    Route::get('/exam/{exam}', [ExamController::class, 'show'])->name('home.exam.show');
+    Route::post('/exam', [ExamController::class, 'store'])->name('home.exam.store');
 
     Route::get('/my-courses', function () {
         return view('index');
