@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('head')
-
+    <link rel="stylesheet" href="/compiled/flipclock.css">
 @stop
 
 @section('content')
@@ -39,6 +39,9 @@
                 </div>
                 <div class="col-12">
                     @if($content->exam)
+                        <div class="clock" style="margin:2em;"></div>
+                        <div class="message"></div>
+
                         @if(count($content->exam->mcqs) > 0)
                             <div class="row bg-danger py-2">
                                 <form action="{{route('home.exam.store')}}" method="POST">
@@ -85,8 +88,7 @@
                                                                 @foreach(['a', 'b', 'c', 'd', 'e'] as $option)
                                                                     <div class="form-check" style="border-radius: 10px; padding: 4px 0 4px 30px">
                                                                         <label class="form-check-label">
-                                                                            <input type="radio" class="form-check-input" name="mcq-{{$mcq->id}}" id="{{$mcq->id . $mcq[$option]}}" value="{{$option}}"
-                                                                                   @if($user_answer === $option) checked @else disabled @endif>
+                                                                            <input type="radio" class="form-check-input" name="mcq-{{$mcq->id}}" id="{{$mcq->id . $mcq[$option]}}" value="{{$option}}">
                                                                             {{$mcq[$option]}}
                                                                         </label>
                                                                     </div>
@@ -156,6 +158,35 @@
 @endsection
 
 @section('script')
+    @if(!$result->submitted && $result->start_time)
+        <script src="/compiled/flipclock.js"></script>
+        <script type="text/javascript">
+            var clock;
 
+            $(document).ready(function () {
+                var clock;
 
+                clock = $('.clock').FlipClock({
+                    clockFace: 'DailyCounter',
+                    autoStart: false,
+                    callbacks: {
+                        stop: function () {
+                            $('.message').html('The clock has stopped!')
+                        }
+                    }
+                });
+                @php
+                    $from = \Carbon\Carbon::parse($result->start_time);
+                    $to = \Carbon\Carbon::parse($result->start_time)->addMinutes($content->exam->duration);
+                    $diff_in_hours = $to->diffInSeconds($from);
+                @endphp
+
+                let start = '{{$diff_in_hours}}'
+                console.log(start)
+                clock.setTime(Number(start));
+                clock.setCountdown(true);
+                clock.start();
+            });
+        </script>
+    @endif
 @stop

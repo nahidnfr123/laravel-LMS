@@ -116,7 +116,7 @@ class ExamController extends Controller
         if ($exam->content->section->course->subscription_status) {
             $course = $exam->content->section->course;
             $content = $exam->content;
-            $result = Result::firstOrNew([
+            $result = Result::firstOrCreate([
                 'exam_id' => $exam->id,
                 'user_id' => auth()->id(),
             ], [
