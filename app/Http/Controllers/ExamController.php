@@ -30,6 +30,19 @@ class ExamController extends Controller
         return view('admin.course.content.exam.index', compact('content'));
     }
 
+    public function ranking(Request $request, $id): View|Factory|Application
+    {
+        $content = Exam::findOrFail($id);
+        $content = $content->content;
+        $results = Result::where('exam_id', $id)
+            ->orderBy('obtained_mark', 'ASC')
+            ->orderBy('duration', 'ASC')
+            ->orderBy('created_at', 'ASC')
+            ->get();
+//        $content = Content::findOrFail($ranking->exam->content->id);
+        return view('course.exam.ranking', compact('results', 'content'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

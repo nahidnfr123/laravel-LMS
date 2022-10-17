@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('home.review.destroy');
     Route::get('/exam/{exam}', [ExamController::class, 'show'])->name('home.exam.show');
     Route::post('/exam', [ExamController::class, 'store'])->name('home.exam.store');
+    Route::get('/exam/{id}/ranking', [ExamController::class, 'ranking'])->name('home.exam.ranking');
 
     Route::get('/my-courses', function () {
         return view('index');

@@ -59,7 +59,9 @@
                                                 <div>Obtained Marks: {{$result->obtained_mark}}</div>
                                                 <div>Time Taken: {{$result->duration}}</div>
                                             </div>
-                                            <button type="button" class="btn bg-white">Ranking</button>
+                                            <a href="{{route('home.exam.ranking',$content->exam->id)}}" class="btn bg-white">
+                                                Ranking
+                                            </a>
                                         </div>
                                     @else
                                         <div class="my-3 text-center" style="position: sticky">
