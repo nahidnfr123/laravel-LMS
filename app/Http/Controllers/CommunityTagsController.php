@@ -23,7 +23,7 @@ class CommunityTagsController extends Controller
     public function index(Request $request): View|Factory|Application
     {
         $prefix = $request->route()->getPrefix();
-        if ($prefix === 'admin/') {
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
             $communityTags = CommunityTags::all();
             return view('admin.community.tags.index', compact('communityTags'));
         }

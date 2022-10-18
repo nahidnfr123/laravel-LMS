@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-12">
                     @if($content->exam)
-                        <div class="clock" style="margin:2em;"></div>
+                        {{--                        <div class="clock" style="margin:2em;"></div>--}}
                         <div class="message"></div>
 
                         @if(count($content->exam->mcqs) > 0)
@@ -60,11 +60,11 @@
                                             @if($result->status === 'absent')
                                                 <div class="alert alert-danger">You Missed the exam!</div>
                                             @else
-                                            <div class="text-white">
-                                                <div>Total Marks: {{$result->total_mark}}</div>
-                                                <div>Obtained Marks: {{$result->obtained_mark}}</div>
-                                                <div>Time Taken: {{$result->duration}}</div>
-                                            </div>
+                                                <div class="text-white">
+                                                    <div>Total Marks: {{$result->total_mark}}</div>
+                                                    <div>Obtained Marks: {{$result->obtained_mark}}</div>
+                                                    <div>Time Taken: {{$result->duration}}</div>
+                                                </div>
                                             @endif
                                             <a href="{{route('home.exam.ranking',$content->exam->id)}}" class="btn bg-white">
                                                 Ranking

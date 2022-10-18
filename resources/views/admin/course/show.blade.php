@@ -70,13 +70,15 @@
                                                                     {{ ucfirst($content->type) }}: {{ $content->title }}
                                                                 </button>
 
-                                                                <form action="{{ route('admin.content.destroy', $content->id) }}" class="d-flex mt-2 ml-2" method="POST" style="width: 300px">
+                                                                <form action="{{ route('admin.content.destroy', $content->id) }}" class="d-flex mt-2 ml-2" method="POST" style="width: 400px">
                                                                     {{ csrf_field() }}
                                                                     {{ method_field('DELETE') }}
                                                                     <div>
                                                                         @if($content->exam)
                                                                             <a href="{{route('admin.exam.index', ['content_id'=> $content->id])}}" class="btn btn-xs btn-behance rounded-lg mr-1">
                                                                                 Mcq
+                                                                            </a> <a href="{{route('admin.exam.ranking', $content->exam->id)}}" class="btn btn-xs btn-dark rounded-lg mr-1">
+                                                                                Ranking
                                                                             </a>
                                                                         @endif
                                                                         @if($content->assignment)
@@ -168,7 +170,9 @@
                                                                     {!! $content->note->note !!}
                                                                 @endif
                                                                 @if($content->pdf)
-                                                                    {{ $content->pdf }}
+                                                                    @if($content->pdf->link)
+                                                                        <iframe src="{{$content->pdf->link}}" height="500" width="100%"></iframe>
+                                                                    @endif
                                                                 @endif
                                                             </div>
                                                         </div>

@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function index(Request $request): View|Factory|Application
     {
         $prefix = $request->route()->getPrefix();
-        if ($prefix === 'admin/') {
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
             $orders = Order::all();
             return view('admin.orders.index', compact('orders'));
         }

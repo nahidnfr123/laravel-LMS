@@ -25,7 +25,7 @@ class CourseController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $prefix = $request->route()->getPrefix();
-        if ($prefix === 'admin/') {
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
             $courses = Course::all();
             return view('admin.course.index', compact('courses'));
         }

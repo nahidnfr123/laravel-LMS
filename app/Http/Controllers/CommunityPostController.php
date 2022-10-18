@@ -25,7 +25,7 @@ class CommunityPostController extends Controller
     public function index(Request $request): View|Factory|Application
     {
         $prefix = $request->route()->getPrefix();
-        if ($prefix === 'admin/') {
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
             $communityPosts = CommunityPost::all();
             return view('admin.community.index', compact('communityPosts'));
         }

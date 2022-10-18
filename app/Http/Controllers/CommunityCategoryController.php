@@ -24,7 +24,7 @@ class CommunityCategoryController extends Controller
     public function index(Request $request): View|Factory|Application
     {
         $prefix = $request->route()->getPrefix();
-        if ($prefix === 'admin/') {
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
             $communityCategories = CommunityCategory::all();
             return view('admin.community.category.index', compact('communityCategories'));
         }

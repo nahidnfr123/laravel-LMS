@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreExamRequest;
 use App\Http\Requests\UpdateExamRequest;
 use App\Models\Content;
+use App\Models\Course;
 use App\Models\Exam;
 use App\Models\Result;
 use Carbon\Carbon;
@@ -39,6 +40,11 @@ class ExamController extends Controller
             ->orderBy('duration', 'ASC')
             ->orderBy('created_at', 'ASC')
             ->get();
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
+            return view('admin.course.content.exam.ranking', compact('results', 'content'));
+        }
+
 //        $content = Content::findOrFail($ranking->exam->content->id);
         return view('course.exam.ranking', compact('results', 'content'));
     }

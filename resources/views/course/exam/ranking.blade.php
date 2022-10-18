@@ -43,7 +43,7 @@
                                         <strong>{{ $result->duration}}</strong>
                                     </td>
                                     <td>
-                                        <strong>{{ $result->start_time}}</strong>
+                                        <strong>{{ $result->status}}</strong>
                                     </td>
                                 </tr>
                             @endforeach

@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
             'negative_mark' => 0,
             'pass_mark' => 10,
             'result_publish_time' => Carbon::now()->addDays(10),
-            'start_time' => Carbon::now()->addDay(),
+            'start_time' => Carbon::now(),
             'end_time' => Carbon::now()->addDays(10),
         ]);
         Exam::create([

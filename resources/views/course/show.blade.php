@@ -220,7 +220,6 @@
                                                                                         <div><strong>Details:</strong></div>
                                                                                         {!!  $content->exam->description !!}
                                                                                     </div>
-                                                                                    <a href="{{route('home.exam.show', $content->exam->id)}}" target="_blank" disabled="disabled" class="btn btn-sm btn-primary">Start Exam</a>
                                                                                     @if(\Carbon\Carbon::now()->isBetween($content->exam->start_time, $content->exam->end_time))
                                                                                         <a href="{{route('home.exam.show', $content->exam->id)}}" target="_blank" disabled="disabled" class="btn btn-sm btn-primary">Start Exam</a>
                                                                                         {{--                                                                                    <a href="{{ $content->live_class->link }}" target="_blank" disabled="disabled" class="btn btn-sm btn-primary">Go To Link</a>--}}

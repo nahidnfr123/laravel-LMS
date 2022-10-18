@@ -22,6 +22,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::resource('/course', CourseController::class)->name('*', 'course');
     Route::resource('/section', SectionController::class)->name('*', 'section');
     Route::resource('/content', ContentController::class)->name('*', 'content');
+    Route::get('/exam/{id}/ranking', [ExamController::class, 'ranking'])->name('exam.ranking');
     Route::resource('/exam', ExamController::class)->name('*', 'exam');
     Route::post('/mcq-import', [McqController::class, 'import'])->name('mcq-import');
     Route::resource('/mcq', McqController::class)->name('*', 'mcq');
