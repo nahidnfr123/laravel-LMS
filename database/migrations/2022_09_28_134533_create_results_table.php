@@ -27,7 +27,7 @@ return new class extends Migration
             $table->dateTime('end_time')->nullable(); //
             $table->integer('duration')->nullable();
             $table->boolean('submitted')->nullable()->default(false); //
-            $table->enum('status',['passed','failed','rejected','disqualified','expelled','absent','retake'])->nullable();
+            $table->enum('status',['started', 'ended', 'passed','failed','rejected','disqualified','expelled','absent','retake'])->nullable();
             $table->string('grade')->nullable();
             $table->timestamps();
         });

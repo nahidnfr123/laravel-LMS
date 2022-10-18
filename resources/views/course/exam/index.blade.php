@@ -43,7 +43,7 @@
                         <div class="message"></div>
 
                         @if(count($content->exam->mcqs) > 0)
-                            <div class="row bg-danger py-2">
+                            <div class="row bg-secondary py-2">
                                 <form action="{{route('home.exam.store')}}" method="POST">
                                     @if($result->start_time)
                                         <div class="badge bg-white text-black" style="font-size: 16px">
@@ -57,11 +57,15 @@
                                     @endif
                                     @if($result->submitted)
                                         <div class="my-3 text-center" style="position: sticky">
+                                            @if($result->status === 'absent')
+                                                <div class="alert alert-danger">You Missed the exam!</div>
+                                            @else
                                             <div class="text-white">
                                                 <div>Total Marks: {{$result->total_mark}}</div>
                                                 <div>Obtained Marks: {{$result->obtained_mark}}</div>
                                                 <div>Time Taken: {{$result->duration}}</div>
                                             </div>
+                                            @endif
                                             <a href="{{route('home.exam.ranking',$content->exam->id)}}" class="btn bg-white">
                                                 Ranking
                                             </a>

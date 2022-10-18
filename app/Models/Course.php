@@ -14,16 +14,26 @@ class Course extends Model
     protected $guarded = [];
     protected $appends = ['rating', 'subscription_status', 'status_text'];
 
-    public function getStatusTextAttribute()
+    public function getStatusTextAttribute(): bool|string
     {
-        $subscription = $this->users()->where('users.id', auth()->id())->first()->pivot;
-        return $subscription ? $subscription->status : '';
+        $user = $this->users()->where('users.id', auth()->id())->first();
+        if ($user) {
+            $subscription = $user->pivot;
+            return $subscription ? $subscription->status : '';
+        }
+
+        return false;
     }
 
-    public function getSubscriptionStatusAttribute()
+    public function getSubscriptionStatusAttribute(): bool|int
     {
-        $subscription = $this->users()->where('users.id', auth()->id())->first()->pivot;
-        return $subscription && $subscription->status === 'active' ? 1 : 0;
+        $user = $this->users()->where('users.id', auth()->id())->first();
+        if ($user) {
+            $subscription = $user->pivot;
+            return $subscription && $subscription->status === 'active' ? 1 : 0;
+        }
+
+        return false;
     }
 
     public function getRatingAttribute(): float

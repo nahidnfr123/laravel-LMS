@@ -100,6 +100,7 @@ class ExamController extends Controller
                 'end_time' => $end_time,
                 'duration' => $duration,
                 'submitted' => true,
+                'status' => 'ended',
             ]);
         }
         return redirect()->back();
@@ -122,15 +123,17 @@ class ExamController extends Controller
             ], [
                 'start_time' => Carbon::now(),
                 'submitted' => false,
+                'status' => 'started',
             ]);
-            if ($result->submitted) {
-//                $content = $content->with('exam', 'exam.mcqs')->get();
-                /*$user_answer = $mcq->users
-                    ->wherePivot('user_id', auth()->id())
-                    ->wherePivot('exam_id', $content->exam->id)
-                    ->first()
-                    ->pivot
-                    ->user_answer ?? null;*/
+            if (!$result->submitted) {
+                $from = \Carbon\Carbon::parse($result->start_time);
+                $to = \Carbon\Carbon::parse($result->start_time)->addMinutes($content->exam->duration);
+                $diff_in_hours = $to->diffInSeconds($from);
+                if (Carbon::now() > $to) {
+                    $result->submitted = true;
+                    $result->status = 'absent';
+                    $result->save();
+                }
             }
 //            $result = $content->exam->results->where('user_id', auth()->id())->first();
             return view('course.exam.index', compact('course', 'content', 'result'));

@@ -24,6 +24,7 @@
                                 <th>Student</th>
                                 <th>Marks</th>
                                 <th>Duration</th>
+                                <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,6 +41,9 @@
                                     </td>
                                     <td>
                                         <strong>{{ $result->duration}}</strong>
+                                    </td>
+                                    <td>
+                                        <strong>{{ $result->start_time}}</strong>
                                     </td>
                                 </tr>
                             @endforeach
