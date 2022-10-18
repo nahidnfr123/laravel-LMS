@@ -44,7 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function course(): BelongsToMany
+    public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class)->withPivot('status');
     }

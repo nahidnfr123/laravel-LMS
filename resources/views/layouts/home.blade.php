@@ -69,6 +69,8 @@
                     <li class="nav-item {{ Request::is('courses') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.courses') }}">Courses</a></li>
                     <li class="nav-item {{ Request::is('community_post') ? 'active' : null }}"><a class="nav-link" href="{{ route('community_post.index') }}">Community Post</a></li>
                     @if(auth()->check())
+                        <li class="nav-item {{ Request::is('home.my_courses') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.my_courses') }}">My Courses</a></li>
+                        <li class="nav-item {{ Request::is('home.profile') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.profile') }}">Profile</a></li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

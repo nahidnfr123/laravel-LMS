@@ -44,16 +44,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/exam/{id}/ranking', [ExamController::class, 'ranking'])->name('home.exam.ranking');
 
     Route::get('/my-courses', function () {
-        return view('index');
-    });
+        $courses = auth()->user()->courses;
+        return view('user.mycourses', compact('courses'));
+    })->name('home.my_courses');
+
+    Route::get('/profile', function () {
+        $courses = auth()->user()->courses;
+        return view('user.profile', compact('courses'));
+    })->name('home.profile');
 });
 
 
 Route::resource('/community_post', CommunityPostController::class)->name('*', 'community_post');
-
-Route::get('/profile', function () {
-    return view('index');
-});
 
 Route::get('/order', function () {
     return view('index');

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('community_post_community_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('community_post_id')->constrained();
-            $table->foreignId('community_tags_id')->constrained();
+            $table->foreignId('community_post_id')->constrained()->onDelete('CASCADE');
+            $table->foreignId('community_tags_id')->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }

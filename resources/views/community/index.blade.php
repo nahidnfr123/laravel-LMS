@@ -25,9 +25,23 @@
                         <div class="course-item">
 
                             <div class="course-br">
-                                <div>
+                                <div class="d-flex" style="column-gap: 20px">
                                     <img src="{{$post->user->photo ?? 'https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-1024.png'}}" alt="" height="60px" width="60px">
-                                    <strong>{!! $post->user->name !!}</strong>
+                                    <div>
+                                        <div>
+                                            <strong>{!! $post->user->name !!}</strong>
+                                        </div>
+                                        @if(auth()->check() && $post->user->id === auth()->id())
+                                            <form action="{{ route('community_post.destroy', $post->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                                <a href="{{route('community_post.edit', $post->id)}}" class="btn btn-sm btn-warning rounded">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div><h2>{{ $post->title }}</h2></div>
                                 <div class="image-blog">

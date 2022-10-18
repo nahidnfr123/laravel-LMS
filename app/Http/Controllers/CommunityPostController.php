@@ -31,7 +31,7 @@ class CommunityPostController extends Controller
             return view('admin.community.index', compact('communityPosts'));
         }
 
-        $communityPosts = CommunityPost::where('publish_at', '>', Carbon::now())->where('is_published', true)->where('is_public', true)->orderBy('publish_at', 'DESC')->orderBy('created_at', 'DESC')->get();
+        $communityPosts = CommunityPost::where('publish_at', '>=', Carbon::now())->where('is_published', true)->where('is_public', true)->orderBy('publish_at', 'DESC')->orderBy('created_at', 'DESC')->get();
         return view('community.index', compact('communityPosts'));
     }
 
@@ -113,7 +113,7 @@ class CommunityPostController extends Controller
     {
         $communityCategories = CommunityCategory::all();
         $communityTags = CommunityTags::all();
-        $action = URL::route('community_post.update');
+        $action = URL::route('community_post.update', $communityPost->id);
         $prefix = $request->route()->getPrefix();
         if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
             $action = URL::route('admin.community_post.update', $communityPost->id);
@@ -134,12 +134,6 @@ class CommunityPostController extends Controller
         $user = auth()->user();
         $data = $request->validated();
         unset($data['photo'], $data['community_tag_ids']);
-        if (!$request->has('is_published')) {
-            $data['is_published'] = false;
-        }
-        if (!$request->has('is_public')) {
-            $data['is_public'] = false;
-        }
         $data['user_id'] = $user->id;
         if ($user && $user->role === 'admin') {
             $data['approved_by'] = $user->id;
