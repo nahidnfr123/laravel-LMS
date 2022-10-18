@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ReviewController;
@@ -46,11 +47,11 @@ Route::middleware('auth')->group(function () {
         return view('index');
     });
 });
-Route::get('/profile', function () {
-    return view('index');
-});
 
-Route::get('/add-to-cart', function () {
+
+Route::resource('/community_post', CommunityPostController::class)->name('*', 'community_post');
+
+Route::get('/profile', function () {
     return view('index');
 });
 

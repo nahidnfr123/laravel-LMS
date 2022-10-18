@@ -67,7 +67,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item {{ Request::is('/') ? 'active' : null }}"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item {{ Request::is('courses') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.courses') }}">Courses</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                    <li class="nav-item {{ Request::is('community_post') ? 'active' : null }}"><a class="nav-link" href="{{ route('community_post.index') }}">Community Post</a></li>
                     @if(auth()->check())
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">

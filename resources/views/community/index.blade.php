@@ -7,7 +7,7 @@
 
     <div class="all-title-box">
         <div class="container text-center">
-            <h1>Courses<span class="m_1">Choose courses you might like.</span></h1>
+            <h1>Join Our Community</h1>
         </div>
     </div>
 
@@ -15,34 +15,32 @@
         <div class="container">
 
             <div class="row">
-                @foreach($courses as $course)
-                    <div class="col-lg-4 col-md-6 col-12">
+                @if(auth()->check())
+                    <div class="col-12 mb-2">
+                        <a href="{{route('community_post.create')}}" class="btn btn-primary">Post on Community</a>
+                    </div>
+                @endif
+                @foreach($communityPosts as $post)
+                    <div class="col-lg-6 col-md-8 col-12 mb-4">
                         <div class="course-item">
-                            <div class="image-blog">
-                                <img src="{{$course->photo}}" alt="" class="img-fluid" style="height: 240px!important;">
-                            </div>
+
                             <div class="course-br">
-                                <div class="course-title">
-                                    <h2><a href="{{ route('home.course', $course->id) }}" title="">{{$course->title}}</a></h2>
+                                <div>
+                                    <img src="{{$post->user->photo ?? 'https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-1024.png'}}" alt="" height="60px" width="60px">
+                                    <strong>{!! $post->user->name !!}</strong>
                                 </div>
-                                <div class="course-desc">
-                                    <p></p>
+                                <div><h2>{{ $post->title }}</h2></div>
+                                <div class="image-blog">
+                                    <img src="{{$post->photo}}" alt="" class="img-fluid" style="max-height: 300px">
                                 </div>
-                                <div class="course-rating">
-                                    4.5
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half"></i>
+                                <div class="mt-2 d-flex justify-content-between align-center">
+                                    <div>Published at: <strong>{{$post->publish_at}}</strong></div>
+
+                                    <a href="{{route('community_post.show', $post->id)}}" class="btn btn-sm btn-warning">Read more</a>
                                 </div>
-                            </div>
-                            <div class="course-meta-bot">
-                                <ul>
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i> 6 Month</li>
-                                    <li><i class="fa fa-users" aria-hidden="true"></i> {{ count($course->users) }} Student</li>
-                                    <li><i class="fa fa-book" aria-hidden="true"></i> 7 Books</li>
-                                </ul>
+                                <div class="mt-1" style="max-height: 200px; overflow: hidden">
+                                    {!! $post->description !!}
+                                </div>
                             </div>
                         </div>
                     </div><!-- end col -->

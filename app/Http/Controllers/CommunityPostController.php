@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCommunityPostRequest;
 use App\Models\CommunityCategory;
 use App\Models\CommunityPost;
 use App\Models\CommunityTags;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -26,26 +27,32 @@ class CommunityPostController extends Controller
     {
         $prefix = $request->route()->getPrefix();
         if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
-            $communityPosts = CommunityPost::all();
+            $communityPosts = CommunityPost::orderBy('is_published', 'ASC')->orderBy('created_at', 'DESC')->get();
             return view('admin.community.index', compact('communityPosts'));
         }
 
-        $communityPosts = CommunityPost::where('is_published', true)->where('is_public', true)->get();
+        $communityPosts = CommunityPost::where('publish_at', '>', Carbon::now())->where('is_published', true)->where('is_public', true)->orderBy('publish_at', 'DESC')->orderBy('created_at', 'DESC')->get();
         return view('community.index', compact('communityPosts'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
-    public function create(): View|Factory|Application
+    public function create(Request $request): View|Factory|Application
     {
         $communityPost = new CommunityPost();
         $communityCategories = CommunityCategory::all();
         $communityTags = CommunityTags::all();
-        $action = URL::route('admin.community_post.store');
-        return view('admin.community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
+        $action = URL::route('community_post.store');
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
+            $action = URL::route('admin.community_post.store');
+            return view('admin.community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
+        }
+        return view('community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
     }
 
     /**
@@ -72,32 +79,47 @@ class CommunityPostController extends Controller
                 $communityPost->communityTags()->attach($id);
             }
         }
-        return redirect()->route('admin.community_post.index');
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
+            return redirect()->route('admin.community_post.index');
+        }
+        return redirect()->route('community_post.index');
     }
 
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param CommunityPost $communityPost
      * @return Application|Factory|View
      */
-    public function show(CommunityPost $communityPost): View|Factory|Application
+    public function show(Request $request, CommunityPost $communityPost): View|Factory|Application
     {
-        return view('admin.community.show', compact('communityPost'));
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
+            return view('admin.community.show', compact('communityPost'));
+        }
+        return view('community.show', compact('communityPost'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Request $request
      * @param CommunityPost $communityPost
      * @return Application|Factory|View
      */
-    public function edit(CommunityPost $communityPost): View|Factory|Application
+    public function edit(Request $request, CommunityPost $communityPost): View|Factory|Application
     {
         $communityCategories = CommunityCategory::all();
         $communityTags = CommunityTags::all();
-        $action = URL::route('admin.community_post.update', $communityPost->id);
-        return view('admin.community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
+        $action = URL::route('community_post.update');
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
+            $action = URL::route('admin.community_post.update', $communityPost->id);
+            return view('admin.community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
+        }
+        return view('community.form', compact('communityPost', 'action', 'communityCategories', 'communityTags'));
     }
 
     /**
@@ -132,16 +154,21 @@ class CommunityPostController extends Controller
                 $communityPost->communityTags()->attach($id);
             }
         }
-        return redirect()->route('admin.community_post.index');
+        $prefix = $request->route()->getPrefix();
+        if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
+            return redirect()->route('admin.community_post.index');
+        }
+        return redirect()->route('community_post.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param CommunityPost $communityPost
      * @return RedirectResponse
      */
-    public function destroy(CommunityPost $communityPost): RedirectResponse
+    public function destroy(Request $request, CommunityPost $communityPost): RedirectResponse
     {
         $communityPost->delete();
         return redirect()->back();
