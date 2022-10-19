@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/exam/{exam}', [ExamController::class, 'show'])->name('home.exam.show');
     Route::post('/exam', [ExamController::class, 'store'])->name('home.exam.store');
     Route::get('/exam/{id}/ranking', [ExamController::class, 'ranking'])->name('home.exam.ranking');
+    Route::get('/messages', [ExamController::class, 'ranking'])->name('home.messages');
 
     Route::get('/my-courses', function () {
         $courses = auth()->user()->courses;
