@@ -71,7 +71,7 @@
                     @if(auth()->check())
                         <li class="nav-item {{ Request::is('home.my_courses') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.my_courses') }}">My Courses</a></li>
                         <li class="nav-item {{ Request::is('home.profile') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.profile') }}">Profile</a></li>
-                        <li class="nav-item {{ Request::is('home.messages') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.messages') }}">Messages</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/chatify">Messages</a></li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
