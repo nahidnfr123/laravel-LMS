@@ -146,5 +146,11 @@ class DatabaseSeeder extends Seeder
         CommunityTags::create(['name' => 'Tag 2', 'active' => true,]);
         CommunityTags::create(['name' => 'Tag 3', 'active' => true,]);
         CommunityTags::create(['name' => 'Tag 4', 'active' => true,]);
+
+        $course2->users()->detach($student1->id);
+        $course2->users()->attach($student1->id, ['status' => 'active']);
+
+        $course2->users()->detach($student2->id);
+        $course2->users()->attach($student2->id, ['status' => 'active']);
     }
 }
