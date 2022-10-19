@@ -52,6 +52,14 @@ Route::middleware('auth')->group(function () {
         $courses = auth()->user()->courses;
         return view('user.profile', compact('courses'));
     })->name('home.profile');
+
+    Route::get('/profile/form', function () {
+        return view('user.profileForm');
+    })->name('home.profile.edit');
+
+    Route::post('/profile/update', function () {
+        return redirect()->route('home.profile');
+    })->name('home.profile.update');
 });
 
 

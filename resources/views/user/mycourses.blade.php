@@ -13,7 +13,6 @@
 
     <div id="overviews" class="section wb">
         <div class="container">
-
             <div class="row">
                 @foreach($courses as $course)
                     <div class="col-lg-4 col-md-6 col-12">

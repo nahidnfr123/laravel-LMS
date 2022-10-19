@@ -177,8 +177,8 @@
                 <li class="nav-item">
                     <div class="d-flex sidebar-profile">
                         <div class="sidebar-profile-image">
-                            @if(auth()->user()->photo)
-                                <img src="{{auth()->user()->photo}}" alt="image">
+                            @if(auth()->user()->avatar)
+                                <img src="{{auth()->user()->avatar}}" alt="image">
                             @else
                                 <img src="/images/faces/face29.png" alt="image">
                             @endif
