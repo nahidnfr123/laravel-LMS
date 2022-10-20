@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CommunityPostController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ReviewController;
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('/community_post', CommunityPostController::class)->name('*', 'community_post');
+Route::resource('/content-us', ContactUsController::class)->name('*', 'content-us');
 
 Route::get('/order', function () {
     return view('index');
