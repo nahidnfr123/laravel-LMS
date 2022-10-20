@@ -18,6 +18,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,7 +36,11 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $admin = User::create([
+        $this->call([
+            RoleSeeder::class,
+        ]);
+
+        $admin = User::updateOrCreate(['phone' => '01212121212'], [
             'name' => 'admin user',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin@gmail.com'),
@@ -43,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '01212121212',
         ]);
 
-        $mayesha = User::create([
+        $mayesha = User::updateOrCreate(['phone' => '01212121211'], [
             'name' => 'mayesha',
             'email' => 'mayesha@gmail.com',
             'password' => Hash::make('12345678'),
@@ -51,7 +56,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '01212121211',
         ]);
 
-        $student1 = User::create([
+        $student1 = User::updateOrCreate(['phone' => '01212121213'], [
             'name' => 'student 1 user',
             'email' => 'student1@gmail.com',
             'password' => Hash::make('12345678'),
@@ -59,13 +64,18 @@ class DatabaseSeeder extends Seeder
             'phone' => '01212121213',
         ]);
 
-        $student2 = User::create([
+        $student2 = User::updateOrCreate(['phone' => '01212121214'], [
             'name' => 'student 2 user',
             'email' => 'student2@gmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'student',
             'phone' => '01212121214',
         ]);
+
+//        $admin->assignRole('teacher');
+//        $mayesha->assignRole('teacher');
+//        $student1->assignRole('student');
+//        $student2->assignRole('student');
 
         $course1 = Course::create([
             'title' => 'Course 1 (Paid)',

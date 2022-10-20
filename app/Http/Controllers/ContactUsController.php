@@ -66,7 +66,7 @@ class ContactUsController extends Controller
         if($request->user_id == null){
             $User_id = 0;
         }else{
-            $User_id = decrypt($request->user_id);
+            $User_id = $request->user_id;
         }
 
         if(str_word_count($request->message) > 200){
