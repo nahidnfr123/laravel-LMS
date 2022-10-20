@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2>Update Profile</h2>
+                    <h2>Update Password</h2>
                     <hr>
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">

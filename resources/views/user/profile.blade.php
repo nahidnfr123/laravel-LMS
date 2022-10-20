@@ -10,6 +10,11 @@
                 <div class="col-12">
                     <h2>Profile</h2>
                     <hr>
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <div class="card">

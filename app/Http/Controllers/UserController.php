@@ -36,7 +36,7 @@ class UserController extends Controller
             $data['avatar'] = $this->photoUploader($request->file('avatar'));
         }
         $user->update($data);
-        return redirect()->route('home.profile');
+        return redirect()->route('home.profile')->with('message', 'Profile Updated');
     }
 
     public function passwordEdit(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
@@ -52,6 +52,6 @@ class UserController extends Controller
             'new_confirm_password' => ['same:new_password'],
         ]);
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-        return redirect()->route('home.profile');
+        return redirect()->route('home.profile')->with('message', 'Password Updated');
     }
 }
