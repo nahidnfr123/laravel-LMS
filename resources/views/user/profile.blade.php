@@ -55,6 +55,7 @@
                                     </table>
 
                                     <a href="{{route('home.profile.edit')}}" class="btn btn-primary px-4">Edit</a>
+                                    <a href="{{route('home.profile.passwordEdit')}}" class="btn btn-primary px-4">Update password</a>
                                 </div>
                             </div>
                         </div>

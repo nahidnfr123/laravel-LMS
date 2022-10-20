@@ -6,6 +6,7 @@ use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -49,16 +50,11 @@ Route::middleware('auth')->group(function () {
         return view('user.mycourses', compact('courses'));
     })->name('home.my_courses');
 
-    Route::get('/profile', function () {
-        $courses = auth()->user()->courses;
-        return view('user.profile', compact('courses'));
-    })->name('home.profile');
-
-    Route::get('/profile/form', function () {
-        return view('user.profileForm');
-    })->name('home.profile.edit');
-
-    Route::put('/profile/update', [\App\Http\Controllers\Controller::class, 'profileUpdate'])->name('home.profile.update');
+    Route::get('/profile', [UserController::class, 'index'])->name('home.profile');
+    Route::get('/profile/edit', [UserController::class, 'edit'])->name('home.profile.edit');
+    Route::put('/profile/update', [UserController::class, 'update'])->name('home.profile.update');
+    Route::get('/profile/password', [UserController::class, 'passwordEdit'])->name('home.profile.passwordEdit');
+    Route::put('/profile/password', [UserController::class, 'passwordUpdate'])->name('home.profile.passwordUpdate');
 });
 
 
