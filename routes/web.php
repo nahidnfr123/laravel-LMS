@@ -58,23 +58,7 @@ Route::middleware('auth')->group(function () {
         return view('user.profileForm');
     })->name('home.profile.edit');
 
-    Route::post('/profile/update', function (Request $request) {
-        $request->validate([
-            'name' => 'required|min:3|max:40',
-            'phone' => 'required',
-            'avatar' => 'nullable|sometimes|image|mimes:jpg,png,jpeg,gif,svg|max:4048',
-            'dob' => '',
-            'gender' => '',
-        ]);
-        $data = $request->validated();
-        $user = \App\Models\User::findOrFail(auth()->id());
-        unset($data['avatar']);
-        if ($request->hasFile('avatar')) {
-            $data['avatar'] = $this->photoUploader($request->file('avatar'));
-        }
-        $user->update($data);
-        return redirect()->route('home.profile');
-    })->name('home.profile.update');
+    Route::put('/profile/update', [\App\Http\Controllers\Controller::class, 'profileUpdate'])->name('home.profile.update');
 });
 
 
