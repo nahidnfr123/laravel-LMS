@@ -12,9 +12,11 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{ route('admin.community_category.create') }}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-plus mr-2"></i>Add
-                </a>
+                @can('create_community_category')
+                    <a href="{{ route('admin.community_category.create') }}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-plus mr-2"></i>Add
+                    </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -45,8 +47,12 @@
                                     <form action="{{ route('admin.community_category.destroy', $category->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.community_category.edit', $category->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
-                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
+                                        @can('update_community_category')
+                                            <a href="{{route('admin.community_category.edit', $category->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
+                                        @endcan
+                                        @can('delete_community_category')
+                                            <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
+                                        @endcan
                                     </form>
                                 </td>
                             </tr>

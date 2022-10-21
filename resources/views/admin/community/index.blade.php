@@ -12,9 +12,11 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{ route('admin.community_post.create') }}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-plus mr-2"></i>Add
-                </a>
+                @can('view_community_post')
+                    <a href="{{ route('admin.community_post.create') }}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-plus mr-2"></i>Add
+                    </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -61,15 +63,19 @@
                                     <form action="{{ route('admin.community_post.destroy', $post->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.community_post.edit', $post->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
-                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
+                                        @can('update_community_post')
+                                            <a href="{{route('admin.community_post.edit', $post->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
+                                        @endcan
+
+                                        @can('delete_community_post')
+                                            <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
+                                        @endcan
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>

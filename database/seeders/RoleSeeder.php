@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -16,19 +16,25 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
+        $permissions = Permission::defaultPermissions();
+
+        foreach ($permissions as $perms) {
+            Permission::create(['name' => $perms]);
+        }
+
         $roles = [
             'admin',
             'teacher',
             'student',
         ];
         foreach ($roles as $role) {
-            Role::firstOrCreate(['name' => $role]);
+            Role::create(['name' => $role]);
         }
-        $permissions = [
-            "view dashboard",
-            "view dashboard",
-        ];
 
-        Role::where('name', 'admin')->first()->syncPermissions(Permission::all());
+        $admin = Role::findByName('admin');
+
+        foreach (\Spatie\Permission\Models\Permission::all() as $permission) {
+            $admin->givePermissionTo($permission->name);
+        }
     }
 }

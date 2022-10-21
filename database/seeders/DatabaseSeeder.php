@@ -72,10 +72,10 @@ class DatabaseSeeder extends Seeder
             'phone' => '01212121214',
         ]);
 
-//        $admin->assignRole('teacher');
-//        $mayesha->assignRole('teacher');
-//        $student1->assignRole('student');
-//        $student2->assignRole('student');
+        $admin->assignRole('teacher');
+        $mayesha->assignRole('teacher');
+        $student1->assignRole('student');
+        $student2->assignRole('student');
 
         $course1 = Course::create([
             'title' => 'Course 1 (Paid)',
