@@ -21,6 +21,16 @@
             <div class="col-12 col-lg-6">
                 <div class="Contact_Form_DIV bg-gray wow fadeInDown">
                     <h1 style="text-align:center;">Get in touch...</h1><br>
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <ul>

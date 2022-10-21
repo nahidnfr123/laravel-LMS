@@ -12,4 +12,9 @@ class ContactUs extends Model
     protected $fillable = [
         'name', 'email', 'phone', 'message', 'seen', 'created_at', 'replied',
     ];
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

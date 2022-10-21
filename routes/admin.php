@@ -5,6 +5,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CommunityCategoryController;
 use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\CommunityTagsController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
@@ -36,4 +37,6 @@ Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->gro
     Route::get('/orders/{id}/accept', [OrderController::class, 'accept'])->name('orders.accept');
     Route::get('/orders/{id}/reject', [OrderController::class, 'reject'])->name('orders.reject');
     Route::resource('/orders', OrderController::class)->name('*', 'orders');
+
+    Route::resource('/content-us', ContactUsController::class)->name('*', 'content-us');
 });

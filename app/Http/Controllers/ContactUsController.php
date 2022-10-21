@@ -13,6 +13,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class ContactUsController extends Controller
 {
@@ -23,17 +25,18 @@ class ContactUsController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        return view('contact_us');
+        $contacts = ContactUs::all();
+        return view('admin.contact.index', compact('contacts'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): Application|Factory|View
     {
-        //
+        return view('contact_us');
     }
 
     /**
@@ -45,10 +48,10 @@ class ContactUsController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', new NameValidate, 'min:3'],
+//            'name' => ['required', new NameValidate, 'min:3'],
             'email' => 'required|email',
-            'contact' => ['required','numeric', 'regex:/(01)[0-9]{9}/', new PhoneMinLength , new PhoneMaxLength],
-            'message' => ['required', 'string', new WordCountRule('Message body', 6, 200)],
+            'contact' => ['required', 'numeric', 'regex:/(01)[0-9]{9}/', new PhoneMinLength, new PhoneMaxLength],
+            'message' => ['required', 'string'],
             'user_id' => 'nullable',
         ], [
             'name.required' => 'Name is required.',
@@ -63,14 +66,14 @@ class ContactUsController extends Controller
             'message.required' => 'Message is required.',
         ]);
 
-        if($request->user_id == null){
+        if ($request->user_id == null) {
             $User_id = 0;
-        }else{
+        } else {
             $User_id = $request->user_id;
         }
 
-        if(str_word_count($request->message) > 200){
-            return back()->withErrors('Error', 'Contact message must be under 200 words.');
+        if (str_word_count($request->message) > 200) {
+            return back()->withErrors('error', 'Contact message must be under 200 words.');
         }
 
         ContactUs::Insert([
@@ -81,29 +84,62 @@ class ContactUsController extends Controller
             'user_id' => $User_id,
             'created_at' => Carbon::now(),
         ]);
-        return back()->with('Success', 'Your message was received. We will reply soon in your email.');
+        return back()->with('success', 'Your message was received. We will reply soon in your email.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ContactUs $contactUs
+     * @return Response
      */
-    public function show($id)
+    public function show(ContactUs $contactUs): Response
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param $id
+     * @return Application|Factory|View
+     */
+    public function edit($id): Application|Factory|View
+    {
+        $contact = ContactUs::findOrFail($id);
+        return view('admin.contact.form', compact('contact'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request, $id): RedirectResponse
+    {
+        $contact = ContactUs::findOrFail($id);
+
+        $data = [
+            'contact' => $contact,
+            'message' => $request->message,
+            'subject' => $request->subject
+        ];
+        Mail::to($contact->email)->send(new \App\Mail\ContactUs($data));
+        return redirect()->route('admin.content-us.index');
     }
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
-        //
+        ContactUs::findOrFail($id)->delete();
+        return redirect()->back();
     }
 }
