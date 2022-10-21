@@ -59,13 +59,17 @@
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         @if($order->status !== 'rejected')
-                                            <a href="{{route('admin.orders.reject', $order->id)}}" class="btn btn-xs btn-primary rounded-lg">
-                                                Reject Payment
-                                            </a>
+                                            @can('reject_order')
+                                                <a href="{{route('admin.orders.reject', $order->id)}}" class="btn btn-xs btn-primary rounded-lg">
+                                                    Reject Payment
+                                                </a>
+                                            @endcan
                                         @else
-                                            <a href="{{route('admin.orders.accept', $order->id)}}" class="btn btn-xs btn-success rounded-lg">
-                                                Accept Payment
-                                            </a>
+                                            @can('accept_order')
+                                                <a href="{{route('admin.orders.accept', $order->id)}}" class="btn btn-xs btn-success rounded-lg">
+                                                    Accept Payment
+                                                </a>
+                                            @endcan
                                         @endif
                                         {{--                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>--}}
                                     </form>
@@ -74,7 +78,6 @@
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>

@@ -41,6 +41,8 @@ class Permission extends \Spatie\Permission\Models\Permission
 
             'view_order',
             'update_order',
+            'accept_order',
+            'reject_order',
             'create_order',
             'delete_order',
 
