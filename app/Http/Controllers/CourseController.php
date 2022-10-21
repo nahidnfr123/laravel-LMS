@@ -26,6 +26,7 @@ class CourseController extends Controller
     {
         $prefix = $request->route()->getPrefix();
         if ($prefix === '/admin' || $prefix === 'admin/' || $prefix === 'admin') {
+            abort_if(!auth()->user()->can('view_course'), 403);
             $courses = Course::all();
             return view('admin.course.index', compact('courses'));
         }
@@ -126,6 +127,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course): RedirectResponse
     {
+        abort_if(!auth()->user()->can('delete_course'), 403);
         $course->delete();
         return redirect()->back();
     }

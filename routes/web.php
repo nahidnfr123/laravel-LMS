@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
         return view('user.mycourses', compact('courses'));
     })->name('home.my_courses');
 
-    Route::get('/profile', [UserController::class, 'index'])->name('home.profile');
+    Route::get('/profile', [UserController::class, 'show'])->name('home.profile.show');
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('home.profile.edit');
     Route::put('/profile/update', [UserController::class, 'update'])->name('home.profile.update');
     Route::get('/profile/password', [UserController::class, 'passwordEdit'])->name('home.profile.passwordEdit');

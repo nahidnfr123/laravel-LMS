@@ -13,12 +13,18 @@ use App\Http\Controllers\LiveClassController;
 use App\Http\Controllers\McqController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('index');
+
+
+    Route::get('/user/{id}/manage', [UserController::class, 'manage'])->name('manage');
+    Route::resource('/user', UserController::class)->name('*', 'user');
+
 //    Route::get('/course', [\App\Http\Controllers\CourseController::class, 'adminIndex']);
     Route::resource('/course', CourseController::class)->name('*', 'course');
     Route::resource('/section', SectionController::class)->name('*', 'section');
