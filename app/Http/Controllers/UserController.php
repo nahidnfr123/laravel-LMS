@@ -37,8 +37,15 @@ class UserController extends Controller
         return view('admin.users.manage', compact('user', 'userPermissions', 'roles', 'permissions'));
     }
 
-    public function manageUpdate($id): \Illuminate\Http\RedirectResponse
+    public function manageUpdate(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
+        $user = User::findOrFail($id);
+        if ($request->permissions && count($request->permissions)) {
+            $permissions = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
+            if ($permissions) {
+                $user->syncPermissions($permissions);
+            }
+        }
         return redirect()->route('admin.user.index');
     }
 
