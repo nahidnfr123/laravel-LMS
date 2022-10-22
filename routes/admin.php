@@ -22,7 +22,8 @@ Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->gro
     })->name('index');
 
 
-    Route::get('/user/{id}/manage', [UserController::class, 'manage'])->name('manage');
+    Route::get('/user/{id}/manage', [UserController::class, 'manage'])->name('user.manage');
+    Route::post('/user/{id}/manageUpdate', [UserController::class, 'manageUpdate'])->name('user.manageUpdate');
     Route::resource('/user', UserController::class)->name('*', 'user');
 
 //    Route::get('/course', [\App\Http\Controllers\CourseController::class, 'adminIndex']);

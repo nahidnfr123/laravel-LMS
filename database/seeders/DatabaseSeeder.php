@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '01212121214',
         ]);
 
-        $admin->assignRole('teacher');
+        $admin->assignRole('admin');
         $mayesha->assignRole('teacher');
         $student1->assignRole('student');
         $student2->assignRole('student');

@@ -29,7 +29,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.user.manageUpdate', $user->id)}}" method="POST" enctype="multipart/form-data">
                             @csrf()
                             @method('POST')
                             <div class="row">
@@ -78,6 +78,31 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2>Permission:</h2>
+                                    <div class="row">
+                                        @foreach($permissions as $permission)
+                                            <div class="col-4">
+                                                <div class="form-check form-check-flat form-check-primary">
+                                                    <label class="form-check-label">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="form-check-input"
+                                                            @if (old('permissions')) checked @elseif(in_array($permission->name, $userPermissions, false)) checked @endif
+                                                            name="permissions[]"
+                                                            value="{{$permission->id}}">
+                                                        {{$permission->name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>

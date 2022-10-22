@@ -31,10 +31,17 @@ class UserController extends Controller
     public function manage($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $user = User::findOrFail($id);
+        $userPermissions = $user->getAllPermissions()->pluck('name')->toArray();
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.users.manage', compact('user', 'roles', 'permissions'));
+        return view('admin.users.manage', compact('user', 'userPermissions', 'roles', 'permissions'));
     }
+
+    public function manageUpdate($id): \Illuminate\Http\RedirectResponse
+    {
+        return redirect()->route('admin.user.index');
+    }
+
 
     public function update(Request $request): \Illuminate\Http\RedirectResponse
     {
