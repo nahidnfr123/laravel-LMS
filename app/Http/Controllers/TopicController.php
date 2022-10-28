@@ -73,7 +73,7 @@ class TopicController extends Controller
     {
         $semester = Semester::findOrFail($topic->semester_id);
         $action = URL::route('admin.semester.update', $semester->id);
-        return view('admin.topic.form', compact('semester', 'semester', 'action'));
+        return view('admin.topic.form', compact('topic', 'semester', 'action'));
     }
 
     /**

@@ -6,10 +6,10 @@
             <div class="card">
                 <div class="card-body">
                     <h1>
-                        @if ($semester->created_at)
-                            Edit Semester
+                        @if ($topic->created_at)
+                            Edit Subject
                         @else
-                            Add Semester to {{$subject->short_title}}
+                            Add Subject to {{$semester->short_title}}
                         @endif
                     </h1>
                     @if (count($errors) > 0)
@@ -22,14 +22,14 @@
                         </div>
                     @endif
                     <form class="forms-sample" action="{{ $action }}" method="POST" enctype="multipart/form-data">
-                        @if ($semester->created_at)
+                        @if ($topic->created_at)
                             @method('PUT')
                         @else
                             @method('POST')
                         @endif
                         @csrf
                         <div class="row">
-                            <input type="hidden" value="{{$subject->id}}" name="subject_id">
+                            <input type="hidden" value="{{$semester->id}}" name="semester_id">
                             <div class="col-12 col-sm-6 form-group">
                                 <label for="title">title</label>
                                 <input
@@ -38,7 +38,7 @@
                                     id="title"
                                     name="title"
                                     placeholder="title"
-                                    value="{{old('title', $semester->title)}}"
+                                    value="{{old('title', $topic->title)}}"
                                 >
                             </div>
 
@@ -50,18 +50,7 @@
                                     id="short_title"
                                     name="short_title"
                                     placeholder="short_title"
-                                    value="{{old('short_title', $semester->short_title)}}"
-                                >
-                            </div>
-                            <div class="col-12 col-sm-6 form-group">
-                                <label for="duration">duration</label>
-                                <input
-                                    type="number"
-                                    class="form-control @error('duration') is-invalid @enderror"
-                                    id="duration"
-                                    name="duration"
-                                    placeholder="duration"
-                                    value="{{old('duration', $semester->duration)}}"
+                                    value="{{old('short_title', $topic->short_title)}}"
                                 >
                             </div>
                         </div>

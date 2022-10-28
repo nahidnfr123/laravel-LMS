@@ -17,6 +17,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,7 @@ Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->gro
     ////// *** ///////
     Route::resource('/subject', SubjectController::class)->name('*', 'subject');
     Route::resource('/semester', SemesterController::class)->name('*', 'semester');
-    Route::resource('/topic', TopicsController::class)->name('*', 'topic');
+    Route::resource('/topic', TopicController::class)->name('*', 'topic');
     Route::resource('/marks', MarkController::class)->name('*', 'marks');
     Route::resource('/clas-attendance', ClasAttendanceController::class)->name('*', 'clas-attendance');
     ////// *** ///////
