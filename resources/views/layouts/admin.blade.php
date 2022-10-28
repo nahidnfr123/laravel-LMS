@@ -108,6 +108,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-university" aria-expanded="false" aria-controls="ui-Courses">
+                        <i class="typcn typcn-briefcase menu-icon"></i>
+                        <span class="menu-title">+++</span>
+                        <i class="typcn typcn-chevron-right menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-university">
+                        <ul class="nav flex-column sub-menu">
+                            {{--                            <li class="nav-item"><a class="nav-link" href="">Course Categories</a></li>--}}
+                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.subject.index') }}">Subjects</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-Courses" aria-expanded="false" aria-controls="ui-Courses">
                         <i class="typcn typcn-briefcase menu-icon"></i>
                         <span class="menu-title">Manage Courses</span>

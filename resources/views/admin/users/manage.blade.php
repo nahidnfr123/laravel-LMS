@@ -79,7 +79,7 @@
                                                             @if (old('permissions')) checked @elseif(in_array($permission->name, $userPermissions, false)) checked @endif
                                                             name="permissions[]"
                                                             value="{{$permission->id}}">
-                                                        {{$permission->name}}
+                                                        {{ ucwords(str_replace("_"," ",$permission->name)) }}
                                                     </label>
                                                 </div>
                                             </div>

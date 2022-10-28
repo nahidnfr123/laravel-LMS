@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\ClasAttendanceController;
 use App\Http\Controllers\CommunityCategoryController;
 use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\CommunityTagsController;
@@ -10,9 +11,13 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\LiveClassController;
+use App\Http\Controllers\MarkController;
 use App\Http\Controllers\McqController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +26,13 @@ Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->gro
         return view('admin.index');
     })->name('index');
 
+    ////// *** ///////
+    Route::resource('/subject', SubjectController::class)->name('*', 'subject');
+    Route::resource('/semester', SemesterController::class)->name('*', 'semester');
+    Route::resource('/topic', TopicsController::class)->name('*', 'topic');
+    Route::resource('/marks', MarkController::class)->name('*', 'marks');
+    Route::resource('/clas-attendance', ClasAttendanceController::class)->name('*', 'clas-attendance');
+    ////// *** ///////
 
     Route::get('/user/{id}/manage', [UserController::class, 'manage'])->name('user.manage');
     Route::post('/user/{id}/manageUpdate', [UserController::class, 'manageUpdate'])->name('user.manageUpdate');

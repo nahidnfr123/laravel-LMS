@@ -14,6 +14,31 @@ class Permission extends \Spatie\Permission\Models\Permission
 
             'manage_roles_and_permissions',
 
+            'view_attendance',
+            'update_attendance',
+            'create_attendance',
+            'delete_attendance',
+
+            'view_subject',
+            'update_subject',
+            'create_subject',
+            'delete_subject',
+
+            'view_semester',
+            'update_semester',
+            'create_semester',
+            'delete_semester',
+
+            'view_topic',
+            'update_topic',
+            'create_topic',
+            'delete_topic',
+
+            'view_marks',
+            'update_marks',
+            'create_marks',
+            'delete_marks',
+
             'view_user',
             'update_user',
             'create_user',
