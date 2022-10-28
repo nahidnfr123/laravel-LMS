@@ -13,7 +13,7 @@ class StoreSemesterRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreSemesterRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'subject_id' => 'required',
+            'title' => 'required',
+            'short_title' => 'required',
+            'duration' => 'required',
         ];
     }
 }

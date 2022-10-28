@@ -32,10 +32,11 @@ class SemesterController extends Controller
      */
     public function create(): View|Factory|Application
     {
-        $subjects = Subject::all();
+        $subject_id = request('subject_id') ?? 0;
+        $subject = Subject::findOrFail($subject_id);
         $semester = new Semester();
         $action = URL::route('admin.semester.store');
-        return view('admin.semester.form', compact('semester', 'action'));
+        return view('admin.semester.form', compact('semester', 'subject', 'action'));
     }
 
     /**
@@ -46,19 +47,19 @@ class SemesterController extends Controller
      */
     public function store(StoreSemesterRequest $request): RedirectResponse
     {
-        Semester::create($request->validated());
-        return redirect()->route('admin.semester.index');
+        $semester = Semester::create($request->validated());
+        return redirect()->route('admin.subject.show', $semester->subject_id);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Semester $semester
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function show(Semester $semester)
+    public function show(Semester $semester): View|Factory|Application
     {
-        //
+        return view('admin.semester.show', compact('semester'));
     }
 
     /**
@@ -67,10 +68,11 @@ class SemesterController extends Controller
      * @param Semester $semester
      * @return Application|Factory|View
      */
-    public function edit(Semester $semester)
+    public function edit(Semester $semester): Factory|View|Application
     {
+        $subject = Subject::findOrFail($semester->subject_id);
         $action = URL::route('admin.semester.update', $semester->id);
-        return view('admin.semester.form', compact('semester', 'action'));
+        return view('admin.semester.form', compact('semester', 'subject', 'action'));
     }
 
     /**
@@ -83,7 +85,7 @@ class SemesterController extends Controller
     public function update(UpdateSemesterRequest $request, Semester $semester): RedirectResponse
     {
         $semester->update($request->validated());
-        return redirect()->route('admin.semester.index');
+        return redirect()->route('admin.subject.show', $semester->subject_id);
     }
 
     /**

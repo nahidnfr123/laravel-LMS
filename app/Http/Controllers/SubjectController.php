@@ -52,11 +52,11 @@ class SubjectController extends Controller
      * Display the specified resource.
      *
      * @param Subject $subject
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function show(Subject $subject)
+    public function show(Subject $subject): View|Factory|Application
     {
-        //
+        return view('admin.subject.show', compact('subject'));
     }
 
     /**

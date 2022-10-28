@@ -7,20 +7,19 @@
 @section('content')
     <div class="row">
         <div class="col-sm-6">
-            <h3 class="mb-0 font-weight-bold">Subject</h3>
-            <p></p>
+            <h3 class="mb-0 font-weight-bold">{{ $subject->title }}</h3>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                @can('view_community_post')
-                    <a href="{{ route('admin.subject.create') }}" class="btn btn-sm bg-white btn-icon-text border">
-                        <i class="typcn typcn-plus mr-2"></i>Add
-                    </a>
-                @endcan
+                <a href="{{route('admin.subject.edit', $subject->id)}}" class="btn btn-sm bg-white btn-icon-text border">
+                    <i class="typcn typcn-pencil mr-2"></i>Edit
+                </a>
+                <a href="{{route('admin.semester.create', ['subject_id'=>$subject->id])}}" class="btn btn-xs btn-success rounded-lg">
+                    <i class="typcn typcn-plus mr-2"></i> Add semester
+                </a>
             </div>
         </div>
     </div>
-
     <div class="row  mt-3">
         <div class="col-12 d-flex grid-margin stretch-card">
             <div class="card">
@@ -35,28 +34,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($subjects as $subject)
+                        @foreach($subject->semester as $semester)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.subject.show', $subject->id) }}">
-                                        <div class="mt-1">
-                                            <strong>{{$subject->title}}</strong>
-                                        </div>
+                                    <a href="{{ route('admin.semester.show', $semester->id) }}">
+                                        <strong>{{$semester->title}}</strong>
                                     </a>
                                 </td>
-                                <td>{{$subject->short_title}}</td>
-                                <td>{{$subject->duration}}</td>
+                                <td>{{$semester->short_title}}</td>
+                                <td>{{$semester->duration}}</td>
                                 <td>
-                                    <form action="{{ route('admin.subject.destroy', $subject->id) }}" method="POST">
+                                    <form action="{{ route('admin.semester.destroy', $semester->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        @can('update_community_post')
-                                            <a href="{{route('admin.subject.edit', $subject->id)}}" class="btn btn-xs btn-primary rounded-lg">
+                                        @can('update_semester')
+                                            <a href="{{route('admin.semester.edit', $semester->id)}}" class="btn btn-xs btn-primary rounded-lg">
                                                 <i class="typcn typcn-pencil mr-2"></i>Edit
                                             </a>
                                         @endcan
 
-                                        @can('delete_community_post')
+                                        @can('delete_semester')
                                             <button type="submit" class="btn btn-xs btn-danger rounded-lg">
                                                 <i class="typcn typcn-trash mr-2"></i>Delete
                                             </button>

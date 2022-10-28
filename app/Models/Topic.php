@@ -10,4 +10,9 @@ class Topic extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function semester(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Semester::class);
+    }
 }

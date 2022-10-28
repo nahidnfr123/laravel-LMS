@@ -10,4 +10,9 @@ class Subject extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function semester(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Semester::class);
+    }
 }
