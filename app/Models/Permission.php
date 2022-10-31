@@ -29,10 +29,20 @@ class Permission extends \Spatie\Permission\Models\Permission
             'create_semester',
             'delete_semester',
 
+            'view_batch',
+            'update_batch',
+            'create_batch',
+            'delete_batch',
+
             'view_topic',
             'update_topic',
             'create_topic',
             'delete_topic',
+
+            'view_clas',
+            'update_clas',
+            'create_clas',
+            'delete_clas',
 
             'view_marks',
             'update_marks',

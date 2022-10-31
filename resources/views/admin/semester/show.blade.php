@@ -24,6 +24,8 @@
         <div class="col-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    <h3>Topic</h3>
+                    <hr class="mb-2">
                     <table id="datatable" class="display">
                         <thead>
                         <tr>
@@ -37,7 +39,7 @@
                         @foreach($semester->topic as $topic)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.semester.show', $topic->id) }}">
+                                    <a href="{{ route('admin.topic.show', $topic->id) }}">
                                         <strong>{{$topic->title}}</strong>
                                     </a>
                                 </td>

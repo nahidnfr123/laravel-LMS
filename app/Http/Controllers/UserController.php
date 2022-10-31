@@ -6,6 +6,9 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\MatchOldPassword;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,6 +18,16 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('admin.users.index', compact('users'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function create(): View|Factory|Application
+    {
+        return \view('admin.users.form');
     }
 
     public function show(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

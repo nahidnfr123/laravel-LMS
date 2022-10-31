@@ -7,69 +7,55 @@
 @section('content')
     <div class="row">
         <div class="col-sm-6">
-            <h3 class="mb-0 font-weight-bold">Subject</h3>
-            <p></p>
+            <h3 class="mb-0 font-weight-bold">{{ $batch->title }}</h3>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                @can('create_subject')
-                    <a href="{{ route('admin.subject.create') }}" class="btn btn-sm bg-white btn-icon-text border">
-                        <i class="typcn typcn-plus mr-2"></i>Add
-                    </a>
-                @endcan
+                <a href="{{route('admin.subject.edit', $batch->id)}}" class="btn btn-sm bg-white btn-icon-text border">
+                    <i class="typcn typcn-pencil mr-2"></i>Edit
+                </a>
+                <a href="{{route('admin.semester.create', ['subject_id'=>$batch->id])}}" class="btn btn-xs btn-success rounded-lg">
+                    <i class="typcn typcn-plus mr-2"></i> Add semester
+                </a>
             </div>
         </div>
     </div>
-
     <div class="row  mt-3">
         <div class="col-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    <h3>Semesters</h3>
+                    <hr class="mb-2">
                     <table id="datatable" class="display">
                         <thead>
                         <tr>
                             <th>Title</th>
                             <th>Short Title</th>
                             <th>Duration</th>
-                            <th>total_semesters</th>
-                            <th>semester_duration</th>
-                            <th>semesters</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($subjects as $subject)
+                        @foreach($batch->semester as $semester)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.subject.show', $subject->id) }}">
-                                        <strong>{{$subject->title}}</strong>
+                                    <a href="{{ route('admin.semester.show', $semester->id) }}">
+                                        <strong>{{$semester->title}}</strong>
                                     </a>
                                 </td>
-                                <td>{{$subject->short_title}}</td>
-                                <td>{{$subject->duration}}</td>
-                                <td>{{$subject->total_semesters}}</td>
-                                <td>{{$subject->semester_duration}}</td>
+                                <td>{{$semester->short_title}}</td>
+                                <td>{{$semester->duration}}</td>
                                 <td>
-                                    @foreach($subject->semester as $semester)
-                                        <div>
-                                            {{ $semester->short_title }},
-                                        </div>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <form action="{{ route('admin.subject.destroy', $subject->id) }}" method="POST">
+                                    <form action="{{ route('admin.semester.destroy', $semester->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.semester.create', ['subject_id'=>$subject->id])}}" class="btn btn-xs btn-success rounded-lg">
-                                            <i class="typcn typcn-plus mr-2"></i> Add semester
-                                        </a>
-                                        @can('update_subject')
-                                            <a href="{{route('admin.subject.edit', $subject->id)}}" class="btn btn-xs btn-primary rounded-lg">
+                                        @can('update_semester')
+                                            <a href="{{route('admin.semester.edit', $semester->id)}}" class="btn btn-xs btn-primary rounded-lg">
                                                 <i class="typcn typcn-pencil mr-2"></i>Edit
                                             </a>
                                         @endcan
 
-                                        @can('delete_subject')
+                                        @can('delete_semester')
                                             <button type="submit" class="btn btn-xs btn-danger rounded-lg">
                                                 <i class="typcn typcn-trash mr-2"></i>Delete
                                             </button>

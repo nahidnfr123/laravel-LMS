@@ -10,4 +10,9 @@ class Clas extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function topic(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Topic::class);
+    }
 }

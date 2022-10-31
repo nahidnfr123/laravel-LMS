@@ -15,4 +15,9 @@ class Topic extends Model
     {
         return $this->belongsTo(Semester::class);
     }
+
+    public function clas(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Clas::class);
+    }
 }

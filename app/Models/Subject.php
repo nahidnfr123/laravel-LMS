@@ -15,4 +15,9 @@ class Subject extends Model
     {
         return $this->hasMany(Semester::class);
     }
+
+    public function batch(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Batch::class);
+    }
 }

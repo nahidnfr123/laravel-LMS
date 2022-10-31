@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Assignment;
+use App\Models\Batch;
+use App\Models\Clas;
 use App\Models\CommunityCategory;
 use App\Models\CommunityTags;
 use App\Models\Content;
@@ -14,6 +16,9 @@ use App\Models\Note;
 use App\Models\Pdf;
 use App\Models\RecordedClass;
 use App\Models\Section;
+use App\Models\Semester;
+use App\Models\Subject;
+use App\Models\Topic;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -26,6 +31,7 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      *
      * @return void
+     * @throws \JsonException
      */
     public function run()
     {
@@ -162,5 +168,71 @@ class DatabaseSeeder extends Seeder
 
         $course2->users()->detach($student2->id);
         $course2->users()->attach($student2->id, ['status' => 'active']);
+
+        Subject::create([
+            'title' => 'Business Information Technology',
+            'short_title' => 'bit',
+            'duration' => 4,
+            'total_semesters' => 8,
+            'semester_duration' => 6,
+        ]);
+
+        Semester::create([
+            'subject_id' => 1,
+            'title' => 'International foundation Year',
+            'short_title' => 'ify',
+            'duration' => 12,
+        ]);
+        Semester::create([
+            'subject_id' => 1,
+            'title' => 'Level 4 Diploma in Computing',
+            'short_title' => 'l4dc',
+            'duration' => 12,
+        ]);
+        Semester::create([
+            'subject_id' => 1,
+            'title' => 'Level 5 Diploma in Computing',
+            'short_title' => 'l5dc',
+            'duration' => 12,
+        ]);
+        Semester::create([
+            'subject_id' => 1,
+            'title' => 'Level 5 Diploma in Computing',
+            'short_title' => 'l5dc',
+            'duration' => 12,
+        ]);
+
+        Topic::create([
+            'semester_id' => 1,
+            'title' => 'Dynamic Website',
+            'short_title' => 'dw',
+        ]);
+
+        Topic::create([
+            'semester_id' => 1,
+            'title' => 'Database Design And Development',
+            'short_title' => 'ddd',
+        ]);
+
+        Batch::create([
+            'semester_id' => 1,
+            'subject_id' => 1,
+            'batch_id' => 'ify45',
+        ]);
+
+        Batch::create([
+            'semester_id' => 1,
+            'subject_id' => 1,
+            'batch_id' => 'ify46',
+        ]);
+
+
+        Clas::create([
+            'topic_id' => 1,
+            'semester_id' => 1,
+            'batch_id' => 1,
+            'class_time' => Carbon::now(),
+            'duration' => 60,
+        ]);
     }
 }

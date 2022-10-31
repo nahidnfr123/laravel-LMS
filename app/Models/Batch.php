@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Semester extends Model
+class Batch extends Model
 {
     use HasFactory;
 
@@ -16,13 +16,8 @@ class Semester extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function topic(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function semester(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(Topic::class);
-    }
-
-    public function batch(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Batch::class);
+        return $this->belongsTo(Semester::class);
     }
 }

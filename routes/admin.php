@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ClasAttendanceController;
+use App\Http\Controllers\ClasController;
 use App\Http\Controllers\CommunityCategoryController;
 use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\CommunityTagsController;
@@ -30,7 +32,9 @@ Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->gro
     ////// *** ///////
     Route::resource('/subject', SubjectController::class)->name('*', 'subject');
     Route::resource('/semester', SemesterController::class)->name('*', 'semester');
+    Route::resource('/batch', BatchController::class)->name('*', 'batch');
     Route::resource('/topic', TopicController::class)->name('*', 'topic');
+    Route::resource('/clas', ClasController::class)->name('*', 'clas');
     Route::resource('/marks', MarkController::class)->name('*', 'marks');
     Route::resource('/clas-attendance', ClasAttendanceController::class)->name('*', 'clas-attendance');
     ////// *** ///////

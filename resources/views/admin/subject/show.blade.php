@@ -15,7 +15,10 @@
                     <i class="typcn typcn-pencil mr-2"></i>Edit
                 </a>
                 <a href="{{route('admin.semester.create', ['subject_id'=>$subject->id])}}" class="btn btn-xs btn-success rounded-lg">
-                    <i class="typcn typcn-plus mr-2"></i> Add semester
+                    <i class="typcn typcn-plus mr-2"></i> Add Semester
+                </a>
+                <a href="{{route('admin.batch.create')}}" class="btn btn-xs btn-warning rounded-lg">
+                    <i class="typcn typcn-plus mr-2"></i> Add Batch
                 </a>
             </div>
         </div>
@@ -24,6 +27,8 @@
         <div class="col-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    <h3>Semesters</h3>
+                    <hr class="mb-2">
                     <table id="datatable" class="display">
                         <thead>
                         <tr>
@@ -47,6 +52,10 @@
                                     <form action="{{ route('admin.semester.destroy', $semester->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
+                                        <a href="{{route('admin.batch.index', ['semester_id'=>$semester->id])}}" class="btn btn-xs btn-success rounded-lg">
+                                            Batch
+                                        </a>
+
                                         @can('update_semester')
                                             <a href="{{route('admin.semester.edit', $semester->id)}}" class="btn btn-xs btn-primary rounded-lg">
                                                 <i class="typcn typcn-pencil mr-2"></i>Edit
