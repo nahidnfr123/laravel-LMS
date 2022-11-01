@@ -42,18 +42,18 @@
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="form-group">
-                                        <label for="email">email:</label>
-                                        <input type="email" name="email" id="email"
-                                               class="form-control @error('email') is-invalid @enderror"
-                                               value="{{old('email')}}">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 mb-3">
-                                    <div class="form-group">
                                         <label for="phone">Phone:</label>
                                         <input type="tel" name="phone" id="phone"
                                                class="form-control @error('phone') is-invalid @enderror"
                                                value="{{old('phone')}}">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="email">email:</label>
+                                        <input type="email" name="email" id="email"
+                                               class="form-control @error('email') is-invalid @enderror"
+                                               value="{{old('email')}}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
@@ -82,16 +82,16 @@
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="form-group">
                                         <label for="role">Role:</label>
-                                        <select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
-                                            <option value="student">student</option>
-                                            <option value="teacher">teacher</option>
-                                            <option value="admin">admin</option>
+                                        <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" style="padding: 20px;">
+                                            <option value="student" @if (old('role')) selected @endif>student</option>
+                                            <option value="teacher" @if (old('role')) selected @endif>teacher</option>
+                                            <option value="admin" @if (old('role')) selected @endif>admin</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="form-group">
-                                        <div>Gender:</div>
+                                        <label>Gender:</label>
                                         <div class="form-control">
                                             <label style="margin-right: 20px">
                                                 <input type="radio" name="gender" value="male" @if (old('gender')) checked @endif> Male
