@@ -50,7 +50,7 @@
                                 <td>{{$b->subject->title}}</td>
                                 <td>{{$b->semester->title}}</td>
                                 <td>
-                                    <form action="{{ route('admin.batch.destroy', $b->id) }}" method="POST">
+                                    <form action="{{ route('admin.batch.destroy', ['batch_id'=> $b->id]) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <a href="{{route('admin.user.create', $b->id)}}" class="btn btn-xs btn-success rounded-lg">

@@ -6,7 +6,7 @@
 @section('content')
     <div class="row">
         <div class="col-sm-6">
-            <h3 class="mb-0 font-weight-bold">Manage users</h3>
+            <h3 class="mb-0 font-weight-bold">Create users</h3>
             <p></p>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
@@ -37,7 +37,15 @@
                                         <label for="name">Name:</label>
                                         <input type="text" name="name" id="name"
                                                class="form-control @error('name') is-invalid @enderror"
-                                               value="{{old('name', auth()->user()->name)}}" required>
+                                               value="{{old('name')}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="email">email:</label>
+                                        <input type="email" name="email" id="email"
+                                               class="form-control @error('email') is-invalid @enderror"
+                                               value="{{old('email')}}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
@@ -45,7 +53,15 @@
                                         <label for="phone">Phone:</label>
                                         <input type="tel" name="phone" id="phone"
                                                class="form-control @error('phone') is-invalid @enderror"
-                                               value="{{old('phone', auth()->user()->phone)}}">
+                                               value="{{old('phone')}}">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="password">Password:</label>
+                                        <input type="password" name="password" id="password"
+                                               class="form-control @error('password') is-invalid @enderror"
+                                               value="{{old('password')}}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
@@ -53,7 +69,7 @@
                                         <label for="dob">Dob:</label>
                                         <input type="date" name="dob" id="dob"
                                                class="form-control @error('dob') is-invalid @enderror"
-                                               value="{{old('dob', auth()->user()->dob)}}">
+                                               value="{{old('dob')}}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
@@ -65,13 +81,23 @@
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="form-group">
+                                        <label for="role">Role:</label>
+                                        <select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
+                                            <option value="student">student</option>
+                                            <option value="teacher">teacher</option>
+                                            <option value="admin">admin</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <div class="form-group">
                                         <div>Gender:</div>
                                         <div class="form-control">
                                             <label style="margin-right: 20px">
-                                                <input type="radio" name="gender" value="male" @if (old('gender', auth()->user()->gender) == 'male') checked @endif> Male
+                                                <input type="radio" name="gender" value="male" @if (old('gender')) checked @endif> Male
                                             </label>
                                             <label>
-                                                <input type="radio" name="gender" value="female" @if (old('gender', auth()->user()->gender) == 'female') checked @endif> Female
+                                                <input type="radio" name="gender" value="female" @if (old('gender')) checked @endif> Female
                                             </label>
                                         </div>
                                     </div>
