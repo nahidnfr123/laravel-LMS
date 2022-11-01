@@ -83,9 +83,9 @@
                                     <div class="form-group">
                                         <label for="role">Role:</label>
                                         <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" style="padding: 20px;">
-                                            <option value="student" @if (old('role')) selected @endif>student</option>
-                                            <option value="teacher" @if (old('role')) selected @endif>teacher</option>
-                                            <option value="admin" @if (old('role')) selected @endif>admin</option>
+                                            <option value="student" @if (old('role')) selected @endif>Student</option>
+                                            <option value="teacher" @if (old('role')) selected @endif>Teacher</option>
+                                            <option value="admin" @if (old('role')) selected @endif>Admin</option>
                                         </select>
                                     </div>
                                 </div>
