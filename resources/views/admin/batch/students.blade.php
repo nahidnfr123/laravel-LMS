@@ -7,21 +7,17 @@
 @section('content')
     <div class="row">
         <div class="col-sm-6">
-            @if($semester)
-                <h3>{{$semester->title}} - Batch,</h3>
+            @if($batch)
+                <h3>{{$batch->batch_id}} - Students,</h3>
                 <hr class="mb-2">
             @else
-                <h3 class="mb-0 font-weight-bold">All Batch</h3>
+                <h3 class="mb-0 font-weight-bold">All Students</h3>
                 <p></p>
             @endif
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                @can('view_batch')
-                    <a href="{{ route('admin.batch.create') }}" class="btn btn-sm bg-white btn-icon-text border">
-                        <i class="typcn typcn-plus mr-2"></i>Add
-                    </a>
-                @endcan
+
             </div>
         </div>
     </div>
@@ -36,33 +32,23 @@
                             <th>Batch</th>
                             <th>Subject</th>
                             <th>Semester</th>
-                            <th>Students</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($batch as $b)
+                        @foreach($batch->users as $user)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.batch.show', $b->id) }}">
-                                        <strong>{{$b->batch_id}}</strong>
-                                    </a>
+                                    <strong>{{$user->name}}</strong>
                                 </td>
-                                <td>{{$b->subject->title}}</td>
-                                <td>{{$b->semester->title}}</td>
+                                <td>{{$user->email}}</td>
+                                <td>{{$user->phone}}</td>
                                 <td>
-                                    <a href="{{ route('admin.batch.students', ['id'=>$b->id]) }}">
-                                        <strong>Students</strong>
-                                    </a></td>
-                                <td>
-                                    <form action="{{ route('admin.batch.destroy', $b->id) }}" method="POST">
+                                    <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.user.create', ['batch_id'=> $b->id])}}" class="btn btn-xs btn-success rounded-lg">
-                                            <i class="typcn typcn-plus mr-2"></i>Add Student
-                                        </a>
                                         @can('update_batch')
-                                            <a href="{{route('admin.batch.edit', $b->id)}}" class="btn btn-xs btn-primary rounded-lg">
+                                            <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-xs btn-primary rounded-lg">
                                                 <i class="typcn typcn-pencil mr-2"></i>Edit
                                             </a>
                                         @endcan

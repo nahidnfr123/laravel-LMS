@@ -38,7 +38,7 @@ class UserController extends Controller
         return view('user.profile', compact('courses'));
     }
 
-    public function store(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $dt = Carbon::parse($request->date);
         $before18Years = $dt->subYears(16)->format('Y-m-d');
@@ -46,11 +46,12 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'digit:11', 'unique:users'],
+            'phone' => ['required', 'numeric', 'digits:11', 'unique:users'],
             'avatar' => 'nullable|sometimes|image|mimes:jpg,png,jpeg,gif,svg|max:4048',
             'dob' => ['required', 'date', 'before_or_equal:' . $before18Years],
             'gender' => ['nullable', 'string'],
             'role' => ['nullable', 'string'],
+            'batch_id' => ['required',],
             'password' => ['required', Rules\Password::defaults()],
         ], [
             'dob.before_or_equal' => 'Student Must be at-least 16 years old.'
@@ -61,8 +62,9 @@ class UserController extends Controller
             $data['avatar'] = $this->photoUploader($request->file('avatar'));
         }
         $data['password'] = Hash::make($request->password);
-        User::create($data);
-        return view('user.profile');
+        $user = User::create($data);
+        $user->assignRole($data['role']);
+        return redirect()->route('admin.batch.index');
     }
 
     public function edit(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

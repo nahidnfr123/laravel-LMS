@@ -33,6 +33,7 @@
                             @method('POST')
                             <div class="row">
                                 <div class="col-12 col-sm-6 mb-3">
+                                    <input type="hidden" hidden value="{{$_GET['batch_id'] || ''}}" name="batch_id">
                                     <div class="form-group">
                                         <label for="name">Name:</label>
                                         <input type="text" name="name" id="name"

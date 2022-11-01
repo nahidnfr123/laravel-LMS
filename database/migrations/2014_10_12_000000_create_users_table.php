@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable();
+            $table->foreignId('batch_id');
             $table->date('dob')->nullable();
             $table->enum('role', ['student', 'teacher', 'admin'])->default('student');
             $table->enum('gender', ['male', 'female', 'others'])->nullable();
