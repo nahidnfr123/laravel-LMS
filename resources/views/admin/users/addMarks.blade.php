@@ -12,7 +12,6 @@
                 <hr class="mb-2">
             @else
                 <h3 class="mb-0 font-weight-bold">All Students</h3>
-                <p></p>
             @endif
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
@@ -26,44 +25,53 @@
         <div class="col-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($batch->users as $user)
-                            <tr>
-                                <td>
-                                    <strong>{{$user->name}}</strong>
-                                </td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->phone}}</td>
-                                <td>
-                                    <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        @can('update_batch')
-                                            <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-xs btn-primary rounded-lg">
-                                                <i class="typcn typcn-pencil mr-2"></i>Edit
-                                            </a>
-                                        @endcan
+                    <h4>Add Mark</h4>
+                    <hr>
+                    <form action="{{ route('admin.marks.store', $user->id) }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
+                        <input type="hidden" name="semester_id" value="">
+                        <input type="hidden" name="user_id" value="">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="topic_id">Topic:</label>
+                                    <select id="topic_id" name="topic_id" class="form-control @error('topic_id') is-invalid @enderror" style="padding: 20px;" required>
+                                        <option value="">Select</option>
+                                        @foreach($topics as $topic)
+                                            <option value="{{$topic->id}}">{{$topic->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="total_mark">Total Mark:</label>
+                                    <input type="text" name="total_mark" id="total_mark" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="obtained_mark">Obtained Mark:</label>
+                                    <input type="text" name="obtained_mark" id="obtained_mark" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="status">Status:</label>
+                                    <select id="status" name="status" class="form-control @error('status') is-invalid @enderror" style="padding: 20px;" required>
+                                        <option value="">Select</option>
+                                        <option value="distinction">Distinction</option>
+                                        <option value="merit">Merit</option>
+                                        <option value="pass">Pass</option>
+                                        <option value="fail">Fail</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                                        @can('delete_batch')
-                                            <button type="submit" class="btn btn-xs btn-danger rounded-lg">
-                                                <i class="typcn typcn-trash mr-2"></i>Delete
-                                            </button>
-                                        @endcan
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>

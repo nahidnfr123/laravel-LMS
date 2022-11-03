@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMarkRequest;
 use App\Http\Requests\UpdateMarkRequest;
+use App\Models\Batch;
 use App\Models\Mark;
+use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class MarkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -22,18 +28,21 @@ class MarkController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): View|Factory|Application
     {
-        //
+        $user = User::findOrFail(request('user_id'));
+        $batch = Batch::findOrFail(request('batch_id'));
+        $topics = $batch->semester->topic;
+        return view('admin.users.addMarks', compact('batch', 'user', 'topics'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreMarkRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreMarkRequest $request
+     * @return Response
      */
     public function store(StoreMarkRequest $request)
     {
@@ -44,7 +53,7 @@ class MarkController extends Controller
      * Display the specified resource.
      *
      * @param Mark $mark
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Mark $mark)
     {
@@ -55,7 +64,7 @@ class MarkController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Mark $mark
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Mark $mark)
     {
@@ -65,9 +74,9 @@ class MarkController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateMarkRequest  $request
+     * @param \App\Http\Requests\UpdateMarkRequest $request
      * @param Mark $mark
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(UpdateMarkRequest $request, Mark $mark)
     {

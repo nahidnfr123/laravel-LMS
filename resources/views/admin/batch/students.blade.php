@@ -47,6 +47,9 @@
                                     <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
+                                        <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id]) }}" class="btn btn-xs btn-success rounded-lg">
+                                            <i class="typcn typcn-plus[p0- mr-2"></i>Add Student
+                                        </a>
                                         @can('update_batch')
                                             <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-xs btn-primary rounded-lg">
                                                 <i class="typcn typcn-pencil mr-2"></i>Edit
