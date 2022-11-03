@@ -30,8 +30,8 @@
                     <form action="{{ route('admin.marks.store', $user->id) }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
-                        <input type="hidden" name="semester_id" value="">
-                        <input type="hidden" name="user_id" value="">
+                        <input type="hidden" name="semester_id" value="{{old('semester_id', )}}">
+                        <input type="hidden" name="user_id" value="{{old('user_id', )}}">
                         <div class="row">
                             <div class="col-12 col-sm-6 mb-3">
                                 <div class="form-group">
@@ -47,13 +47,13 @@
                             <div class="col-12 col-sm-6 mb-3">
                                 <div class="form-group">
                                     <label for="total_mark">Total Mark:</label>
-                                    <input type="text" name="total_mark" id="total_mark" value="" class="form-control">
+                                    <input type="text" name="total_mark" id="total_mark" value="{{old('total_mark', )}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 mb-3">
                                 <div class="form-group">
                                     <label for="obtained_mark">Obtained Mark:</label>
-                                    <input type="text" name="obtained_mark" id="obtained_mark" value="" class="form-control">
+                                    <input type="text" name="obtained_mark" id="obtained_mark" value="{{old('obtained_mark', )}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 mb-3">
