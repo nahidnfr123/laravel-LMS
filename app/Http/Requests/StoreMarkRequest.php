@@ -13,7 +13,7 @@ class StoreMarkRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreMarkRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'semester_id' => 'required',
+            'topic_id' => 'required',
+            'user_id' => 'required',
+            'obtained_mark' => 'required',
+            'total_mark' => 'required',
+            'status' => 'required',
         ];
     }
 }

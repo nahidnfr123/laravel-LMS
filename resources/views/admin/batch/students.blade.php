@@ -26,6 +26,18 @@
         <div class="col-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    <h3>Topics</h3>
+                    <div>
+                        @foreach($batch->semester->topic as $topic)
+                            <a href="" class="btn btn-sm btn-warning">{{$topic->title}}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
                     <table id="datatable" class="display">
                         <thead>
                         <tr>
@@ -44,11 +56,20 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->phone}}</td>
                                 <td>
+                                    @foreach($user->batch->semester->topic as $topic)
+                                        <div>
+                                            <strong>{{$topic->title}}:</strong>
+                                            {{$topic->mark ? $topic->mark->obtained_mark : 'not marked'}}
+                                            {{$topic->mark ? '/'.$topic->mark->total_mark : ''}} ,
+                                        </div>
+                                    @endforeach
+                                </td>
+                                <td>
                                     <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id]) }}" class="btn btn-xs btn-success rounded-lg">
-                                            <i class="typcn typcn-plus[p0- mr-2"></i>Add Student
+                                            <i class="typcn typcn-plus[p0- mr-2"></i>Add Marks
                                         </a>
                                         @can('update_batch')
                                             <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-xs btn-primary rounded-lg">

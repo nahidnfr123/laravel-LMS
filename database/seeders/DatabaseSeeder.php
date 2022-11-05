@@ -68,6 +68,9 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'role' => 'student',
             'phone' => '01212121213',
+            'batch_id' => 1,
+            'semester_id' => 1,
+            'subject_id' => 1,
         ]);
 
         $student2 = User::updateOrCreate(['phone' => '01212121214'], [
@@ -76,6 +79,9 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'role' => 'student',
             'phone' => '01212121214',
+            'batch_id' => 1,
+            'semester_id' => 1,
+            'subject_id' => 1,
         ]);
 
         $admin->assignRole('admin');

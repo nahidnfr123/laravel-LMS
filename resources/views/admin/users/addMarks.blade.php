@@ -27,11 +27,11 @@
                 <div class="card-body">
                     <h4>Add Mark</h4>
                     <hr>
-                    <form action="{{ route('admin.marks.store', $user->id) }}" method="POST">
+                    <form action="{{ route('admin.marks.store') }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
-                        <input type="hidden" name="semester_id" value="{{old('semester_id', )}}">
-                        <input type="hidden" name="user_id" value="{{old('user_id', )}}">
+                        <input type="hidden" name="semester_id" value="{{old('semester_id',  $batch->semester->id )}}">
+                        <input type="hidden" name="user_id" value="{{old('user_id', $user->id )}}">
                         <div class="row">
                             <div class="col-12 col-sm-6 mb-3">
                                 <div class="form-group">
@@ -39,7 +39,7 @@
                                     <select id="topic_id" name="topic_id" class="form-control @error('topic_id') is-invalid @enderror" style="padding: 20px;" required>
                                         <option value="">Select</option>
                                         @foreach($topics as $topic)
-                                            <option value="{{$topic->id}}">{{$topic->title}}</option>
+                                            <option value="{{$topic->id}}" @if (old('topic_id') === $topic->id) selected @endif>{{$topic->title}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -61,10 +61,10 @@
                                     <label for="status">Status:</label>
                                     <select id="status" name="status" class="form-control @error('status') is-invalid @enderror" style="padding: 20px;" required>
                                         <option value="">Select</option>
-                                        <option value="distinction">Distinction</option>
-                                        <option value="merit">Merit</option>
-                                        <option value="pass">Pass</option>
-                                        <option value="fail">Fail</option>
+                                        <option value="distinction" @if (old('status') === 'distinction') selected @endif>Distinction</option>
+                                        <option value="merit" @if (old('status') === 'merit') selected @endif>Merit</option>
+                                        <option value="pass" @if (old('status') === 'pass') selected @endif>Pass</option>
+                                        <option value="fail" @if (old('status') === 'fail') selected @endif>Fail</option>
                                     </select>
                                 </div>
                             </div>

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     /**
-     * Run the migrations.
+     * Run the migrations.->nullable()
      *
      * @return void
      */
@@ -20,7 +20,9 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable();
-            $table->foreignId('batch_id');
+            $table->foreignId('subject_id')->nullable();
+            $table->foreignId('semester_id')->nullable();
+            $table->foreignId('batch_id')->nullable();
             $table->date('dob')->nullable();
             $table->enum('role', ['student', 'teacher', 'admin'])->default('student');
             $table->enum('gender', ['male', 'female', 'others'])->nullable();

@@ -84,9 +84,9 @@
                                     <div class="form-group">
                                         <label for="role">Role:</label>
                                         <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" style="padding: 20px;">
-                                            <option value="student" @if (old('role')) selected @endif>Student</option>
-                                            <option value="teacher" @if (old('role')) selected @endif>Teacher</option>
-                                            <option value="admin" @if (old('role')) selected @endif>Admin</option>
+                                            <option value="student" @if (old('role') === 'student') selected @endif>Student</option>
+                                            <option value="teacher" @if (old('role') === 'teacher') selected @endif>Teacher</option>
+                                            <option value="admin" @if (old('role') === 'admin') selected @endif>Admin</option>
                                         </select>
                                     </div>
                                 </div>
@@ -95,10 +95,10 @@
                                         <label>Gender:</label>
                                         <div class="form-control">
                                             <label style="margin-right: 20px">
-                                                <input type="radio" name="gender" value="male" @if (old('gender')) checked @endif> Male
+                                                <input type="radio" name="gender" value="male" @if (old('gender') === 'male') checked @endif> Male
                                             </label>
                                             <label>
-                                                <input type="radio" name="gender" value="female" @if (old('gender')) checked @endif> Female
+                                                <input type="radio" name="gender" value="female" @if (old('gender') === 'female') checked @endif> Female
                                             </label>
                                         </div>
                                     </div>

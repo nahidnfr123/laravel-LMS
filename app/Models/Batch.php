@@ -15,6 +15,7 @@ class Batch extends Model
     {
         return $this->hasMany(User::class);
     }
+
     public function subject(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Subject::class);
