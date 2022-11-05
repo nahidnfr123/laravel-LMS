@@ -44,6 +44,7 @@
                             <th>Batch</th>
                             <th>Subject</th>
                             <th>Semester</th>
+                            <th>Subjects</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -59,8 +60,12 @@
                                     @foreach($user->batch->semester->topic as $topic)
                                         <div>
                                             <strong>{{$topic->title}}:</strong>
-                                            {{$topic->mark ? $topic->mark->obtained_mark : 'not marked'}}
-                                            {{$topic->mark ? '/'.$topic->mark->total_mark : ''}} ,
+                                            @if($topic->mark)
+                                                {{$topic->mark->obtained_mark.'/'.$topic->mark->total_mark}} ,
+                                            @else
+                                                <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->i, 'topic_id'=>$topic->id]) }}" class="btn btn-xs btn-success rounded-lg">Add Marks
+                                                </a>
+                                            @endif
                                         </div>
                                     @endforeach
                                 </td>
@@ -68,9 +73,6 @@
                                     <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id]) }}" class="btn btn-xs btn-success rounded-lg">
-                                            <i class="typcn typcn-plus[p0- mr-2"></i>Add Marks
-                                        </a>
                                         @can('update_batch')
                                             <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-xs btn-primary rounded-lg">
                                                 <i class="typcn typcn-pencil mr-2"></i>Edit
