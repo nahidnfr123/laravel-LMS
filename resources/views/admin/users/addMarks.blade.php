@@ -25,25 +25,24 @@
         <div class="col-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4>Add Mark</h4>
+                    <h4>Add Mark for {{$topic->title}}</h4>
                     <hr>
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('admin.marks.store') }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
                         <input type="hidden" name="semester_id" value="{{old('semester_id',  $batch->semester->id )}}">
+                        <input type="hidden" name="topic_id" value="{{old('topic_id',  $topic->id )}}">
                         <input type="hidden" name="user_id" value="{{old('user_id', $user->id )}}">
                         <div class="row">
-                            <div class="col-12 col-sm-6 mb-3">
-                                <div class="form-group">
-                                    <label for="topic_id">Topic:</label>
-                                    <select id="topic_id" name="topic_id" class="form-control @error('topic_id') is-invalid @enderror" style="padding: 20px;" required>
-                                        <option value="">Select</option>
-                                        @foreach($topics as $topic)
-                                            <option value="{{$topic->id}}" @if (old('topic_id') === $topic->id) selected @endif>{{$topic->title}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-12 col-sm-6 mb-3">
                                 <div class="form-group">
                                     <label for="total_mark">Total Mark:</label>

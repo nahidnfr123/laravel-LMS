@@ -34,9 +34,9 @@ class MarkController extends Controller
     {
         $user = User::findOrFail(request('user_id'));
         $batch = Batch::findOrFail(request('batch_id'));
-        $topics = $batch->semester->topic;
+        $topic = $batch->semester->topic->where('id', request('topic_id'))->first();
 
-        return view('admin.users.addMarks', compact('batch', 'user', 'topics'));
+        return view('admin.users.addMarks', compact('batch', 'user', 'topic'));
     }
 
     /**
@@ -47,11 +47,7 @@ class MarkController extends Controller
      */
     public function store(StoreMarkRequest $request): RedirectResponse
     {
-        $mark = Mark::updateOrCreate([
-            'topic_id' => $request->topic_id,
-            'semester_id' => $request->semester_id,
-            'user_id' => $request->user_id,
-        ], $request->validated());
+        $mark = Mark::create($request->validated());
         return redirect()->back();
     }
 

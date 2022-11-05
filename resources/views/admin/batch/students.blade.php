@@ -63,7 +63,9 @@
                                             @if($topic->mark)
                                                 {{$topic->mark->obtained_mark.'/'.$topic->mark->total_mark}} ,
                                             @else
-                                                <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->i, 'topic_id'=>$topic->id]) }}" class="btn btn-xs btn-success rounded-lg">Add Marks
+                                                <a
+                                                    href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}"
+                                                    class="btn btn-xs btn-success rounded-lg">Add Marks
                                                 </a>
                                             @endif
                                         </div>
