@@ -32,8 +32,24 @@
                             @csrf()
                             @method('POST')
                             <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="role">Role:</label>
+                                        <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" required style="padding: 20px;">
+                                            @isset($_GET['batch_id'])
+                                                <option value="student" @if (old('role') === 'student') selected @endif>Student</option>
+                                            @else
+                                                <option value="" @if (!old('role')) selected @endif></option>
+                                                <option value="teacher" @if (old('role') === 'teacher') selected @endif>Teacher</option>
+                                                <option value="admin" @if (old('role') === 'admin') selected @endif>Admin</option>
+                                            @endisset
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-sm-6 mb-3">
-                                    <input type="hidden" hidden value="{{$_GET['batch_id'] || ''}}" name="batch_id">
+                                    @isset($_GET['batch_id'] )
+                                        <input type="hidden" hidden value="{{$_GET['batch_id'] || ''}}" name="batch_id">
+                                    @endisset
                                     <div class="form-group">
                                         <label for="name">Name:</label>
                                         <input type="text" name="name" id="name"
@@ -78,16 +94,6 @@
                                         <label for="avatar">Avatar:</label>
                                         <input type="file" name="avatar" id="avatar"
                                                class="form-control @error('avatar') is-invalid @enderror">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 mb-3">
-                                    <div class="form-group">
-                                        <label for="role">Role:</label>
-                                        <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" style="padding: 20px;">
-                                            <option value="student" @if (old('role') === 'student') selected @endif>Student</option>
-                                            <option value="teacher" @if (old('role') === 'teacher') selected @endif>Teacher</option>
-                                            <option value="admin" @if (old('role') === 'admin') selected @endif>Admin</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">

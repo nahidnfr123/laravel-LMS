@@ -29,7 +29,7 @@
                     <h3>Topics</h3>
                     <div>
                         @foreach($batch->semester->topic as $topic)
-                            <a href="" class="btn btn-sm btn-warning">{{$topic->title}}</a>
+                            <a href="{{route('admin.topic.show', $topic->id)}}" class="btn btn-sm btn-warning">{{$topic->title}}</a>
                         @endforeach
                     </div>
                 </div>
@@ -41,9 +41,9 @@
                     <table id="datatable" class="display">
                         <thead>
                         <tr>
-                            <th>Batch</th>
-                            <th>Subject</th>
-                            <th>Semester</th>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Phone</th>
                             <th>Subjects</th>
                             <th>Action</th>
                         </tr>

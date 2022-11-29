@@ -36,7 +36,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($batch->semester as $semester)
+                        @foreach($batch->semester() as $semester)
                             <tr>
                                 <td>
                                     <a href="{{ route('admin.semester.show', $semester->id) }}">
