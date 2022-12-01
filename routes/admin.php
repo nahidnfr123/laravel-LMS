@@ -20,7 +20,6 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TopicController;
-use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
