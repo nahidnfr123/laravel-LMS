@@ -76,6 +76,18 @@ class BatchController extends Controller
         return view('admin.batch.students', compact('batch'));
     }
 
+    public function addMark($id): View|Factory|Application
+    {
+        $batch = Batch::findOrFail($id);
+        return view('admin.batch.addMark', compact('batch'));
+    }
+
+    public function addAttendance($id): View|Factory|Application
+    {
+        $batch = Batch::findOrFail($id);
+        return view('admin.batch.addAttendance', compact('batch'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

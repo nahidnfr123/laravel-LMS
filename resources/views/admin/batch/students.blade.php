@@ -17,7 +17,8 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-
+                <a href="{{ route('admin.batch.addMark', ['id'=>$batch->id]) }}" class="btn btn-sm btn-primary">Add Marks</a>
+                <a href="{{ route('admin.batch.addAttendance', ['id'=>$batch->id]) }}" class="btn btn-sm btn-success">Add Attendance</a>
             </div>
         </div>
     </div>
@@ -41,6 +42,7 @@
                     <table id="datatable" class="display">
                         <thead>
                         <tr>
+                            <th>Id</th>
                             <th>User</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -51,6 +53,9 @@
                         <tbody>
                         @foreach($batch->users as $user)
                             <tr>
+                                <td>
+                                    <strong>{{$user->id}}</strong>
+                                </td>
                                 <td>
                                     <strong>{{$user->name}}</strong>
                                 </td>
