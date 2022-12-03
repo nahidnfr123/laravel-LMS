@@ -12,6 +12,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\LiveClassController;
 use App\Http\Controllers\MarkController;
 use App\Http\Controllers\McqController;
@@ -65,4 +66,7 @@ Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->gro
     Route::resource('/orders', OrderController::class)->name('*', 'orders');
 
     Route::resource('/content-us', ContactUsController::class)->name('*', 'content-us');
+    Route::post('/import-user', [ImportController::class, 'user'])->name('importUser');
+    Route::post('/import-mark', [ImportController::class, 'mark'])->name('importMark');
+    Route::post('/import-attendance', [ImportController::class, 'attendance'])->name('importAttendance');
 });

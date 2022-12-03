@@ -69,6 +69,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'student',
             'phone' => '01212121213',
             'batch_id' => 1,
+            's_id' => 1001,
             'semester_id' => 1,
             'subject_id' => 1,
         ]);
@@ -80,6 +81,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'student',
             'phone' => '01212121214',
             'batch_id' => 1,
+            's_id' => 1002,
             'semester_id' => 1,
             'subject_id' => 1,
         ]);

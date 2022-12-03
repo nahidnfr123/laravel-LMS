@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-sm-6">
             @if($batch)
-                <h3>{{$batch->batch_id}} - Students,</h3>
+                <h3>Batch: {{$batch->batch_id}} - Students,</h3>
                 <hr class="mb-2">
             @else
                 <h3 class="mb-0 font-weight-bold">All Students</h3>
@@ -17,6 +17,34 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Import User
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Import User</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{{ route('admin.importUser') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method('POST')
+                                <div class="modal-body">
+                                    <input type="hidden" class="form-control" name="batch_id" value="{{$batch->id}}">
+                                    <input type="file" class="form-control" name="file">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <a href="{{ route('admin.batch.addMark', ['id'=>$batch->id]) }}" class="btn btn-sm btn-primary">Add Marks</a>
                 <a href="{{ route('admin.batch.addAttendance', ['id'=>$batch->id]) }}" class="btn btn-sm btn-success">Add Attendance</a>
             </div>
