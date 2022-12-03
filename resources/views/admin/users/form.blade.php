@@ -46,10 +46,10 @@
                                         </select>
                                     </div>
                                 </div>
+                                @isset($_GET['batch_id'] )
+                                    <input type="hidden" hidden value="{{$_GET['batch_id'] || ''}}" name="batch_id">
+                                @endisset
                                 <div class="col-12 col-sm-6 mb-3">
-                                    @isset($_GET['batch_id'] )
-                                        <input type="hidden" hidden value="{{$_GET['batch_id'] || ''}}" name="batch_id">
-                                    @endisset
                                     <div class="form-group">
                                         <label for="name">Name:</label>
                                         <input type="text" name="name" id="name"
@@ -57,6 +57,16 @@
                                                value="{{old('name')}}" required>
                                     </div>
                                 </div>
+                                @isset($_GET['batch_id'])
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="s_id">Student Id:</label>
+                                            <input type="text" name="s_id" id="s_id"
+                                                   class="form-control @error('s_id') is-invalid @enderror"
+                                                   value="{{old('s_id')}}" required>
+                                        </div>
+                                    </div>
+                                @endisset
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="form-group">
                                         <label for="phone">Phone:</label>
@@ -109,6 +119,56 @@
                                         </div>
                                     </div>
                                 </div>
+                                @isset($_GET['batch_id'])
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="fathers_name">Fathers Name:</label>
+                                            <input type="text" name="fathers_name" id="fathers_name"
+                                                   class="form-control @error('fathers_name') is-invalid @enderror"
+                                                   value="{{old('fathers_name')}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="fathers_phone">Fathers Phone:</label>
+                                            <input type="tel" name="fathers_phone" id="fathers_phone"
+                                                   class="form-control @error('fathers_phone') is-invalid @enderror"
+                                                   value="{{old('fathers_phone')}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="mothers_name">Mothers Name:</label>
+                                            <input type="text" name="mothers_name" id="mothers_name"
+                                                   class="form-control @error('mothers_name') is-invalid @enderror"
+                                                   value="{{old('mothers_name')}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="mothers_phone">Mothers Phone:</label>
+                                            <input type="tel" name="mothers_phone" id="mothers_phone"
+                                                   class="form-control @error('mothers_phone') is-invalid @enderror"
+                                                   value="{{old('mothers_phone')}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="present_address">Present Address:</label>
+                                            <textarea name="present_address" id="present_address"
+                                                class="form-control @error('present_address') is-invalid @enderror"
+                                            >{{old('present_address')}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="permanent_address">Permanent Address:</label>
+                                            <textarea name="permanent_address" id="permanent_address"
+                                                class="form-control @error('permanent_address') is-invalid @enderror"
+                                            >{{old('permanent_address')}}</textarea>
+                                        </div>
+                                    </div>
+                                @endisset
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

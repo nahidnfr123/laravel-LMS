@@ -27,6 +27,15 @@ return new class extends Migration {
             $table->enum('role', ['student', 'teacher', 'admin'])->default('student');
             $table->enum('gender', ['male', 'female', 'others'])->nullable();
             $table->enum('status', ['active', 'inactive', 'pending'])->default('active');
+
+            $table->string('s_id')->unique()->nullable();
+            $table->text('present_address')->nullable();
+            $table->text('permanent_address')->nullable();
+            $table->string('fathers_name')->nullable();
+            $table->string('fathers_phone')->nullable();
+            $table->string('mothers_name')->nullable();
+            $table->string('mothers_phone')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

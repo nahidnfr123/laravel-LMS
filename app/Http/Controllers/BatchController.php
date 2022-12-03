@@ -12,6 +12,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
 class BatchController extends Controller
@@ -76,10 +77,16 @@ class BatchController extends Controller
         return view('admin.batch.students', compact('batch'));
     }
 
-    public function addMark($id): View|Factory|Application
+    public function addMark(Request $request, $id): View|Factory|Application
     {
+        if ($request->isMethod('post')) {
+            print('is post method');
+        }
+        $semesters = Semester::all();
+        $subjects = Subject::all();
         $batch = Batch::findOrFail($id);
-        return view('admin.batch.addMark', compact('batch'));
+        $action = URL::route('admin.batch.addMark', $batch->id);
+        return view('admin.batch.addMark', compact('batch', 'action', 'semesters', 'subjects'));
     }
 
     public function addAttendance($id): View|Factory|Application

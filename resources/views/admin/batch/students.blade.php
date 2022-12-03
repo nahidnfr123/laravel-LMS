@@ -54,7 +54,7 @@
                         @foreach($batch->users as $user)
                             <tr>
                                 <td>
-                                    <strong>{{$user->id}}</strong>
+                                    <strong>{{$user->s_id}}</strong>
                                 </td>
                                 <td>
                                     <strong>{{$user->name}}</strong>

@@ -51,6 +51,13 @@ class UserController extends Controller
             'dob' => ['required', 'date', 'before_or_equal:' . $before18Years],
             'gender' => ['nullable', 'string'],
             'role' => ['nullable', 'string'],
+            's_id' => ['nullable', 'unique:users'],
+            'present_address' => ['nullable', 'string'],
+            'permanent_address' => ['nullable', 'string'],
+            'fathers_name' => ['nullable', 'string'],
+            'fathers_phone' => ['nullable', 'numeric', 'digits:11'],
+            'mothers_name' => ['nullable', 'string'],
+            'mothers_phone' => ['nullable', 'numeric', 'digits:11'],
             'batch_id' => ['required',],
             'password' => ['required', Rules\Password::defaults()],
         ], [
