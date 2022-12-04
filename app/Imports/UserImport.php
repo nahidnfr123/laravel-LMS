@@ -31,7 +31,7 @@ class UserImport implements ToCollection
                 ->orWhere('email', '=', $row[2])
                 ->orWhere('phone', '=', $row[3])
                 ->first();
-            Log::info($user);
+
             if (empty($user) && $row[0]) {
                 $user = User::create([
                     'batch_id' => $this->batch_id,

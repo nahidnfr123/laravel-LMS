@@ -34,8 +34,8 @@
                                 @csrf
                                 @method('POST')
                                 <div class="modal-body">
-                                    <input type="hidden" class="form-control" name="batch_id" value="{{$batch->id}}">
-                                    <input type="file" class="form-control" name="file">
+                                    <input type="hidden" class="form-control" name="batch_id" value="{{$batch->id}}" required>
+                                    <input type="file" class="form-control" name="file" required>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -65,7 +65,7 @@
                                     <input type="hidden" class="form-control" name="batch_id" value="{{$batch->id}}">
                                     <div class="col-12 form-group">
                                         <label for="topic_id">Topic</label>
-                                        <select class="form-select" id="topic_id" aria-label="multiple select example" name="topic_id">
+                                        <select class="form-select" id="topic_id" aria-label="multiple select example" name="topic_id" required>
                                             <option selected></option>
                                             @foreach($batch->semester->topic as $topic)
                                                 <option value="{{$topic->id}}">{{$topic->title}}</option>
@@ -74,11 +74,11 @@
                                     </div>
                                     <div class="col-12 form-group">
                                         <label for="total_mark">Total Mark</label>
-                                        <input type="text" class="form-control" name="total_mark" id="total_mark" value="">
+                                        <input type="text" class="form-control" name="total_mark" id="total_mark" value="" required>
                                     </div>
                                     <div class="col-12 form-group">
                                         <label for="file">File</label>
-                                        <input type="file" class="form-control" name="file" id="file">
+                                        <input type="file" class="form-control" name="file" id="file" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('admin.batch.addMark', ['id'=>$batch->id]) }}" class="btn btn-sm btn-primary">Add Marks</a>
+                {{--                <a href="{{ route('admin.batch.addMark', ['id'=>$batch->id]) }}" class="btn btn-sm btn-primary">Add Marks</a>--}}
                 <a href="{{ route('admin.batch.addAttendance', ['id'=>$batch->id]) }}" class="btn btn-sm btn-success">Add Attendance</a>
             </div>
         </div>
@@ -135,6 +135,7 @@
                                 <td>{{$user->phone}}</td>
                                 <td>
                                     @foreach($user->batch->semester->topic as $topic)
+                                        {{$topic->user}}
                                         <div>
                                             <strong>{{$topic->title}}:</strong>
                                             @if($topic->mark)

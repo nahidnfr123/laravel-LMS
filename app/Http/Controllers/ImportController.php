@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\MarkImport;
 use App\Imports\McqsImport;
 use App\Imports\UserImport;
 use Illuminate\Http\RedirectResponse;
@@ -20,6 +21,25 @@ class ImportController extends Controller
             (new UserImport($request->batch_id))->import($file, null, \Maatwebsite\Excel\Excel::ODS);
         } else {
             (new UserImport($request->batch_id))->import($file, null, \Maatwebsite\Excel\Excel::XLSX);
+        }
+        return redirect()->back();
+    }
+
+    public function mark(Request $request): RedirectResponse
+    {
+        $this->validate($request, [
+            'batch_id' => 'required',
+            'total_mark' => 'required',
+            'topic_id' => 'required',
+            'file' => 'required|file|mimes:ods,xls,xlsx',
+        ]);
+        $file = $request->file;
+        if ($file->extension() === 'ods') {
+            (new MarkImport($request->topic_id, $request->total_mark))
+                ->import($file, null, \Maatwebsite\Excel\Excel::ODS);
+        } else {
+            (new MarkImport($request->batch_id))
+                ->import($file, null, \Maatwebsite\Excel\Excel::XLSX);
         }
         return redirect()->back();
     }
