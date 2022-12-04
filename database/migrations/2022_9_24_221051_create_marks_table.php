@@ -14,7 +14,6 @@ return new class extends Migration {
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('semester_id')->constrained();
             $table->foreignId('topic_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->decimal('obtained_mark')->nullable();

@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $student1 = User::updateOrCreate(['phone' => '01212121213'], [
-            'name' => 'student 1 user',
+            'name' => 'student 1',
             'email' => 'student1@gmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'student',
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $student2 = User::updateOrCreate(['phone' => '01212121214'], [
-            'name' => 'student 2 user',
+            'name' => 'student 2',
             'email' => 'student2@gmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'student',

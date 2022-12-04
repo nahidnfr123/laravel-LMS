@@ -45,6 +45,50 @@
                         </div>
                     </div>
                 </div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal-marks">
+                    Import Marks
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal-marks" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Import Marks</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{{ route('admin.importMark') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method('POST')
+                                <div class="modal-body">
+                                    <input type="hidden" class="form-control" name="batch_id" value="{{$batch->id}}">
+                                    <div class="col-12 form-group">
+                                        <label for="topic_id">Topic</label>
+                                        <select class="form-select" id="topic_id" aria-label="multiple select example" name="topic_id">
+                                            <option selected></option>
+                                            @foreach($batch->semester->topic as $topic)
+                                                <option value="{{$topic->id}}">{{$topic->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <label for="total_mark">Total Mark</label>
+                                        <input type="text" class="form-control" name="total_mark" id="total_mark" value="">
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <label for="file">File</label>
+                                        <input type="file" class="form-control" name="file" id="file">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <a href="{{ route('admin.batch.addMark', ['id'=>$batch->id]) }}" class="btn btn-sm btn-primary">Add Marks</a>
                 <a href="{{ route('admin.batch.addAttendance', ['id'=>$batch->id]) }}" class="btn btn-sm btn-success">Add Attendance</a>
             </div>
