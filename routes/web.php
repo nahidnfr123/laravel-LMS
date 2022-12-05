@@ -23,8 +23,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/testing', function () {
-    $batch = Batch::where('id', 1)->with('users', 'users.topics')->first();
+Route::get('/test', function () {
+    $batch = Batch::where('id', 1)->with('users', 'users.topics', 'users.marks')->first();
     return $batch->users;
 });
 

@@ -36,7 +36,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($semester->topic as $topic)
+                        @foreach($semester->topics as $topic)
                             <tr>
                                 <td>
                                     <a href="{{ route('admin.topic.show', $topic->id) }}">

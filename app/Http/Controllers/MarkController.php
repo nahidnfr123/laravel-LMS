@@ -34,7 +34,7 @@ class MarkController extends Controller
     {
         $user = User::findOrFail(request('user_id'));
         $batch = Batch::findOrFail(request('batch_id'));
-        $topic = $batch->semester->topic->where('id', request('topic_id'))->first();
+        $topic = $batch->semester->topics->where('id', request('topic_id'))->first();
 
         return view('admin.users.addMarks', compact('batch', 'user', 'topic'));
     }

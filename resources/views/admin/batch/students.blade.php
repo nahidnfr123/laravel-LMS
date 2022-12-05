@@ -67,7 +67,7 @@
                                         <label for="topic_id">Topic</label>
                                         <select class="form-select" id="topic_id" aria-label="multiple select example" name="topic_id" required>
                                             <option selected></option>
-                                            @foreach($batch->semester->topic as $topic)
+                                            @foreach($batch->semester->topics as $topic)
                                                 <option value="{{$topic->id}}">{{$topic->title}}</option>
                                             @endforeach
                                         </select>
@@ -101,7 +101,7 @@
                 <div class="card-body">
                     <h3>Topics</h3>
                     <div>
-                        @foreach($batch->semester->topic as $topic)
+                        @foreach($batch->semester->topics as $topic)
                             <a href="{{route('admin.topic.show', $topic->id)}}" class="btn btn-sm btn-warning">{{$topic->title}}</a>
                         @endforeach
                     </div>
@@ -134,16 +134,15 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->phone}}</td>
                                 <td>
-                                    @foreach($user->batch->semester->topic as $topic)
+                                    @foreach($user->batch->semester->topics as $topic)
                                         {{$topic->user}}
                                         <div>
                                             <strong>{{$topic->title}}:</strong>
                                             @if($topic->mark)
-                                                {{$topic->mark->obtained_mark.'/'.$topic->mark->total_mark}} ,
+                                                {{$topic->mark->obtained_mark.'/'.$topic->mark}} ,
                                             @else
-                                                <a
-                                                    href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}"
-                                                    class="btn btn-xs btn-success rounded-lg">Add Marks
+                                                <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}"
+                                                   class="btn btn-xs btn-success rounded-lg">Add Marks
                                                 </a>
                                             @endif
                                         </div>
