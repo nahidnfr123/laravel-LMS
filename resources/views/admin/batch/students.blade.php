@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="col-12 form-group">
                                         <label for="total_mark">Total Mark</label>
-                                        <input type="text" class="form-control" name="total_mark" id="total_mark" value="" required>
+                                        <input type="number" class="form-control" name="total_mark" id="total_mark" value="" required>
                                     </div>
                                     <div class="col-12 form-group">
                                         <label for="file">File</label>
@@ -134,16 +134,18 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->phone}}</td>
                                 <td>
-                                    @foreach($user->batch->semester->topics as $topic)
-                                        {{$topic->user}}
+                                    @foreach($user->topics as $topic)
+                                        @php
+                                            $marks = $topic->marks->where('user_id',$user->id)->first();
+                                        @endphp
                                         <div>
-                                            <strong>{{$topic->title}}:</strong>
-                                            @if($topic->mark)
-                                                {{$topic->mark->obtained_mark.'/'.$topic->mark}} ,
+                                            <strong>{{$topic->title}}</strong>
+                                            @if(!empty($marks))
+                                                <u class="text-success">Marks:</u> {{$marks->obtained_mark.'/'.$marks->total_mark}} ,
                                             @else
-                                                <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}"
-                                                   class="btn btn-xs btn-success rounded-lg">Add Marks
-                                                </a>
+                                                {{--                                                <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}"--}}
+                                                {{--                                                   class="btn btn-xs btn-success rounded-lg">Add Marks--}}
+                                                {{--                                                </a>--}}
                                             @endif
                                         </div>
                                     @endforeach

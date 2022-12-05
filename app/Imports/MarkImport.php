@@ -31,7 +31,10 @@ class MarkImport implements ToCollection
         foreach ($rows as $row) {
             $s_id = User::where('s_id', $row[0])->first();
             if (!empty($s_id) && $row[0]) {
-                Mark::create([
+                Mark::updateOrCreate([
+                    'topic_id' => $this->topic_id,
+                    'user_id' => $s_id->id,
+                ],[
                     'topic_id' => $this->topic_id,
                     'user_id' => $s_id->id,
                     'obtained_mark' => $row[1],
