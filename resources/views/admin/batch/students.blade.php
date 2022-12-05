@@ -164,6 +164,8 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Subjects</th>
+                            <th>Marks</th>
+                            <th>Attendance</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -182,15 +184,44 @@
                                     @foreach($user->topics as $topic)
                                         @php
                                             $marks = $topic->marks->where('user_id',$user->id)->first();
+                                            $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
                                             <strong>{{$topic->title}}</strong>
-                                            @if(!empty($marks))
+                                            {{--@if(!empty($marks))
                                                 <u class="text-success">Marks:</u> {{$marks->obtained_mark.'/'.$marks->total_mark}} ,
-                                            @else
-                                                {{-- <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}" --}}
-                                                {{--    class="btn btn-xs btn-success rounded-lg">Add Marks --}}
-                                                {{-- </a> --}}
+                                            @endif
+                                            @if(!empty($clasAttendances))
+                                                <u class="text-success">Attendance:</u> {{$clasAttendances->attended_classes.'/'.$clasAttendances->total_classes}} ,
+                                            @endif--}}
+                                            {{-- <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}" --}}
+                                            {{--    class="btn btn-xs btn-success rounded-lg">Add Marks --}}
+                                            {{-- </a> --}}
+                                        </div>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($user->topics as $topic)
+                                        @php
+                                            $marks = $topic->marks->where('user_id',$user->id)->first();
+                                        @endphp
+                                        <div>
+                                            <strong>{{ strtoupper($topic->short_title)}}</strong>
+                                            @if(!empty($marks))
+                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong> ,
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($user->topics as $topic)
+                                        @php
+                                            $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
+                                        @endphp
+                                        <div>
+                                            <strong>{{ strtoupper($topic->short_title)}}</strong>
+                                            @if(!empty($clasAttendances))
+                                                <strong class="text-success">{{$clasAttendances->attended_classes}}</strong>/ <strong>{{$clasAttendances->total_classes}}</strong> ,
                                             @endif
                                         </div>
                                     @endforeach

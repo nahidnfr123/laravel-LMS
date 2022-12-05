@@ -37,7 +37,7 @@ class AttendanceImport implements ToCollection
                     'user_id' => $s_id->id,
                     'attended_classes' => $row[1],
                     'total_classes' => $this->total_classes,
-                    'status' => ucwords($row[2]),
+                    'status' => null,
                 ]);
             }
         }
