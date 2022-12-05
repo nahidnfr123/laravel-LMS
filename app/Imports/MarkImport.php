@@ -14,8 +14,7 @@ class MarkImport implements ToCollection
 {
     use Importable;
 
-    public mixed $batch_id;
-    public mixed $total_mark;
+    public mixed $batch_id, $total_mark;
 
     public function __construct($topic_id = null, $total_mark = null)
     {
@@ -34,7 +33,7 @@ class MarkImport implements ToCollection
                 Mark::updateOrCreate([
                     'topic_id' => $this->topic_id,
                     'user_id' => $s_id->id,
-                ],[
+                ], [
                     'topic_id' => $this->topic_id,
                     'user_id' => $s_id->id,
                     'obtained_mark' => $row[1],

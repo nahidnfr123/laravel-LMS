@@ -143,9 +143,9 @@
                                             @if(!empty($marks))
                                                 <u class="text-success">Marks:</u> {{$marks->obtained_mark.'/'.$marks->total_mark}} ,
                                             @else
-                                                {{--                                                <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}"--}}
-                                                {{--                                                   class="btn btn-xs btn-success rounded-lg">Add Marks--}}
-                                                {{--                                                </a>--}}
+                                                {{-- <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}" --}}
+                                                {{--    class="btn btn-xs btn-success rounded-lg">Add Marks --}}
+                                                {{-- </a> --}}
                                             @endif
                                         </div>
                                     @endforeach

@@ -7,6 +7,7 @@ use App\Imports\McqsImport;
 use App\Imports\UserImport;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ImportController extends Controller
 {
@@ -38,7 +39,7 @@ class ImportController extends Controller
             (new MarkImport($request->topic_id, $request->total_mark))
                 ->import($file, null, \Maatwebsite\Excel\Excel::ODS);
         } else {
-            (new MarkImport($request->batch_id))
+            (new MarkImport($request->topic_id, $request->total_mark))
                 ->import($file, null, \Maatwebsite\Excel\Excel::XLSX);
         }
         return redirect()->back();
