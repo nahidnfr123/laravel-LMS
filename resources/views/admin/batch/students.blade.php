@@ -183,8 +183,9 @@
                                 <td>
                                     @foreach($user->topics as $topic)
                                         @php
-                                            $marks = $topic->marks->where('user_id',$user->id)->first();
-                                            $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
+                                        $status = ['bad', 'moderate', 'good', 'excellent']
+                                            //  $marks = $topic->marks->where('user_id',$user->id)->first();
+                                            //  $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
                                             <strong>{{$topic->title}}</strong>
@@ -206,9 +207,11 @@
                                             $marks = $topic->marks->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
-                                            <strong>{{ strtoupper($topic->short_title)}}</strong>
+                                            <strong>{{ strtoupper($topic->short_title)}}: </strong>
                                             @if(!empty($marks))
-                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong> ,
+                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong>
+                                            @else
+                                                <strong class="ml-3">---</strong>
                                             @endif
                                         </div>
                                     @endforeach
@@ -219,9 +222,11 @@
                                             $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
-                                            <strong>{{ strtoupper($topic->short_title)}}</strong>
+                                            <strong>{{ strtoupper($topic->short_title)}}: </strong>
                                             @if(!empty($clasAttendances))
-                                                <strong class="text-success">{{$clasAttendances->attended_classes}}</strong>/ <strong>{{$clasAttendances->total_classes}}</strong> ,
+                                                <strong class="text-success">{{$clasAttendances->attended_classes}}</strong>/ <strong>{{$clasAttendances->total_classes}}</strong>
+                                            @else
+                                                <strong class="ml-3">---</strong>
                                             @endif
                                         </div>
                                     @endforeach
