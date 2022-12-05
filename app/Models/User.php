@@ -71,11 +71,6 @@ class User extends Authenticatable
         return $this->hasMany(Result::class);
     }
 
-    public function marks(): HasMany
-    {
-        return $this->hasMany(Mark::class);
-    }
-
     public function mcqs(): BelongsToMany
     {
         return $this->belongsToMany(Mcq::class)->withPivot(['exam_id', 'user_answer'])->withTimestamps();
@@ -94,5 +89,10 @@ class User extends Authenticatable
     public function topics(): BelongsToMany
     {
         return $this->belongsToMany(Topic::class);
+    }
+
+    public function marks(): HasMany
+    {
+        return $this->hasMany(Mark::class);
     }
 }

@@ -21,9 +21,9 @@ class Topic extends Model
         return $this->hasMany(Clas::class);
     }
 
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
     }
 
     public function mark(): \Illuminate\Database\Eloquent\Relations\HasOne

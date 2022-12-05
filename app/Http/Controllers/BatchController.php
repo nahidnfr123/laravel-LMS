@@ -74,6 +74,7 @@ class BatchController extends Controller
     public function students($id): View|Factory|Application
     {
         $batch = Batch::findOrFail($id);
+//        $batch = Batch::where('id', $id)->with('users', 'user.topic')->get();
         return view('admin.batch.students', compact('batch'));
     }
 

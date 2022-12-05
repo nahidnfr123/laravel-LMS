@@ -16,7 +16,7 @@ class Semester extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function topic(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Topic::class);
     }
