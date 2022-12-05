@@ -95,4 +95,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Mark::class);
     }
+
+    public function clasAttendances(): HasMany
+    {
+        return $this->hasMany(ClasAttendance::class);
+    }
 }

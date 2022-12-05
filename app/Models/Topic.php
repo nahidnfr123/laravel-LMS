@@ -30,4 +30,9 @@ class Topic extends Model
     {
         return $this->hasMany(Mark::class);
     }
+
+    public function clasAttendances(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClasAttendance::class);
+    }
 }

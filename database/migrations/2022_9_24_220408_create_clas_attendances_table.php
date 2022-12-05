@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('clas_attendances', function (Blueprint $table) {
             $table->id();
-
+            $table->foreignId('topic_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->decimal('attended_classes')->nullable();
+            $table->decimal('total_classes')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
