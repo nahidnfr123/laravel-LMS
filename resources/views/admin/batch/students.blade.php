@@ -166,6 +166,7 @@
                             <th>Subjects</th>
                             <th>Marks</th>
                             <th>Attendance</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -183,9 +184,9 @@
                                 <td>
                                     @foreach($user->topics as $topic)
                                         @php
-                                        $status = ['bad', 'moderate', 'good', 'excellent']
-                                            //  $marks = $topic->marks->where('user_id',$user->id)->first();
-                                            //  $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
+                                            $status = ['bad', 'moderate', 'good', 'excellent']
+                                                //  $marks = $topic->marks->where('user_id',$user->id)->first();
+                                                //  $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
                                             <strong>{{$topic->title}}</strong>
@@ -209,7 +210,20 @@
                                         <div>
                                             <strong>{{ strtoupper($topic->short_title)}}: </strong>
                                             @if(!empty($marks))
-                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong>
+                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong>,
+                                                @php
+                                                    $color = '';
+                                                    if(ucwords($marks->status) === 'Distinction' || ucwords($marks->status) === 'Distinction Plus'){
+                                                        $color = 'text-success';
+                                                    }else if(ucwords($marks->status) === 'Merit'){
+                                                        $color = 'text-info';
+                                                    }else if(ucwords($marks->status) === 'Pass'){
+                                                        $color = 'text-warning';
+                                                    }else{
+                                                        $color = 'text-danger';
+                                                    }
+                                                @endphp
+                                                <strong class="{{$color}}">{{$marks->status}}</strong>
                                             @else
                                                 <strong class="ml-3">---</strong>
                                             @endif
@@ -224,12 +238,14 @@
                                         <div>
                                             <strong>{{ strtoupper($topic->short_title)}}: </strong>
                                             @if(!empty($clasAttendances))
-                                                <strong class="text-success">{{$clasAttendances->attended_classes}}</strong>/ <strong>{{$clasAttendances->total_classes}}</strong>
+                                                <strong class="text-success">{{$clasAttendances->attended_classes}}</strong> / <strong>{{$clasAttendances->total_classes}}</strong>
                                             @else
                                                 <strong class="ml-3">---</strong>
                                             @endif
                                         </div>
                                     @endforeach
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                     <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
