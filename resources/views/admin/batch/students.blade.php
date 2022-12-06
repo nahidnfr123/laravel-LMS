@@ -149,6 +149,14 @@
                         @foreach($batch->semester->topics as $topic)
                             <a href="{{route('admin.topic.show', $topic->id)}}" class="btn btn-sm btn-warning">{{$topic->title}}</a>
                         @endforeach
+
+                        @php
+                            $topicIds = [];
+                            $topics = $batch->semester->topics;
+                            if(!empty($topics)){
+                            $topicIds = $topics->pluck('id');
+                            }
+                        @endphp
                     </div>
                 </div>
             </div>
@@ -184,7 +192,7 @@
                                 <td>
                                     @foreach($user->topics as $topic)
                                         @php
-                                            $status = ['bad', 'moderate', 'good', 'excellent']
+                                            $status = ['bad', 'moderate', 'good', 'excellent'];
                                                 //  $marks = $topic->marks->where('user_id',$user->id)->first();
                                                 //  $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
                                         @endphp
@@ -210,7 +218,6 @@
                                         <div>
                                             <strong>{{ strtoupper($topic->short_title)}}: </strong>
                                             @if(!empty($marks))
-                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong>,
                                                 @php
                                                     $color = '';
                                                     if(ucwords($marks->status) === 'Distinction' || ucwords($marks->status) === 'Distinction Plus'){
@@ -223,7 +230,12 @@
                                                         $color = 'text-danger';
                                                     }
                                                 @endphp
+{{--                                                {{$topicIds}}--}}
+                                                {{--                                                @if (in_array($topic->id, $topicIds))--}}
+                                                {{--                                                @else--}}
+                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong>,
                                                 <strong class="{{$color}}">{{$marks->status}}</strong>
+                                                {{--                                                @endif--}}
                                             @else
                                                 <strong class="ml-3">---</strong>
                                             @endif

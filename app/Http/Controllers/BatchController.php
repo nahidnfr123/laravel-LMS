@@ -120,7 +120,7 @@ class BatchController extends Controller
     public function update(UpdateBatchRequest $request, Batch $batch): RedirectResponse
     {
         $batch->update($request->validated());
-        return redirect()->route('admin.topic.index');
+        return redirect()->route('admin.batch.index');
     }
 
     /**

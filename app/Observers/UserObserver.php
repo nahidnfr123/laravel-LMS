@@ -22,7 +22,7 @@ class UserObserver
         $batch = $user->batch;
         if (!empty($batch)) {
             $tpoicIds = $batch->semester->topics->pluck('id');
-            $user->topics()->sync($tpoicIds);
+            $user->topics()->syncWithoutDetaching($tpoicIds);
         }
     }
 
@@ -33,8 +33,6 @@ class UserObserver
             $user->name = ucwords($user->name);
             $user->subject_id = $batch->subject_id;
             $user->semester_id = $batch->semester_id;
-            $tpoicIds = $batch->semester->topics->pluck('id');
-            $user->topics()->sync($tpoicIds);
         }
     }
 
@@ -43,7 +41,7 @@ class UserObserver
         $batch = $user->batch;
         if (!empty($batch)) {
             $tpoicIds = $batch->semester->topics->pluck('id');
-            $user->topics()->sync($tpoicIds);
+            $user->topics()->syncWithoutDetaching($tpoicIds);
         }
     }
 }

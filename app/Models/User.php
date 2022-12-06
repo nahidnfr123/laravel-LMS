@@ -51,6 +51,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['topic_marks'];
+
+    public function getTopicMarksAttribute()
+    {
+        $data = [];
+        foreach ($this->topics as $topic) {
+            $mark = $topic->marks->where('user_id', $this->id)->first();
+            $data[] = $mark;
+        }
+        return $data;
+    }
+
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class)->withPivot('status');
@@ -100,4 +112,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(ClasAttendance::class);
     }
+
 }

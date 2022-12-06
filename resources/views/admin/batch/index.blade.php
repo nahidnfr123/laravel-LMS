@@ -44,9 +44,9 @@
                         @foreach($batch as $b)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.batch.show', $b->id) }}">
-                                        <strong>{{$b->batch_id}}</strong>
-                                    </a>
+                                    {{--                                    <a href="{{ route('admin.batch.show', $b->id) }}">--}}
+                                    <strong>{{$b->batch_id}}</strong>
+                                    {{--                                    </a>--}}
                                 </td>
                                 <td>{{$b->subject->title}}</td>
                                 <td>{{$b->semester->title}}</td>
