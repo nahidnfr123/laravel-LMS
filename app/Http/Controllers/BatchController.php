@@ -78,6 +78,13 @@ class BatchController extends Controller
         return view('admin.batch.students', compact('batch'));
     }
 
+    public function report($id): View|Factory|Application
+    {
+        $batch = Batch::findOrFail($id);
+//        $batch = Batch::where('id', $id)->with('users', 'user.topic')->get();
+        return view('admin.batch.report', compact('batch'));
+    }
+
     public function addMark(Request $request, $id): View|Factory|Application
     {
         if ($request->isMethod('post')) {

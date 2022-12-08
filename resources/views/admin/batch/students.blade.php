@@ -134,8 +134,14 @@
                         </div>
                     </div>
                 </div>
+
                 {{--                <a href="{{ route('admin.batch.addMark', ['id'=>$batch->id]) }}" class="btn btn-sm btn-primary">Add Marks</a>--}}
                 {{--                <a href="{{ route('admin.batch.addAttendance', ['id'=>$batch->id]) }}" class="btn btn-sm btn-success">Add Attendance</a>--}}
+            </div>
+            <div class="pr-1 mb-3 mr-2 mb-xl-0">
+                <a href="{{ route('admin.batch.report', ['id'=>$batch->id]) }}" class="btn btn-xs btn-secondary">
+                    <strong>View Student Report</strong>
+                </a>
             </div>
         </div>
     </div>
@@ -154,7 +160,7 @@
                             $topicIds = [];
                             $topics = $batch->semester->topics;
                             if(!empty($topics)){
-                            $topicIds = $topics->pluck('id');
+                            $topicIds = $topics->pluck('id')->toArray();
                             }
                         @endphp
                     </div>
@@ -174,7 +180,6 @@
                             <th>Subjects</th>
                             <th>Marks</th>
                             <th>Attendance</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -191,23 +196,16 @@
                                 <td>{{$user->phone}}</td>
                                 <td>
                                     @foreach($user->topics as $topic)
-                                        @php
-                                            $status = ['bad', 'moderate', 'good', 'excellent'];
-                                                //  $marks = $topic->marks->where('user_id',$user->id)->first();
-                                                //  $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
-                                        @endphp
-                                        <div>
-                                            <strong>{{$topic->title}}</strong>
-                                            {{--@if(!empty($marks))
-                                                <u class="text-success">Marks:</u> {{$marks->obtained_mark.'/'.$marks->total_mark}} ,
-                                            @endif
-                                            @if(!empty($clasAttendances))
-                                                <u class="text-success">Attendance:</u> {{$clasAttendances->attended_classes.'/'.$clasAttendances->total_classes}} ,
-                                            @endif--}}
-                                            {{-- <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}" --}}
-                                            {{--    class="btn btn-xs btn-success rounded-lg">Add Marks --}}
-                                            {{-- </a> --}}
-                                        </div>
+                                        @if(in_array($topic->id, $topicIds))
+                                            <div>
+                                                <strong>{{$topic->title}}</strong>
+                                            </div>
+                                        @endif
+                                        @if(!in_array($topic->id, $topicIds))
+                                            <div class="text-muted">
+                                                {{$topic->title}}
+                                            </div>
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td>
@@ -216,7 +214,7 @@
                                             $marks = $topic->marks->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
-                                            <strong>{{ strtoupper($topic->short_title)}}: </strong>
+                                            <strong class="{{ !in_array($topic->id, $topicIds) ? 'text-muted' : '' }}">{{ strtoupper($topic->short_title)}}: </strong>
                                             @if(!empty($marks))
                                                 @php
                                                     $color = '';
@@ -230,14 +228,14 @@
                                                         $color = 'text-danger';
                                                     }
                                                 @endphp
-{{--                                                {{$topicIds}}--}}
+                                                {{--                                                {{$topicIds}}--}}
                                                 {{--                                                @if (in_array($topic->id, $topicIds))--}}
                                                 {{--                                                @else--}}
-                                                <strong class="text-success">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong>,
+                                                <strong class="{{ !in_array($topic->id, $topicIds) ? 'text-muted' : 'text-success' }}">{{$marks->obtained_mark}}</strong> / <strong>{{$marks->total_mark}}</strong>,
                                                 <strong class="{{$color}}">{{$marks->status}}</strong>
                                                 {{--                                                @endif--}}
                                             @else
-                                                <strong class="ml-3">---</strong>
+                                                <strong class="ml-3 {{ !in_array($topic->id, $topicIds) ? 'text-muted' : '' }}">---</strong>
                                             @endif
                                         </div>
                                     @endforeach
@@ -256,8 +254,6 @@
                                             @endif
                                         </div>
                                     @endforeach
-                                </td>
-                                <td>
                                 </td>
                                 <td>
                                     <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
