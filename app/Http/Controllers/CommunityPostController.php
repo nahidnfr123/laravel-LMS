@@ -31,7 +31,7 @@ class CommunityPostController extends Controller
             return view('admin.community.index', compact('communityPosts'));
         }
 
-        $communityPosts = CommunityPost::where('publish_at', '>=', Carbon::now())->where('is_published', true)->where('is_public', true)->orderBy('publish_at', 'DESC')->orderBy('created_at', 'DESC')->get();
+        $communityPosts = CommunityPost::whereDate('publish_at', '>=', Carbon::now())->where('is_published', true)->where('is_public', true)->orderBy('publish_at', 'DESC')->orderBy('created_at', 'DESC')->get();
         return view('community.index', compact('communityPosts'));
     }
 
