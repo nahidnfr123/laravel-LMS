@@ -8,6 +8,7 @@ use App\Models\Batch;
 use App\Models\Semester;
 use App\Models\Subject;
 use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -82,7 +83,10 @@ class BatchController extends Controller
     {
         $batch = Batch::findOrFail($id);
 //        $batch = Batch::where('id', $id)->with('users', 'user.topic')->get();
-        return view('admin.batch.report', compact('batch'));
+        $users = User::where('batch_id', $id)->with(['topics' => function($q){
+
+        }])->get();
+        return view('admin.batch.report', compact('batch', 'users'));
     }
 
     public function addMark(Request $request, $id): View|Factory|Application

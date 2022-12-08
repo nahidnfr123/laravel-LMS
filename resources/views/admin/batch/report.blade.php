@@ -44,7 +44,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($batch->users as $user)
+                        @foreach($users as $user)
                             <tr>
                                 <td>
                                     <strong>{{$user->s_id}}</strong>
@@ -57,20 +57,9 @@
                                     @foreach($user->topics as $topic)
                                         @php
                                             $status = ['bad', 'moderate', 'good', 'excellent'];
-                                                //  $marks = $topic->marks->where('user_id',$user->id)->first();
-                                                //  $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
                                             <strong>{{$topic->title}}</strong>
-                                            {{--@if(!empty($marks))
-                                                <u class="text-success">Marks:</u> {{$marks->obtained_mark.'/'.$marks->total_mark}} ,
-                                            @endif
-                                            @if(!empty($clasAttendances))
-                                                <u class="text-success">Attendance:</u> {{$clasAttendances->attended_classes.'/'.$clasAttendances->total_classes}} ,
-                                            @endif--}}
-                                            {{-- <a href="{{ route('admin.marks.create', ['batch_id'=>$batch->id, 'user_id'=>$user->id, 'topic_id'=>$topic->id]) }}" --}}
-                                            {{--    class="btn btn-xs btn-success rounded-lg">Add Marks --}}
-                                            {{-- </a> --}}
                                         </div>
                                     @endforeach
                                 </td>
@@ -112,7 +101,7 @@
                                             $clasAttendances = $topic->clasAttendances->where('user_id',$user->id)->first();
                                         @endphp
                                         <div>
-                                            <strong>{{ strtoupper($topic->short_title)}}: </strong>
+                                            <strong>{{ strtoupper($topic->short_title) }}: </strong>
                                             @if(!empty($clasAttendances))
                                                 <strong class="text-success">{{$clasAttendances->attended_classes}}</strong> / <strong>{{$clasAttendances->total_classes}}</strong>
                                             @else
