@@ -24,6 +24,7 @@ use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/admin/batch/{id}/report', [BatchController::class, 'report'])->name('admin.batch.report');
 Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
@@ -32,10 +33,10 @@ Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->gro
     ////// *** ///////
     Route::resource('/subject', SubjectController::class)->name('*', 'subject');
     Route::resource('/semester', SemesterController::class)->name('*', 'semester');
-    Route::get('/batch/{id}/students', [BatchController::class, 'students'])->name( 'batch.students');
-    Route::get('/batch/{id}/report', [BatchController::class, 'report'])->name( 'batch.report');
-    Route::get('/batch/{id}/add-mark', [BatchController::class, 'addMark'])->name( 'batch.addMark');
-    Route::get('/batch/{id}/add-attendance', [BatchController::class, 'addAttendance'])->name( 'batch.addAttendance');
+    Route::get('/batch/{id}/students', [BatchController::class, 'students'])->name('batch.students');
+//    Route::get('/batch/{id}/report', [BatchController::class, 'report'])->name( 'batch.report');
+    Route::get('/batch/{id}/add-mark', [BatchController::class, 'addMark'])->name('batch.addMark');
+    Route::get('/batch/{id}/add-attendance', [BatchController::class, 'addAttendance'])->name('batch.addAttendance');
     Route::resource('/batch', BatchController::class)->name('*', 'batch');
     Route::resource('/topic', TopicController::class)->name('*', 'topic');
     Route::resource('/clas', ClasController::class)->name('*', 'clas');

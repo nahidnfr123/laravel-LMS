@@ -14,7 +14,9 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Database\Eloquent\Builder;
 
 class BatchController extends Controller
 {
@@ -79,13 +81,41 @@ class BatchController extends Controller
         return view('admin.batch.students', compact('batch'));
     }
 
-    public function report($id): View|Factory|Application
+    public function report($id)
     {
         $batch = Batch::findOrFail($id);
 //        $batch = Batch::where('id', $id)->with('users', 'user.topic')->get();
-        $users = User::where('batch_id', $id)->with(['topics' => function($q){
+        $batch2 = Batch::where('id', $id)
+            ->with(['users' => function ($user) {
+                return $user->with(['topics' => function ($topic) use ($user) {
 
-        }])->get();
+                    return $topic->with(['marks' => function ($mark) use ($topic, $user) {
+                        return $mark->where('marks.user_id','=', $user->id);
+                    }]);
+                }]);
+            }])->get();
+        return $batch2;
+        /*$users = User::with(['topics' => function ($q) {
+            return $q->with(['users.marks' => function ($pq) use ($q){
+                return $pq->orderBy('obtained_mark');
+            }]);
+        }])->where('batch_id', $id)->get();*/
+
+        /*$users = User::with(['categories' => function ($cq) {
+            return $cq->with(['varieties' => function ($vq) {
+                return $vq->with(['products' => function ($pq) {
+                    return $pq->sum('total');
+                }]);
+            }]);
+        }])->get();*/
+
+        /*$users = DB::table('users')
+            ->where('batch_id', $id)
+            ->leftJoin('topics', 'users.id', '=', 'topics.id')
+            ->select('users.*', 'topics.*')
+            ->get();*/
+
+//        return $users;
         return view('admin.batch.report', compact('batch', 'users'));
     }
 

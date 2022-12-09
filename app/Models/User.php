@@ -51,7 +51,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = ['topic_marks'];
+//    protected $appends = ['topic_marks'];
 
     public function getTopicMarksAttribute()
     {
