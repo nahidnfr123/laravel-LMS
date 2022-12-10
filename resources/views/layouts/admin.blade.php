@@ -39,8 +39,12 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="/"><img src="/images/logo.svg" alt="logo"/></a>
-            <a class="navbar-brand brand-logo-mini" href="/"><img src="/images/logo-mini.svg" alt="logo"/></a>
+            <a class="navbar-brand brand-logo" href="/">
+                {{ env('APP_NAME', 'ASAP') }}
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="/">
+                {{ env('APP_NAME', 'ASAP') }}
+            </a>
             <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
                 <span class="typcn typcn-th-menu"></span>
             </button>
@@ -102,7 +106,7 @@
                     <p class="sidebar-menu-title">Dash menu</p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="/admin">
                         <i class="typcn typcn-device-desktop menu-icon"></i>
                         <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
                     </a>

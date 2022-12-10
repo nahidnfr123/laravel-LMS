@@ -29,7 +29,9 @@ Route::get('/test', function () {
 });
 
 Route::get('/', function () {
-    return view('index');
+    $users = \App\Models\User::where('role', 'student')->get();
+    $courses = \App\Models\Course::where('status', true)->get();
+    return view('index', compact('courses', 'users'));
 })->name('home');
 
 Route::get('/courses', function () {
