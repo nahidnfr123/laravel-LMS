@@ -25,7 +25,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/batch/{id}/report', [BatchController::class, 'report'])->name('admin.batch.report');
-Route::middleware('auth', 'admin-teacher')->name('admin.')->prefix('admin')->group(function () {
+Route::middleware('auth', 'admin-teacher', 'permission:access_dashboard')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('index');
