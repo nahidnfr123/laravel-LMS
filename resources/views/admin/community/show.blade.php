@@ -10,10 +10,12 @@
             <h3 class="mb-0 font-weight-bold">{{ $communityPost->title }}</h3>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
-            <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{route('admin.community_post.edit', $communityPost->id)}}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-pencil mr-2"></i>Edit
-                </a>
+            <div class="pr-1 mb-3 mr-2 mb-xl-0">\
+                @can('update_community_post')
+                    <a href="{{route('admin.community_post.edit', $communityPost->id)}}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-pencil mr-2"></i>Edit
+                    </a>
+                @endcan
             </div>
         </div>
     </div>

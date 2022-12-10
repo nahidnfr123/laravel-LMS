@@ -19,34 +19,36 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="forms-sample" action="{{ route('admin.content-us.update', $contact->id) }}" method="POST" enctype="multipart/form-data">
-                        @method('PUT')
-                        @csrf
-                        <div class="row">
-                            <div class="col-12 col-sm-6 form-group">
-                                <label for="subject">Subject</label>
-                                <input
-                                    type="text"
-                                    class="form-control @error('subject') is-invalid @enderror"
-                                    id="subject"
-                                    name="subject"
-                                    placeholder="subject"
-                                    value="{{old('subject')}}"
-                                >
+                    @can('view_contact')
+                        <form class="forms-sample" action="{{ route('admin.content-us.update', $contact->id) }}" method="POST" enctype="multipart/form-data">
+                            @method('PUT')
+                            @csrf
+                            <div class="row">
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="subject">Subject</label>
+                                    <input
+                                        type="text"
+                                        class="form-control @error('subject') is-invalid @enderror"
+                                        id="subject"
+                                        name="subject"
+                                        placeholder="subject"
+                                        value="{{old('subject')}}"
+                                    >
+                                </div>
+                                <div class="col-12 form-group">
+                                    <label for="editor">description</label>
+                                    <textarea
+                                        class="form-control @error('message') is-invalid @enderror"
+                                        id="editor"
+                                        placeholder="Enter the message"
+                                        name="message"
+                                        style="min-height: 200px"
+                                    >{{old('message')}}</textarea>
+                                </div>
                             </div>
-                            <div class="col-12 form-group">
-                                <label for="editor">description</label>
-                                <textarea
-                                    class="form-control @error('message') is-invalid @enderror"
-                                    id="editor"
-                                    placeholder="Enter the message"
-                                    name="message"
-                                    style="min-height: 200px"
-                                >{{old('message')}}</textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    </form>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

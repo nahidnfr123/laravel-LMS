@@ -11,12 +11,16 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{route('admin.semester.edit', $semester->id)}}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-pencil mr-2"></i>Edit
-                </a>
-                <a href="{{route('admin.topic.create', ['semester_id'=>$semester->id])}}" class="btn btn-xs btn-success rounded-lg">
-                    <i class="typcn typcn-plus mr-2"></i> Add Topic
-                </a>
+                @can('update_semester')
+                    <a href="{{route('admin.semester.edit', $semester->id)}}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-pencil mr-2"></i>Edit
+                    </a>
+                @endcan
+                @can('create_topic')
+                    <a href="{{route('admin.topic.create', ['semester_id'=>$semester->id])}}" class="btn btn-xs btn-success rounded-lg">
+                        <i class="typcn typcn-plus mr-2"></i> Add Topic
+                    </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -39,9 +43,13 @@
                         @foreach($semester->topics as $topic)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.topic.show', $topic->id) }}">
+                                    {{--@can('view_topic')
+                                        <a href="{{ route('admin.topic.show', $topic->id) }}">
+                                            <strong>{{$topic->title}}</strong>
+                                        </a>
+                                    @else
+                                    @endcan--}}
                                         <strong>{{$topic->title}}</strong>
-                                    </a>
                                 </td>
                                 <td>{{$topic->short_title}}</td>
                                 <td>{{$topic->duration}}</td>

@@ -11,15 +11,21 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{route('admin.subject.edit', $subject->id)}}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-pencil mr-2"></i>Edit
-                </a>
-                <a href="{{route('admin.semester.create', ['subject_id'=>$subject->id])}}" class="btn btn-xs btn-success rounded-lg">
-                    <i class="typcn typcn-plus mr-2"></i> Add Semester
-                </a>
-                <a href="{{route('admin.batch.create')}}" class="btn btn-xs btn-warning rounded-lg">
-                    <i class="typcn typcn-plus mr-2"></i> Add Batch
-                </a>
+                @can('update_subject')
+                    <a href="{{route('admin.subject.edit', $subject->id)}}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-pencil mr-2"></i>Edit
+                    </a>
+                @endcan
+                @can('create_semester')
+                    <a href="{{route('admin.semester.create', ['subject_id'=>$subject->id])}}" class="btn btn-xs btn-success rounded-lg">
+                        <i class="typcn typcn-plus mr-2"></i> Add Semester
+                    </a>
+                @endcan
+                @can('create_batch')
+                    <a href="{{route('admin.batch.create')}}" class="btn btn-xs btn-warning rounded-lg">
+                        <i class="typcn typcn-plus mr-2"></i> Add Batch
+                    </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -42,9 +48,13 @@
                         @foreach($subject->semester as $semester)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.semester.show', $semester->id) }}">
+                                    @can('view_semester')
+                                        <a href="{{ route('admin.semester.show', $semester->id) }}">
+                                            <strong>{{$semester->title}}</strong>
+                                        </a>
+                                    @else
                                         <strong>{{$semester->title}}</strong>
-                                    </a>
+                                    @endcan
                                 </td>
                                 <td>{{$semester->short_title}}</td>
                                 <td>{{$semester->duration}}</td>
@@ -52,9 +62,11 @@
                                     <form action="{{ route('admin.semester.destroy', $semester->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.batch.index', ['semester_id'=>$semester->id])}}" class="btn btn-xs btn-success rounded-lg">
-                                            Batch
-                                        </a>
+                                        @can('view_batch')
+                                            <a href="{{route('admin.batch.index', ['semester_id'=>$semester->id])}}" class="btn btn-xs btn-success rounded-lg">
+                                                Batch
+                                            </a>
+                                        @endcan
 
                                         @can('update_semester')
                                             <a href="{{route('admin.semester.edit', $semester->id)}}" class="btn btn-xs btn-primary rounded-lg">

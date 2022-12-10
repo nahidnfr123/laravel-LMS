@@ -11,12 +11,16 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{route('admin.subject.edit', $batch->id)}}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-pencil mr-2"></i>Edit
-                </a>
-                <a href="{{route('admin.semester.create', ['subject_id'=>$batch->id])}}" class="btn btn-xs btn-success rounded-lg">
-                    <i class="typcn typcn-plus mr-2"></i> Add semester
-                </a>
+                @can('update_subject')
+                    <a href="{{route('admin.subject.edit', $batch->id)}}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-pencil mr-2"></i>Edit
+                    </a>
+                @endcan
+                @can('add_semester')
+                    <a href="{{route('admin.semester.create', ['subject_id'=>$batch->id])}}" class="btn btn-xs btn-success rounded-lg">
+                        <i class="typcn typcn-plus mr-2"></i> Add semester
+                    </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -39,9 +43,13 @@
                         @foreach($batch->semester() as $semester)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.semester.show', $semester->id) }}">
+                                    @can('view_semester')
+                                        <a href="{{ route('admin.semester.show', $semester->id) }}">
+                                            <strong>{{$semester->title}}</strong>
+                                        </a>
+                                    @else
                                         <strong>{{$semester->title}}</strong>
-                                    </a>
+                                    @endcan
                                 </td>
                                 <td>{{$semester->short_title}}</td>
                                 <td>{{$semester->duration}}</td>

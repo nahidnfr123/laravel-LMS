@@ -15,9 +15,11 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{route('admin.course.edit', $course->id)}}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-pencil mr-2"></i>Edit
-                </a>
+                @can('update_course')
+                    <a href="{{route('admin.course.edit', $course->id)}}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-pencil mr-2"></i>Edit
+                    </a>
+                @endcan
                 <a href="{{route('admin.section.create', ['course'=>$course->id])}}" class="btn btn-sm bg-white btn-icon-text border">
                     <i class="typcn typcn-plus mr-2"></i>Add Section
                 </a>

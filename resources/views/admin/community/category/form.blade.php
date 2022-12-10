@@ -25,61 +25,63 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="forms-sample" action="{{ $action }}" method="POST" enctype="multipart/form-data">
-                        @if ($communityCategory->created_at)
-                            @method('PUT')
-                        @else
-                            @method('POST')
-                        @endif
-                        @csrf
-                        <div class="row">
-                            <div class="col-12 col-sm-6 form-group">
-                                <label for="name">name</label>
-                                <input
-                                    type="text"
-                                    class="form-control @error('name') is-invalid @enderror"
-                                    id="name"
-                                    name="name"
-                                    placeholder="name"
-                                    value="{{old('name', $communityCategory->name)}}"
-                                >
-                            </div>
-                            <div class="col-12 col-sm-6 form-group">
-                                <label for="photo">photo</label>
-                                <input
-                                    type="file"
-                                    class="form-control @error('photo') is-invalid @enderror"
-                                    id="photo"
-                                    name="photo"
-                                    placeholder="photo"
-                                >
-                            </div>
-                            <div class="col-12 form-group">
-                                <label for="editor">description</label>
-                                <textarea
-                                    class="form-control @error('description') is-invalid @enderror"
-                                    id="editor"
-                                    placeholder="Enter the Description"
-                                    name="description"
-                                    style="min-height: 200px"
-                                >{{old('description', $communityCategory->description)}}</textarea>
-                            </div>
-                            <div class="col-12 col-sm-6 mt-4">
-                                <div class="form-check form-check-flat form-check-primary">
-                                    <label class="form-check-label">
-                                        <input
-                                            type="checkbox"
-                                            class="form-check-input"
-                                            @if (old('active', $communityCategory->active)) checked @endif
-                                            name="active"
-                                            value="1">
-                                        active
-                                    </label>
+                    @can('create_community_category', 'update_community_category')
+                        <form class="forms-sample" action="{{ $action }}" method="POST" enctype="multipart/form-data">
+                            @if ($communityCategory->created_at)
+                                @method('PUT')
+                            @else
+                                @method('POST')
+                            @endif
+                            @csrf
+                            <div class="row">
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="name">name</label>
+                                    <input
+                                        type="text"
+                                        class="form-control @error('name') is-invalid @enderror"
+                                        id="name"
+                                        name="name"
+                                        placeholder="name"
+                                        value="{{old('name', $communityCategory->name)}}"
+                                    >
+                                </div>
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="photo">photo</label>
+                                    <input
+                                        type="file"
+                                        class="form-control @error('photo') is-invalid @enderror"
+                                        id="photo"
+                                        name="photo"
+                                        placeholder="photo"
+                                    >
+                                </div>
+                                <div class="col-12 form-group">
+                                    <label for="editor">description</label>
+                                    <textarea
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        id="editor"
+                                        placeholder="Enter the Description"
+                                        name="description"
+                                        style="min-height: 200px"
+                                    >{{old('description', $communityCategory->description)}}</textarea>
+                                </div>
+                                <div class="col-12 col-sm-6 mt-4">
+                                    <div class="form-check form-check-flat form-check-primary">
+                                        <label class="form-check-label">
+                                            <input
+                                                type="checkbox"
+                                                class="form-check-input"
+                                                @if (old('active', $communityCategory->active)) checked @endif
+                                                name="active"
+                                                value="1">
+                                            active
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    </form>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

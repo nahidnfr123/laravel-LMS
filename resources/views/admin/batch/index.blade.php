@@ -51,17 +51,21 @@
                                 <td>{{$b->subject->title}}</td>
                                 <td>{{$b->semester->title}}</td>
                                 <td>
-                                    <a href="{{ route('admin.batch.students', ['id'=>$b->id]) }}">
-                                        <strong>Students</strong>
-                                    </a>
+                                    @can('view_student')
+                                        <a href="{{ route('admin.batch.students', ['id'=>$b->id]) }}">
+                                            <strong>Students</strong>
+                                        </a>
+                                    @endcan
                                 </td>
                                 <td>
                                     <form action="{{ route('admin.batch.destroy', $b->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.user.create', ['batch_id'=> $b->id])}}" class="btn btn-xs btn-success rounded-lg">
-                                            <i class="typcn typcn-plus mr-2"></i>Add Student
-                                        </a>
+                                        @can('create_student')
+                                            <a href="{{route('admin.user.create', ['batch_id'=> $b->id])}}" class="btn btn-xs btn-success rounded-lg">
+                                                <i class="typcn typcn-plus mr-2"></i>Add Student
+                                            </a>
+                                        @endcan
                                         <a href="{{ route('admin.batch.report', ['id'=>$b->id]) }}" class="btn btn-xs btn-secondary rounded-lg">
                                             <strong>Report</strong>
                                         </a>

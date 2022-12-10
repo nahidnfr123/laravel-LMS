@@ -12,9 +12,11 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{ route('admin.course.create') }}" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="typcn typcn-plus mr-2"></i>Add
-                </a>
+                @can('create_course')
+                    <a href="{{ route('admin.course.create') }}" class="btn btn-sm bg-white btn-icon-text border">
+                        <i class="typcn typcn-plus mr-2"></i>Add
+                    </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -36,12 +38,19 @@
                         @foreach($courses as $course)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.course.show', $course->id) }}">
+                                    @can('view_course')
+                                        <a href="{{ route('admin.course.show', $course->id) }}">
+                                            <img src="{{$course->photo}}" alt="" height="60" class="rounded-lg">
+                                            <div class="mt-1">
+                                                <strong>{{$course->title}}</strong>
+                                            </div>
+                                        </a>
+                                    @else
                                         <img src="{{$course->photo}}" alt="" height="60" class="rounded-lg">
                                         <div class="mt-1">
                                             <strong>{{$course->title}}</strong>
                                         </div>
-                                    </a>
+                                    @endcan
                                 </td>
                                 <td>
                                     <strong>{{ $course->status ? 'Active' : 'Inactive'}}</strong>
@@ -53,8 +62,12 @@
                                     <form action="{{ route('admin.course.destroy', $course->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.course.edit', $course->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
-                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
+                                        @can('update_course')
+                                            <a href="{{route('admin.course.edit', $course->id)}}" class="btn btn-xs btn-primary rounded-lg"><i class="typcn typcn-pencil mr-2"></i>Edit</a>
+                                        @endcan
+                                        @can('delete_course')
+                                            <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>
+                                        @endcan
                                     </form>
                                 </td>
                             </tr>

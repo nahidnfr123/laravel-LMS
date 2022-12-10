@@ -39,7 +39,7 @@ Route::middleware('auth', 'admin-teacher', 'permission:access_dashboard')->name(
     Route::get('/batch/{id}/add-attendance', [BatchController::class, 'addAttendance'])->name('batch.addAttendance');
     Route::resource('/batch', BatchController::class)->name('*', 'batch');
     Route::resource('/topic', TopicController::class)->name('*', 'topic');
-    Route::resource('/clas', ClasController::class)->name('*', 'clas');
+//    Route::resource('/clas', ClasController::class)->name('*', 'clas');
     Route::resource('/marks', MarkController::class)->name('*', 'marks');
     Route::resource('/clas-attendance', ClasAttendanceController::class)->name('*', 'clas-attendance');
     ////// *** ///////

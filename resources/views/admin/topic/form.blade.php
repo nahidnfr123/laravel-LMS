@@ -21,41 +21,43 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="forms-sample" action="{{ $action }}" method="POST" enctype="multipart/form-data">
-                        @if ($topic->created_at)
-                            @method('PUT')
-                        @else
-                            @method('POST')
-                        @endif
-                        @csrf
-                        <div class="row">
-                            <input type="hidden" value="{{$semester->id}}" name="semester_id">
-                            <div class="col-12 col-sm-6 form-group">
-                                <label for="title">title</label>
-                                <input
-                                    type="text"
-                                    class="form-control @error('title') is-invalid @enderror"
-                                    id="title"
-                                    name="title"
-                                    placeholder="title"
-                                    value="{{old('title', $topic->title)}}"
-                                >
-                            </div>
+                    @can('create_topic', 'update_topic')
+                        <form class="forms-sample" action="{{ $action }}" method="POST" enctype="multipart/form-data">
+                            @if ($topic->created_at)
+                                @method('PUT')
+                            @else
+                                @method('POST')
+                            @endif
+                            @csrf
+                            <div class="row">
+                                <input type="hidden" value="{{$semester->id}}" name="semester_id">
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="title">title</label>
+                                    <input
+                                        type="text"
+                                        class="form-control @error('title') is-invalid @enderror"
+                                        id="title"
+                                        name="title"
+                                        placeholder="title"
+                                        value="{{old('title', $topic->title)}}"
+                                    >
+                                </div>
 
-                            <div class="col-12 col-sm-6 form-group">
-                                <label for="short_title">short_title</label>
-                                <input
-                                    type="text"
-                                    class="form-control @error('short_title') is-invalid @enderror"
-                                    id="short_title"
-                                    name="short_title"
-                                    placeholder="short_title"
-                                    value="{{old('short_title', $topic->short_title)}}"
-                                >
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="short_title">short_title</label>
+                                    <input
+                                        type="text"
+                                        class="form-control @error('short_title') is-invalid @enderror"
+                                        id="short_title"
+                                        name="short_title"
+                                        placeholder="short_title"
+                                        value="{{old('short_title', $topic->short_title)}}"
+                                    >
+                                </div>
                             </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    </form>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

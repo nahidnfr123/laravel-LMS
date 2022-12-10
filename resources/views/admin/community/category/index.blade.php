@@ -36,12 +36,10 @@
                         @foreach($communityCategories as $category)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.community_category.show', $category->id) }}">
-                                        <img src="{{$category->photo}}" alt="" height="60" class="rounded-lg">
-                                        <div class="mt-1">
-                                            <strong>{{$category->name}}</strong>
-                                        </div>
-                                    </a>
+                                    <img src="{{$category->photo}}" alt="" height="60" class="rounded-lg">
+                                    <div class="mt-1">
+                                        <strong>{{$category->name}}</strong>
+                                    </div>
                                 </td>
                                 <td>
                                     <form action="{{ route('admin.community_category.destroy', $category->id) }}" method="POST">

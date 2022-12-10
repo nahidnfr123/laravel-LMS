@@ -40,12 +40,19 @@
                         @foreach($communityPosts as $post)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.community_post.show', $post->id) }}">
+                                    @can('view_community_post')
+                                        <a href="{{ route('admin.community_post.show', $post->id) }}">
+                                            <img src="{{$post->photo}}" alt="" height="60" class="rounded-lg">
+                                            <div class="mt-1">
+                                                <strong>{{$post->title}}</strong>
+                                            </div>
+                                        </a>
+                                    @else
                                         <img src="{{$post->photo}}" alt="" height="60" class="rounded-lg">
                                         <div class="mt-1">
                                             <strong>{{$post->title}}</strong>
                                         </div>
-                                    </a>
+                                    @endcan
                                 </td>
                                 <td>
                                     <strong>{{ $post->user->name}}</strong>

@@ -36,12 +36,10 @@
                         @foreach($communityTags as $tags)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.community_tags.show', $tags->id) }}">
-                                        <img src="{{$tags->photo}}" alt="" height="60" class="rounded-lg">
-                                        <div class="mt-1">
-                                            <strong>{{$tags->name}}</strong>
-                                        </div>
-                                    </a>
+                                    <img src="{{$tags->photo}}" alt="" height="60" class="rounded-lg">
+                                    <div class="mt-1">
+                                        <strong>{{$tags->name}}</strong>
+                                    </div>
                                 </td>
                                 <td>
                                     <form action="{{ route('admin.community_tags.destroy', $tags->id) }}" method="POST">

@@ -39,15 +39,10 @@ class Permission extends \Spatie\Permission\Models\Permission
             'create_topic',
             'delete_topic',
 
-            'view_clas',
-            'update_clas',
-            'create_clas',
-            'delete_clas',
-
-            'view_marks',
-            'update_marks',
-            'create_marks',
-            'delete_marks',
+            'view_mark',
+            'update_mark',
+            'create_mark',
+            'delete_mark',
 
             'view_user',
             'update_user',
@@ -83,6 +78,11 @@ class Permission extends \Spatie\Permission\Models\Permission
             'update_contact',
             'create_contact',
             'delete_contact',
+
+            'view_student',
+            'update_student',
+            'create_student',
+            'delete_student',
         ];
     }
 }

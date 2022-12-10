@@ -41,9 +41,13 @@
                         @foreach($subjects as $subject)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.subject.show', $subject->id) }}">
+                                    @can('view_subject')
+                                        <a href="{{ route('admin.subject.show', $subject->id) }}">
+                                            <strong>{{$subject->title}}</strong>
+                                        </a>
+                                    @else
                                         <strong>{{$subject->title}}</strong>
-                                    </a>
+                                    @endcan
                                 </td>
                                 <td>{{$subject->short_title}}</td>
                                 <td>{{$subject->duration}}</td>
@@ -60,9 +64,12 @@
                                     <form action="{{ route('admin.subject.destroy', $subject->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="{{route('admin.semester.create', ['subject_id'=>$subject->id])}}" class="btn btn-xs btn-success rounded-lg">
-                                            <i class="typcn typcn-plus mr-2"></i> Add semester
-                                        </a>
+                                        @can('create_semester')
+                                            <a href="{{route('admin.semester.create', ['subject_id'=>$subject->id])}}" class="btn btn-xs btn-success rounded-lg">
+                                                <i class="typcn typcn-plus mr-2"></i> Add semester
+                                            </a>
+                                        @endcan
+
                                         @can('update_subject')
                                             <a href="{{route('admin.subject.edit', $subject->id)}}" class="btn btn-xs btn-primary rounded-lg">
                                                 <i class="typcn typcn-pencil mr-2"></i>Edit

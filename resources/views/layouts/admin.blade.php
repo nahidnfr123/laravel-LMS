@@ -111,71 +111,87 @@
                         <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-university" aria-expanded="false" aria-controls="ui-Courses">
-                        <i class="typcn typcn-briefcase menu-icon"></i>
-                        <span class="menu-title">+++</span>
-                        <i class="typcn typcn-chevron-right menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="ui-university">
-                        <ul class="nav flex-column sub-menu">
-                            {{--                            <li class="nav-item"><a class="nav-link" href="">Course Categories</a></li>--}}
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.subject.index') }}">Subjects</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.batch.index') }}">Batch</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-Courses" aria-expanded="false" aria-controls="ui-Courses">
-                        <i class="typcn typcn-briefcase menu-icon"></i>
-                        <span class="menu-title">Manage Courses</span>
-                        <i class="typcn typcn-chevron-right menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="ui-Courses">
-                        <ul class="nav flex-column sub-menu">
-                            {{--                            <li class="nav-item"><a class="nav-link" href="">Course Categories</a></li>--}}
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.course.index') }}">Courses</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-Community" aria-expanded="false" aria-controls="ui-Community">
-                        <i class="typcn typcn-briefcase menu-icon"></i>
-                        <span class="menu-title">Manage Community</span>
-                        <i class="typcn typcn-chevron-right menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="ui-Community">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_category.index') }}">Community Category</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_tags.index') }}">Community Tag</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_post.index') }}">Community Post</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-Users" aria-expanded="false" aria-controls="ui-Users">
-                        <i class="typcn typcn-briefcase menu-icon"></i>
-                        <span class="menu-title">Manage User</span>
-                        <i class="typcn typcn-chevron-right menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="ui-Users">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.user.index') }}">Users</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.orders.index') }}">
-                        <i class="typcn typcn-device-desktop menu-icon"></i>
-                        <span class="menu-title">Orders</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.content-us.index') }}">
-                        <i class="typcn typcn-device-desktop menu-icon"></i>
-                        <span class="menu-title">Contact us</span>
-                    </a>
-                </li>
+                @can('view_subject', 'view_batch')
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-university" aria-expanded="false" aria-controls="ui-Courses">
+                            <i class="typcn typcn-briefcase menu-icon"></i>
+                            <span class="menu-title">+++</span>
+                            <i class="typcn typcn-chevron-right menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-university">
+                            <ul class="nav flex-column sub-menu">
+                                {{--                            <li class="nav-item"><a class="nav-link" href="">Course Categories</a></li>--}}
+                                @can('view_subject')
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.subject.index') }}">Subjects</a></li>
+                                @endcan
+                                @can('view_batch')
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.batch.index') }}">Batch</a></li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+                @can('view_course')
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-Courses" aria-expanded="false" aria-controls="ui-Courses">
+                            <i class="typcn typcn-briefcase menu-icon"></i>
+                            <span class="menu-title">Manage Courses</span>
+                            <i class="typcn typcn-chevron-right menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-Courses">
+                            <ul class="nav flex-column sub-menu">
+                                {{--                            <li class="nav-item"><a class="nav-link" href="">Course Categories</a></li>--}}
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.course.index') }}">Courses</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+                @can('view_community_category', 'view_community_tag', 'view_community_post')
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-Community" aria-expanded="false" aria-controls="ui-Community">
+                            <i class="typcn typcn-briefcase menu-icon"></i>
+                            <span class="menu-title">Manage Community</span>
+                            <i class="typcn typcn-chevron-right menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-Community">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_category.index') }}">Community Category</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_tags.index') }}">Community Tag</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.community_post.index') }}">Community Post</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+                @can('view_user')
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-Users" aria-expanded="false" aria-controls="ui-Users">
+                            <i class="typcn typcn-briefcase menu-icon"></i>
+                            <span class="menu-title">Manage User</span>
+                            <i class="typcn typcn-chevron-right menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-Users">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.user.index') }}">Users</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+                @can('view_order')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Orders</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('view_contact')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.content-us.index') }}">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Contact us</span>
+                        </a>
+                    </li>
+                @endcan
             </ul>
         </nav>
         <!-- partial -->

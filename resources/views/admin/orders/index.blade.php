@@ -16,72 +16,73 @@
             </div>
         </div>
     </div>
-
-    <div class="row  mt-3">
-        <div class="col-12 d-flex grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                        <tr>
-                            <th>Course</th>
-                            <th>User</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Transaction Id</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($orders as $order)
+    @can('view_order')
+        <div class="row  mt-3">
+            <div class="col-12 d-flex grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="datatable" class="display">
+                            <thead>
                             <tr>
-                                <td>
-                                    {{$order->course->title}}
-                                </td>
-                                <td>
-                                    {{$order->user->name}}
-                                </td>
-                                <td>
-                                    {{$order->amount}}
-                                </td>
-                                <td>
-                                    {{$order->status}}
-                                </td>
-                                <td>
-                                    {{$order->transaction_id}}
-                                </td>
-                                <td>
-                                    {{$order->created_at}}
-                                </td>
-                                <td>
-                                    <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        @if($order->status !== 'rejected')
-                                            @can('reject_order')
-                                                <a href="{{route('admin.orders.reject', $order->id)}}" class="btn btn-xs btn-primary rounded-lg">
-                                                    Reject Payment
-                                                </a>
-                                            @endcan
-                                        @else
-                                            @can('accept_order')
-                                                <a href="{{route('admin.orders.accept', $order->id)}}" class="btn btn-xs btn-success rounded-lg">
-                                                    Accept Payment
-                                                </a>
-                                            @endcan
-                                        @endif
-                                        {{--                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>--}}
-                                    </form>
-                                </td>
+                                <th>Course</th>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Transaction Id</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($orders as $order)
+                                <tr>
+                                    <td>
+                                        {{$order->course->title}}
+                                    </td>
+                                    <td>
+                                        {{$order->user->name}}
+                                    </td>
+                                    <td>
+                                        {{$order->amount}}
+                                    </td>
+                                    <td>
+                                        {{$order->status}}
+                                    </td>
+                                    <td>
+                                        {{$order->transaction_id}}
+                                    </td>
+                                    <td>
+                                        {{$order->created_at}}
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            @if($order->status !== 'rejected')
+                                                @can('reject_order')
+                                                    <a href="{{route('admin.orders.reject', $order->id)}}" class="btn btn-xs btn-primary rounded-lg">
+                                                        Reject Payment
+                                                    </a>
+                                                @endcan
+                                            @else
+                                                @can('accept_order')
+                                                    <a href="{{route('admin.orders.accept', $order->id)}}" class="btn btn-xs btn-success rounded-lg">
+                                                        Accept Payment
+                                                    </a>
+                                                @endcan
+                                            @endif
+                                            {{--                                        <button type="submit" class="btn btn-xs btn-danger rounded-lg"><i class="typcn typcn-trash mr-2"></i>Delete</button>--}}
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endcan
 @endsection
 
 @section('script')
