@@ -31,25 +31,25 @@ Route::middleware('auth', 'admin-teacher', 'permission:access_dashboard')->name(
     })->name('index');
 
     ////// *** ///////
-    Route::resource('/subject', SubjectController::class)->name('*', 'subject');
-    Route::resource('/semester', SemesterController::class)->name('*', 'semester');
-    Route::get('/batch/{id}/students', [BatchController::class, 'students'])->name('batch.students');
+    Route::resource('/subject', SubjectController::class)->middleware('permission:view_subject')->name('*', 'subject');
+    Route::resource('/semester', SemesterController::class)->middleware('permission:view_semester')->name('*', 'semester');
+    Route::get('/batch/{id}/students', [BatchController::class, 'students'])->middleware('permission:view_student')->name('batch.students');
 //    Route::get('/batch/{id}/report', [BatchController::class, 'report'])->name( 'batch.report');
     Route::get('/batch/{id}/add-mark', [BatchController::class, 'addMark'])->name('batch.addMark');
     Route::get('/batch/{id}/add-attendance', [BatchController::class, 'addAttendance'])->name('batch.addAttendance');
-    Route::resource('/batch', BatchController::class)->name('*', 'batch');
-    Route::resource('/topic', TopicController::class)->name('*', 'topic');
+    Route::resource('/batch', BatchController::class)->middleware('permission:view_batch')->name('*', 'batch');
+    Route::resource('/topic', TopicController::class)->middleware('permission:view_topic')->name('*', 'topic');
 //    Route::resource('/clas', ClasController::class)->name('*', 'clas');
-    Route::resource('/marks', MarkController::class)->name('*', 'marks');
-    Route::resource('/clas-attendance', ClasAttendanceController::class)->name('*', 'clas-attendance');
+    Route::resource('/marks', MarkController::class)->middleware('permission:view_mark')->name('*', 'marks');
+    Route::resource('/clas-attendance', ClasAttendanceController::class)->middleware('permission:attendance_mark')->name('*', 'clas-attendance');
     ////// *** ///////
 
     Route::get('/user/{id}/manage', [UserController::class, 'manage'])->name('user.manage');
     Route::post('/user/{id}/manageUpdate', [UserController::class, 'manageUpdate'])->name('user.manageUpdate');
-    Route::resource('/user', UserController::class)->name('*', 'user');
+    Route::resource('/user', UserController::class)->middleware('permission:view_user')->name('*', 'user');
 
 //    Route::get('/course', [\App\Http\Controllers\CourseController::class, 'adminIndex']);
-    Route::resource('/course', CourseController::class)->name('*', 'course');
+    Route::resource('/course', CourseController::class)->middleware('permission:view_course')->name('*', 'course');
     Route::resource('/section', SectionController::class)->name('*', 'section');
     Route::resource('/content', ContentController::class)->name('*', 'content');
     Route::get('/exam/{id}/ranking', [ExamController::class, 'ranking'])->name('exam.ranking');
@@ -59,15 +59,15 @@ Route::middleware('auth', 'admin-teacher', 'permission:access_dashboard')->name(
     Route::resource('/assignment', AssignmentController::class)->name('*', 'assignment');
     Route::resource('/live_class', LiveClassController::class)->name('*', 'live_class');
 
-    Route::resource('/community_category', CommunityCategoryController::class)->name('*', 'community_category');
-    Route::resource('/community_tags', CommunityTagsController::class)->name('*', 'community_tags');
-    Route::resource('/community_post', CommunityPostController::class)->name('*', 'community_post');
+    Route::resource('/community_category', CommunityCategoryController::class)->middleware('permission:view_community_category')->name('*', 'community_category');
+    Route::resource('/community_tags', CommunityTagsController::class)->middleware('permission:view_community_tag')->name('*', 'community_tags');
+    Route::resource('/community_post', CommunityPostController::class)->middleware('permission:view_community_post')->name('*', 'community_post');
 
     Route::get('/orders/{id}/accept', [OrderController::class, 'accept'])->name('orders.accept');
     Route::get('/orders/{id}/reject', [OrderController::class, 'reject'])->name('orders.reject');
-    Route::resource('/orders', OrderController::class)->name('*', 'orders');
+    Route::resource('/orders', OrderController::class)->middleware('permission:view_order')->name('*', 'orders');
 
-    Route::resource('/content-us', ContactUsController::class)->name('*', 'content-us');
+    Route::resource('/content-us', ContactUsController::class)->middleware('permission:view_contact')->name('*', 'content-us');
     Route::post('/import-user', [ImportController::class, 'user'])->name('importUser');
     Route::post('/import-mark', [ImportController::class, 'mark'])->name('importMark');
     Route::post('/import-attendance', [ImportController::class, 'attendance'])->name('importAttendance');
