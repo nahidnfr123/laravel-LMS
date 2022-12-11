@@ -87,16 +87,6 @@ class BatchController extends Controller
     public function report($id)
     {
         $batch = Batch::findOrFail($id);
-//        $batch = Batch::where('id', $id)->with('users', 'user.topic')->get();
-        /*$batch2 = Batch::where('id', $id)
-            ->with(['users' => function ($user) {
-                return $user->with(['topics' => function ($topic) use ($user) {
-                    return $topic->with(['marks' => function ($mark) use ($topic, $user) {
-//                        return $mark->selectRaw('sum(obtained_mark) as total_obtained_mark, user_id');
-//                        return $mark->where('marks.user_id','=', $user->id);
-                    }]);
-                }]);
-            }])->get();*/
         $outputUsers = collect();
         foreach ($batch->users as $user) {
             $outputTopics = [];
@@ -149,28 +139,6 @@ class BatchController extends Controller
         }
 
         $users = $outputUsers->SortByDesc('average');
-
-        /*$users = User::with(['topics' => function ($q) {
-            return $q->with(['users.marks' => function ($pq) use ($q){
-                return $pq->orderBy('obtained_mark');
-            }]);
-        }])->where('batch_id', $id)->get();*/
-
-        /*$users = User::with(['categories' => function ($cq) {
-            return $cq->with(['varieties' => function ($vq) {
-                return $vq->with(['products' => function ($pq) {
-                    return $pq->sum('total');
-                }]);
-            }]);
-        }])->get();*/
-
-        /*$users = DB::table('users')
-            ->where('batch_id', $id)
-            ->leftJoin('topics', 'users.id', '=', 'topics.id')
-            ->select('users.*', 'topics.*')
-            ->get();*/
-
-//        return $users;
         return view('admin.batch.report', compact('batch', 'users'));
     }
 
