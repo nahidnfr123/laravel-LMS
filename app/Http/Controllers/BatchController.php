@@ -88,12 +88,13 @@ class BatchController extends Controller
         $batch2 = Batch::where('id', $id)
             ->with(['users' => function ($user) {
                 return $user->with(['topics' => function ($topic) use ($user) {
-
                     return $topic->with(['marks' => function ($mark) use ($topic, $user) {
-                        return $mark->where('marks.user_id','=', $user->id);
+//                        return $mark->selectRaw('sum(obtained_mark) as total_obtained_mark, user_id');
+//                        return $mark->where('marks.user_id','=', $user->id);
                     }]);
                 }]);
             }])->get();
+
         return $batch2;
         /*$users = User::with(['topics' => function ($q) {
             return $q->with(['users.marks' => function ($pq) use ($q){
