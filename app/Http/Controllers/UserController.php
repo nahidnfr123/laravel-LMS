@@ -58,7 +58,7 @@ class UserController extends Controller
             'fathers_phone' => ['nullable', 'numeric', 'digits:11'],
             'mothers_name' => ['nullable', 'string'],
             'mothers_phone' => ['nullable', 'numeric', 'digits:11'],
-            'batch_id' => ['required',],
+            'batch_id' => ['sometimes',],
             'password' => ['required', Rules\Password::defaults()],
         ], [
             'dob.before_or_equal' => 'Student Must be at-least 16 years old.'
@@ -71,7 +71,10 @@ class UserController extends Controller
         $data['password'] = Hash::make($request->password);
         $user = User::create($data);
         $user->assignRole($data['role']);
-        return redirect()->route('admin.batch.index');
+        if ($user->batch_id) {
+            return redirect()->route('admin.batch.index');
+        }
+        return redirect()->route('admin.user.index');
     }
 
     public function edit(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

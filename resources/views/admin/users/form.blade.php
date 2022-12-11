@@ -46,8 +46,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                @isset($_GET['batch_id'] )
-                                    <input type="hidden" hidden value="{{$_GET['batch_id'] || ''}}" name="batch_id">
+                                @isset($_GET['batch_id'])
+                                    <input type="hidden" hidden value="{{$batch_id ?? null}}" name="batch_id">
                                 @endisset
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="form-group">
@@ -156,7 +156,7 @@
                                         <div class="form-group">
                                             <label for="present_address">Present Address:</label>
                                             <textarea name="present_address" id="present_address"
-                                                class="form-control @error('present_address') is-invalid @enderror"
+                                                      class="form-control @error('present_address') is-invalid @enderror"
                                             >{{old('present_address')}}</textarea>
                                         </div>
                                     </div>
@@ -164,7 +164,7 @@
                                         <div class="form-group">
                                             <label for="permanent_address">Permanent Address:</label>
                                             <textarea name="permanent_address" id="permanent_address"
-                                                class="form-control @error('permanent_address') is-invalid @enderror"
+                                                      class="form-control @error('permanent_address') is-invalid @enderror"
                                             >{{old('permanent_address')}}</textarea>
                                         </div>
                                     </div>
