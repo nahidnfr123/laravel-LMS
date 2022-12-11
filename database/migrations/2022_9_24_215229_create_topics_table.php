@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('semester_id')->constrained();
             $table->string('title')->nullable();
             $table->string('short_title')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

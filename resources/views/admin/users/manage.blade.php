@@ -76,6 +76,7 @@
                                                         <input
                                                             type="checkbox"
                                                             class="form-check-input"
+                                                            @if(auth()->id() == 1) disabled @endif
                                                             @if (old('permissions')) checked @elseif(in_array($permission->name, $userPermissions, false)) checked @endif
                                                             name="permissions[]"
                                                             value="{{$permission->id}}">

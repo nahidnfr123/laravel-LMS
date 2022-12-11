@@ -36,6 +36,7 @@ return new class extends Migration {
             $table->string('mothers_name')->nullable();
             $table->string('mothers_phone')->nullable();
 
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
