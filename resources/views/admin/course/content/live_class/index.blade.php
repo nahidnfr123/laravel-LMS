@@ -12,9 +12,9 @@
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
             <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                <a href="{{ route('admin.course.create') }}" class="btn btn-sm bg-white btn-icon-text border">
+               {{-- <a href="{{ route('admin.course.create') }}" class="btn btn-sm bg-white btn-icon-text border">
                     <i class="typcn typcn-plus mr-2"></i>Add
-                </a>
+                </a>--}}
             </div>
         </div>
     </div>
