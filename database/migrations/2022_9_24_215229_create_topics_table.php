@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('semester_id')->constrained();
+            $table->foreignId('semester_id')->constrained()->onDelete('CASCADE');
             $table->string('title')->nullable();
             $table->string('short_title')->nullable();
             $table->softDeletes();

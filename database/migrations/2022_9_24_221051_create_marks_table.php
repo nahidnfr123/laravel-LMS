@@ -14,8 +14,8 @@ return new class extends Migration {
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('topic_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('topic_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');;
             $table->decimal('obtained_mark')->nullable();
             $table->decimal('total_mark')->nullable();
             $table->string('status')->nullable();

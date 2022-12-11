@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('subject_id')->constrained();
+            $table->foreignId('subject_id')->constrained()->onDelete('CASCADE');
             $table->string('title')->nullable();
             $table->string('short_title')->nullable();
             $table->integer('duration')->nullable();

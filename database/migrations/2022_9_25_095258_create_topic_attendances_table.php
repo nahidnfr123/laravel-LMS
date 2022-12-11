@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('topic_attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('semester_id')->constrained();
-            $table->foreignId('topic_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('clas_id')->constrained();
-            $table->boolean('present')->constrained();
+            $table->foreignId('semester_id')->nullable()->constrained()->onDelete('set null');;
+            $table->foreignId('topic_id')->nullable()->constrained()->onDelete('set null');;
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');;
+            $table->foreignId('clas_id')->nullable()->constrained()->onDelete('set null');;
+            $table->boolean('present')->nullable()->constrained()->onDelete('set null');;
             $table->timestamps();
         });
     }

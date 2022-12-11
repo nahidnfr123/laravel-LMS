@@ -14,8 +14,8 @@ return new class extends Migration {
     {
         Schema::create('assignment_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('assignment_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('CASCADE');
+            $table->foreignId('assignment_id')->constrained()->onDelete('CASCADE');
             $table->string('file')->nullable();
             $table->double('marks')->nullable();
             $table->timestamps();

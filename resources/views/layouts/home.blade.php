@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title>SmartEDU - Education Responsive HTML5 Template</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -72,8 +72,10 @@
                     <li class="nav-item {{ Request::is('content-us.create') ? 'active' : null }}"><a class="nav-link" href="{{ route('content-us.create') }}">Contact Us</a></li>
                     @if(auth()->check())
                         <li class="nav-item {{ Request::is('home.my_courses') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.my_courses') }}">My Courses</a></li>
-                        <li class="nav-item {{ Request::is('home.profile.show') ? 'active' : null }}"><a class="nav-link" href="{{ route('home.profile.show') }}">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="/chatify">Messages</a></li>
+                        @can('access_dashboard')
+                            <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                        @endcan
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

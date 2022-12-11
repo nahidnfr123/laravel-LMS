@@ -65,31 +65,34 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-12">
-                                    <h2>Permission:</h2>
-                                    <div class="row">
-                                        @foreach($permissions as $permission)
-                                            <div class="col-4">
-                                                <div class="form-check form-check-flat form-check-primary">
-                                                    <label class="form-check-label">
-                                                        <input
-                                                            type="checkbox"
-                                                            class="form-check-input"
-                                                            @if(auth()->id() == 1) disabled @endif
-                                                            @if (old('permissions')) checked @elseif(in_array($permission->name, $userPermissions, false)) checked @endif
-                                                            name="permissions[]"
-                                                            value="{{$permission->id}}">
-                                                        {{ ucwords(str_replace("_"," ",$permission->name)) }}
-                                                    </label>
+                            @can('manage_roles_and_permissions')
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Permission:</h2>
+                                        <div class="row">
+                                            @foreach($permissions as $permission)
+                                                <div class="col-4">
+                                                    <div class="form-check form-check-flat form-check-primary">
+                                                        <label class="form-check-label">
+                                                            <input
+                                                                type="checkbox"
+                                                                class="form-check-input"
+                                                                @if(auth()->id() == 1) disabled @endif
+                                                                @if (old('permissions')) checked @elseif(in_array($permission->name, $userPermissions, false)) checked @endif
+                                                                name="permissions[]"
+                                                                value="{{$permission->id}}">
+                                                            {{ ucwords(str_replace("_"," ",$permission->name)) }}
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            @endcan
+                            @can('update_user')
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            @endcan
                         </form>
                     </div>
                 </div>
