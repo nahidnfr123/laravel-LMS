@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBatchRequest;
 use App\Http\Requests\UpdateBatchRequest;
 use App\Models\Batch;
+use App\Models\ClasAttendance;
+use App\Models\Mark;
 use App\Models\Semester;
 use App\Models\Subject;
 use App\Models\Topic;
@@ -17,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Database\Eloquent\Builder;
+use mysql_xdevapi\Collection;
 
 class BatchController extends Controller
 {
@@ -85,7 +88,7 @@ class BatchController extends Controller
     {
         $batch = Batch::findOrFail($id);
 //        $batch = Batch::where('id', $id)->with('users', 'user.topic')->get();
-        $batch2 = Batch::where('id', $id)
+        /*$batch2 = Batch::where('id', $id)
             ->with(['users' => function ($user) {
                 return $user->with(['topics' => function ($topic) use ($user) {
                     return $topic->with(['marks' => function ($mark) use ($topic, $user) {
@@ -93,9 +96,60 @@ class BatchController extends Controller
 //                        return $mark->where('marks.user_id','=', $user->id);
                     }]);
                 }]);
-            }])->get();
+            }])->get();*/
+        $outputUsers = collect();
+        foreach ($batch->users as $user) {
+            $outputTopics = [];
+            $totalObtainedMarks = 0;
+            $totalMarks = 0;
+            $totalAttendedClass = 0;
+            $totalClass = 0;
+            foreach ($user->topics as $topic) {
+                $mark = Mark::where('topic_id', $topic->id)->where('user_id', $user->id)->first();
+                $classAttendance = ClasAttendance::where('topic_id', $topic->id)->where('user_id', $user->id)->first();
+//                $marks = $topic->marks->where('user_id', $user->id)->get();
+                if (!empty($classAttendance)) {
+                    $totalAttendedClass = $classAttendance->attended_classes + $totalAttendedClass;
+                    $totalClass = $classAttendance->total_classes + $totalClass;
+                    $topic['attendance'] = $classAttendance;
+                }
+                if (!empty($mark)) {
+                    $totalObtainedMarks = $mark->obtained_mark + $totalObtainedMarks;
+                    $totalMarks = $mark->total_mark + $totalMarks;
+                    $topic['mark'] = $mark;
+                }
+                $outputTopics[] = $topic;
+            }
+            $user['topics'] = $outputTopics;
+            $user['obtained_mark'] = $totalObtainedMarks;
+            $user['total_mark'] = $totalMarks;
+            $user['attended_classes'] = $totalAttendedClass;
+            $user['total_classes'] = $totalClass;
 
-        return $batch2;
+            $MarksPercentage = intval(($totalObtainedMarks / $totalMarks) * 100);
+            $AttendancePercentage = intval(($totalAttendedClass / $totalClass) * 100);
+
+            $user['MarksPercentage'] = $MarksPercentage;
+            $user['AttendancePercentage'] = $AttendancePercentage;
+            $user['average'] = intval((($MarksPercentage + $AttendancePercentage) / 200) * 100);
+
+            if ($user['average'] >= 80) {
+                $user['status'] = 'Excellent';
+            } else if ($user['average'] >= 60) {
+                $user['status'] = 'Good';
+            } else if ($user['average'] >= 50) {
+                $user['status'] = 'Fair';
+            } else if ($user['average'] >= 40) {
+                $user['status'] = 'Poor';
+            } else {
+                $user['status'] = 'Very Poor';
+            }
+
+            $outputUsers[] = $user;
+        }
+
+        $users = $outputUsers->SortByDesc('average');
+
         /*$users = User::with(['topics' => function ($q) {
             return $q->with(['users.marks' => function ($pq) use ($q){
                 return $pq->orderBy('obtained_mark');
